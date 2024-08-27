@@ -33,7 +33,7 @@ const options = {
 const pin = sid(options) // => "383620"
 ```
 
-### Example: Create an API Key with a Prefix
+### Example: API Key with a Prefix
 
 ```js
 const options = {
