@@ -1,0 +1,15 @@
+{
+  "name": "sid",
+  "version": "0.1.0",
+  "description": "Generate short unique identifiers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alan Hettinger",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
