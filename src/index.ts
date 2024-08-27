@@ -1,9 +1,9 @@
 import crypto from 'crypto'
 
 // Generate a short unique identifyer
-// Defaults to base 32 encoding, 5 bits per character, 25 characters, 125 bits
+// Defaults to base 32 alphabet, 5 bits per character, 25 characters, 125 bits
 // Compare to UUIDv4, which has 122 random bits
-// Omitting 0, o, i, l, u to improve readability
+// Omits 0, o, i, l, u to improve readability in cases where id may need to be manually read
 export function sid({
   length = 25,
   alphabet = '123456789abcdefghjkmnpqrstuvwxyz',
