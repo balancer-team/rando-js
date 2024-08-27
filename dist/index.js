@@ -9,7 +9,7 @@ const crypto_1 = __importDefault(require("crypto"));
 // Defaults to base 32 encoding, 5 bits per character, 25 characters, 125 bits
 // Compare to UUIDv4, which has 122 random bits
 // Omitting 0, o, i, l, u to improve readability
-function sid({ length = 25, alphabet = '123456789abcdefghjkmnpqrstuvwxyz', }) {
+function sid({ length = 25, alphabet = '123456789abcdefghjkmnpqrstuvwxyz', } = {}) {
     const idArray = new Array(length);
     for (let i = 0; i < length; i++) {
         idArray[i] = alphabet[crypto_1.default.randomInt(alphabet.length)];
