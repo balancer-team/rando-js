@@ -8,9 +8,9 @@ export function sid({
   length = 25,
   alphabet = '123456789abcdefghjkmnpqrstuvwxyz',
 }: {
-  length: number
-  alphabet: string
-}): string {
+  length?: number
+  alphabet?: string
+} = {}): string {
   const idArray = new Array(length)
   for (let i = 0; i < length; i++) {
     idArray[i] = alphabet[crypto.randomInt(alphabet.length)]
