@@ -2,10 +2,16 @@
 
 Simple ID generates IDs that are URL safe, human readable, and cryptographically random. By default, Simple IDs are universally unique, providing more than 128 bits of randomness.
 
+### Install
+
+```
+npm i @balancerteam/sid
+```
+
 ### Usage
 
 ```js
-import { sid } from 'sid'
+import { sid } from '@balancerteam/sid'
 
 const id = sid() // => "ogm3Yzf4NSKJsDnL8ma8XC"
 ```
@@ -14,7 +20,7 @@ const id = sid() // => "ogm3Yzf4NSKJsDnL8ma8XC"
 
 ```js
 const defaultOptions = {
-  length: 22, // Provides 128.9 bits of randomness
+  length: 22, // Provides more than 128 bits of randomness
   alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz', // Base 58
   prefix: '', // Optional prefix
 }
@@ -37,7 +43,7 @@ const pin = sid(pinOptions) // => "383620"
 
 ```js
 const keyOptions = {
-  length: 44, // Provides 257.8 bits of randomness with the default alphabet
+  length: 44, // Provides more than 256 bits of randomness
   prefix: 'live_', // For example, to distinguish between environments
 }
 

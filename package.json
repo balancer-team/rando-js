@@ -1,5 +1,5 @@
 {
-  "name": "sid",
+  "name": "@balancerteam/sid",
   "version": "1.0.1",
   "description": "Generate short unique identifiers",
   "main": "dist/index.js",
