@@ -1,11 +1,11 @@
 import crypto from 'crypto'
 
-// Defaults to base 32 alphabet, 5 bits per character, 25 characters, 125 bits
+// Default base 58 alphabet, 5.85798 bits per character, 22 characters, 128.9 random bits
 // Compare to UUIDv4, which has 122 random bits
-// Omits 0, o, i, l, u to improve readability in cases where id may need to be manually read
+// Omits 0, O, I, l for readability
 export function sid({
-  length = 25,
-  alphabet = '123456789abcdefghjkmnpqrstuvwxyz',
+  length = 22,
+  alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
   prefix = '',
 }: {
   length?: number
