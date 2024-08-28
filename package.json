@@ -1,6 +1,6 @@
 {
   "name": "sid",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Generate short unique identifiers",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
