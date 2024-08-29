@@ -1,6 +1,6 @@
 {
   "name": "@balancer-team/sid",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generate short unique identifiers",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

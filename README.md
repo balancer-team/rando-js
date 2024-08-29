@@ -5,13 +5,13 @@ Simple ID generates IDs that are URL safe, human readable, and cryptographically
 ### Install
 
 ```
-npm i @balancerteam/sid
+npm i @balancer-team/sid
 ```
 
 ### Usage
 
 ```js
-import { sid } from '@balancerteam/sid'
+import { sid } from '@balancer-team/sid'
 
 const id = sid() // => "ogm3Yzf4NSKJsDnL8ma8XC"
 ```
