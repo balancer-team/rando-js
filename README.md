@@ -13,7 +13,7 @@ npm i @balancer-team/sid
 ```js
 import { sid } from '@balancer-team/sid'
 
-const id = sid() // => "ogm3Yzf4NSKJsDnL8ma8XC"
+const id = sid() // => "ogm3Yzf4NSKJsDnL8ma8Xn"
 ```
 
 ### Default Options
