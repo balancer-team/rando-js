@@ -1,6 +1,6 @@
 # Simple ID
 
-Simple ID generates IDs that are URL safe, human readable, and cryptographically random. By default, Simple IDs are universally unique, providing more than 128 bits of randomness.
+Simple ID generates IDs that are URL safe, human readable, and cryptographically random. By default, Simple IDs are universally unique, providing more than 128 bits of randomness with just 22 characters.
 
 ### Install
 
