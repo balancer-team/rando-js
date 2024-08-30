@@ -1,6 +1,6 @@
 {
   "name": "@balancer-team/sid",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate short unique identifiers",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,5 +13,7 @@
   "devDependencies": {
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
-  }
+  },
+  "repository": "github:balancer-team/sid-js",
+  "homepage": "https://www.balancer.team"
 }

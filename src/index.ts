@@ -1,8 +1,8 @@
 import crypto from 'crypto'
 
-// Default base 58 alphabet, 5.85798 bits per character, 22 characters, 128.9 random bits
+// Default base 58 alphabet, 5.9 bits per character, 22 characters, 128.9 random bits
 // Compare to UUIDv4, which has 122 random bits
-// Omits 0, O, I, l for readability
+// Base 58 omits 0, O, I, l for readability
 export function sid({
   length = 22,
   alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
