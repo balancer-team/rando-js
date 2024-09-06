@@ -32,7 +32,7 @@ const id = sid(defaultOptions) // => "8fzKWQL1oD9cr6UgZ3gHBu"
 
 ### Example: 6-digit Pin
 
-The options object can be modified by providing one or more properties. For example, these options would generate a cryptographically random 6- digit pin.
+The options object can be modified by providing one or more properties. For example, these options would generate a cryptographically random 6-digit pin.
 
 ```js
 const pinOptions = {
@@ -67,3 +67,11 @@ const shortId = {
 
 const key = sid(shortId) // => "8fzKWQL1oD9cr6"
 ```
+
+### Why Base 58?
+
+There are edge cases where it is helpful to have a human-readable ID. Base 58 excludes the characters "0", "O", "I", and "l", which are hard to distinguish with some fonts. Base 58 is used in Bitcoin, Solana and other projects to improve readability.
+
+Base 58 also excludes special characters "-" and "\_", which can imply a meaningful segmentation of the ID where there is none. Dashes can also get in the way of quickly selecting an ID to copy and paste it.
+
+If you prefer to use a different alphabet, such as base 64, base 32, or hex, you can easily set the `alphabet` property to whatever your project requires.
