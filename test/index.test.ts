@@ -1,32 +1,30 @@
 import test from 'node:test'
 import assert from 'node:assert'
-import { sid, getTimestamp } from '../src'
+import { rando, lex, decodeLex } from '../src'
 
-// // Default sid is 25 characters
-// test('sid default', () => {
-//   assert.strictEqual(sid().length, 22)
-// })
+test('Rando default length', () => {
+  assert.strictEqual(rando().length, 22)
+})
 
-// // Adjusting the length changes the length of the sid
-// test('sid with length', () => {
-//   assert.strictEqual(sid({ length: 44 }).length, 44)
-// })
+test('Rando with custom length', () => {
+  assert.strictEqual(rando({ length: 44 }).length, 44)
+})
 
-// // Changing the alphabet to one character returns a string of that character
-// test('sid with alphabet', () => {
-//   assert.strictEqual(sid({ alphabet: 'a' }), 'aaaaaaaaaaaaaaaaaaaaaa')
-// })
+// Changing the alphabet to one character returns a string of that character
+test('Rando with custom alphabet', () => {
+  assert.strictEqual(rando({ alphabet: 'a' }), 'aaaaaaaaaaaaaaaaaaaaaa')
+})
 
-// // Adding a prefix returns a sid that starts with that prefix
-// test('sortable', () => {
-//   const sortableId = sid({ length: 1, precision: 'seconds', sortable: true })
-//   console.log(sortableId)
-//   // assert.strictEqual(sid({ sortable: true }).startsWith('test_'), true)
-// })
+test('Date matches after encoding and decoding', () => {
+  const date = new Date()
+  const id = lex({ date })
+  const decodedDate = decodeLex({ encoded: id })
+  assert.strictEqual(date.getTime(), decodedDate.getTime())
+})
 
-test('sid default', () => {
-  const id = sid({ sortable: true })
-  console.log(id)
-  getTimestamp(id)
-  // assert.strictEqual(sid().length, 22)
+test('Date matches after encoding and decoding with options', () => {
+  const date = new Date()
+  const id = lex({ date, alphabet: '0123456789', maxYear: 4000 })
+  const decodedDate = decodeLex({ encoded: id, alphabet: '0123456789', maxYear: 4000 })
+  assert.strictEqual(date.getTime(), decodedDate.getTime())
 })
