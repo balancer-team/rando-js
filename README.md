@@ -45,15 +45,15 @@ const pin = sid(pinOptions) // => "383620"
 
 ### Example: API Key with a Prefix
 
-Sometimes it may be helpful to provide a prefix, for example if you want to generate API keys that distinguish between development and production environments. By defining the prefix in the options object, you can have a clean function that generates exactly the string you need.
+Sometimes it's helpful to provide a prefix, for example if you want to generate API keys that distinguish between development and production environments. By defining the prefix in the options object, you can have a clean function that generates exactly the string you need.
 
 ```js
-const keyOptions = {
+const liveKeyOptions = {
   length: 44, // 256 bits of entropy
   prefix: 'live_', // For example, to distinguish between environments
 }
 
-const key = sid(keyOptions) // => "live_NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44"
+const key = sid(liveKeyOptions) // => "live_NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44"
 ```
 
 ### Example: Short ID
