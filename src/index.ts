@@ -20,6 +20,11 @@ type DecodeTimestampOptions = {
 
 const base58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 
+// Ensure that the alphabet is lexically sorted
+export function sortAlphabet(alphabet: string): string {
+  return alphabet.split('').sort().join('')
+}
+
 export function sid({ length = 22, alphabet = base58, sortable = false, separator = '' }: Options = {}): string {
   let result = sortable ? encodeTimestamp(alphabet) + separator : ''
   if (result.length >= length) console.warn('The length is shorter than the sortable characters.')
