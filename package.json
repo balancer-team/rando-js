@@ -1,6 +1,6 @@
 {
   "name": "@balancer-team/rando-and-lex",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generate identifiers with Rando and Lex.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
