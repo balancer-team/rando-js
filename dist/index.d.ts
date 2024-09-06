@@ -1,5 +1,7 @@
-export declare function sid({ length, alphabet, prefix, }?: {
+type Options = {
     length?: number;
     alphabet?: string;
     prefix?: string;
-}): string;
+};
+export declare function sid({ length, alphabet, prefix, }?: Options): string;
+export {};
