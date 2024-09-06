@@ -15,5 +15,13 @@
     "typescript": "^5.5.4"
   },
   "repository": "github:balancer-team/sid-js",
-  "homepage": "https://www.balancer.team"
+  "homepage": "https://www.balancer.team",
+  "keywords": [
+    "sid",
+    "short",
+    "unique",
+    "identifier",
+    "uuid",
+    "guid"
+  ]
 }
