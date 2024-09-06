@@ -1,7 +1,7 @@
 {
-  "name": "@balancer-team/sid-and-lex",
+  "name": "@balancer-team/rando-and-lex-js",
   "version": "0.0.1",
-  "description": "Generate identifiers with Sid and Lex.",
+  "description": "Generate identifiers with Rando and Lex.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
