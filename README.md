@@ -14,7 +14,7 @@ npm i @balancer-team/rando-and-lex
 import { rando, lex } from '@balancer-team/rando-and-lex'
 
 const someRando = rando() // => "ogm3Yzf4NSKJsDnL8ma8Xn"
-const someLex = lex() ////////////////////// FILL IN
+const someLex = lex() // => "1nL9fdp3"
 ```
 
 ### Rando
@@ -23,7 +23,7 @@ The `rando()` function generates cryptographically random strings. By default, t
 
 ```js
 const defaultRandoOptions = {
-  length: 22, // 128 bits of entropy
+  length: 22, // 22 characters provides 128 bits of entropy, comparable to a UUID
   alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz', // Base 58
 }
 
@@ -36,8 +36,9 @@ The `lex()` function generates lexicographically sortable strings. By default, t
 
 ```js
 const defaultLexOptions = {
-  year: 6000 // Maximum calendar year
+  date: new Date() // Current date by default
   alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz' // Base 58
+  maxYear: 6000 // After the year 6000, these options won't work
 }
 
 const id = lex(defaultLexOptions) ///////////// INSERT
@@ -49,8 +50,8 @@ Of course, `rando()` and `lex()` can be combined to create the perfect identifie
 
 ```js
 const lexOptions = {
-  year: 10889 // Maximum calendar year
-  alphabet: '0123456789ABCDEFGHJKMNPQRSTVWXYZ' // Crockford's base32
+  alphabet: '0123456789ABCDEFGHJKMNPQRSTVWXYZ', // Crockford's base32
+  maxYear: 10889, // ulid spec
 }
 
 const randoOptions = {
@@ -90,13 +91,13 @@ const key = rando(shortId) // => "8fzKWQL1oD9cr6"
 
 // Generate a Snowflake-like ID
 const snowflakeLexOptions = {
-  year: 2080
+  maxYear: 2080,
   alphabet: '0123456789', // Snowflake uses numbers only
 }
 
 const snowflakeRandoOptions = {
-    length: 10
-    alphabet: '0123456789', // Snowflake uses numbers onle
+  length: 10,
+  alphabet: '0123456789', // Snowflake uses numbers onle
 }
 
 const snowflakeLike = lex(snowflakeLexOptions) + rando(snowflakeRandoOptions)
