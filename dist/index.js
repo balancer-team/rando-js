@@ -1,38 +1,40 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sid = sid;
-exports.encodeTimestamp = encodeTimestamp;
-exports.decodeTimestamp = decodeTimestamp;
-const base58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
-function sid({ length = 22, alphabet = base58, sortable = false, separator = '' } = {}) {
-    return encodeTimestamp(base58);
-    // let result = ''
-    // const arr = Array.from({ length }, () => alphabet[crypto.randomInt(alphabet.length)])
-    // result = arr.join('')
-    // if (sortable) result = encodeTimestamp(alphabet) + separator + result
-    // return result
-}
-function encodeTimestamp(alphabet = 'abc') {
-    const base = alphabet.length;
-    const timestamp = Date.now();
-    console.log('Before encoding: ', timestamp); ////////////////////////////////////////
-    const maxTimestamp = 8640000000000000; // Maximum value for a Date object
+exports.lex = lex;
+exports.rando = rando;
+const crypto_1 = __importDefault(require("crypto"));
+const constants_1 = require("./constants");
+const utils_1 = require("./utils");
+function lex({ date = new Date(), alphabet = constants_1.BASE_58, maxDate = null } = {}) {
+    // Alphabet must be at least two characters long
+    if (alphabet.length < 2)
+        throw new Error('The alphabet must be at least two characters long.');
+    if (!maxDate)
+        maxDate = constants_1.DATE_MAP[alphabet.length];
+    // Ensure the alphabet is lexicographically sorted
+    alphabet = (0, utils_1.sortAlphabet)(alphabet);
+    // Convert the date and maxDate to timestamps
+    const timestamp = date.getTime();
+    const maxTimestamp = maxDate.getTime();
     let result = '';
     let remaining = timestamp;
-    while (remaining > 0 || result.length < Math.ceil(Math.log(maxTimestamp) / Math.log(base))) {
-        const index = remaining % base;
+    while (remaining > 0 || result.length < Math.ceil(Math.log(maxTimestamp) / Math.log(alphabet.length))) {
+        const index = remaining % alphabet.length;
         result = alphabet[index] + result;
-        remaining = Math.floor(remaining / base);
+        remaining = Math.floor(remaining / alphabet.length);
     }
     return result;
 }
-function decodeTimestamp(encodedTimestamp, alphabet = base58) {
-    const base = alphabet.length;
-    // Convert the encoded timestamp back to a number
-    let decoded = 0;
-    for (let i = 0; i < encodedTimestamp.length; i++) {
-        decoded = decoded * base + alphabet.indexOf(encodedTimestamp[i]);
-    }
-    console.log('After decoding: ', decoded); /////////////////////
-    return new Date(decoded);
+function rando({ length = 22, alphabet = constants_1.BASE_58 } = {}) {
+    // Length must be greater than 0
+    if (length <= 0)
+        throw new Error('The length must be greater than 0.');
+    // Alphabet must be at least two characters long
+    if (alphabet.length < 2)
+        throw new Error('The alphabet must be at least two characters long.');
+    const a = Array.from({ length }, () => alphabet[crypto_1.default.randomInt(alphabet.length)]);
+    return a.join('');
 }

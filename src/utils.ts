@@ -14,9 +14,6 @@ export function decodeLex({ encoded, alphabet = BASE_58 }: DecodeLexOptions): Da
   // Alphabet must not be empty
   if (!alphabet) throw new Error('The alphabet must not be empty.')
 
-  // Validate the year. Must be later than the current year.
-  // if (maxYear <= 1970) throw new Error('The year must be later than 1970.')
-
   // Sort the alphabet
   alphabet = sortAlphabet(alphabet)
 

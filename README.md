@@ -1,6 +1,6 @@
-# Rando and Lex
+# Lex and Rando
 
-Rando and Lex is a library for generating identifiers, with `rando()` generating random strings and `lex()` generating lexicographically sortable strings. The two generators can be customized and combined to create the perfect identifier for your project requirements.
+Lex and Rando helps you craft the perfect identifier. `lex()` generates lexicographically sortable strings, and `rando()` generates random strings.
 
 ### Install
 
@@ -11,10 +11,25 @@ npm i @balancer-team/rando-and-lex
 ### Basic Usage
 
 ```js
-import { rando, lex } from '@balancer-team/rando-and-lex'
+import { lex, rando } from '@balancer-team/lex-and-rando'
 
-const someRando = rando() // => "ogm3Yzf4NSKJsDnL8ma8Xn"
-const someLex = lex() // => "1nL9fdp3"
+const sortableString = lex() // => "1nL9fdp3"
+const randomString = rando() // => "ogm3Yzf4NSKJsDnL8ma8Xn"
+const combined = sortableString + randomString // => "1nL9fdp3ogm3Yzf4NSKJsDnL8ma8Xn"
+```
+
+### Lex
+
+The `lex()` function generates lexicographically sortable strings. By default, the strings are 8 characters long and can be generated until the year 6028. These settings provide for a reasonable number of leading characters with a base 58 alphabet. If you think you'll want your application to last beyond the year 6028, you can adjust the `year` property to suit your ambitions. The result will be more repeating leading characters to maintain lexicographic sortabilty.
+
+```js
+const defaultLexOptions = {
+  date: new Date() // Current date by default
+  alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz' // Base 58
+  maxYear: 6000 // After the year 6000, these options won't work
+}
+
+const id = lex(defaultLexOptions) ///////////// INSERT
 ```
 
 ### Rando
@@ -28,20 +43,6 @@ const defaultRandoOptions = {
 }
 
 const id = rando(defaultRandoOptions) // => "8fzKWQL1oD9cr6UgZ3gHBu"
-```
-
-### Lex
-
-The `lex()` function generates lexicographically sortable strings. By default, the strings are 8 characters long and can be generated until the year 6000. These settings provide for a reasonable number of leading characters with a base 58 alphabet. If you think you'll want your application to last beyond the year 6000, you can adjust the `year` property to suit your ambitions. The result will be more repeating leading characters to maintain lexicographic sortabilty.
-
-```js
-const defaultLexOptions = {
-  date: new Date() // Current date by default
-  alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz' // Base 58
-  maxYear: 6000 // After the year 6000, these options won't work
-}
-
-const id = lex(defaultLexOptions) ///////////// INSERT
 ```
 
 ### Putting it All Together
