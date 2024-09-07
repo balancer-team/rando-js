@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert'
-import { rando, lex, decodeLex, ulid, flake, fav, lexPracticalMaximums } from '../src'
+import { rando, lex } from '../src'
+import { decodeLex } from '../src/utils'
 
 test('Rando default length', () => {
   assert.strictEqual(rando().length, 22)
@@ -24,7 +25,7 @@ test('Date matches after encoding and decoding', () => {
 
 test('Date matches after encoding and decoding with options', () => {
   const date = new Date()
-  const id = lex({ date, alphabet: '0123456789', maxYear: 4000 })
+  const id = lex({ date, alphabet: '0123456789', maxDate: new Date('4000-01-01') })
   const decodedDate = decodeLex({ encoded: id, alphabet: '0123456789' })
   assert.strictEqual(date.getTime(), decodedDate.getTime())
 })
@@ -44,24 +45,3 @@ test('Generate to ulid spec', () => {
 
   assert.strictEqual(id.length, 26)
 })
-
-// test('Generate ulid', () => {
-//   console.log(ulid())
-// })
-
-// test('Generate snowflake-like id', () => {
-//   console.log(flake())
-// })
-
-test('Generate fav', () => {
-  console.log(lex())
-  console.log(lex({ date: new Date('6000-01-02') }))
-  lexPracticalMaximums()
-  // console.log(crumb())
-})
-
-// 17256643061560183958186
-
-// 285124269753503744
-
-// 285124269753503744
