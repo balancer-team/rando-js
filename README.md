@@ -1,26 +1,50 @@
-# Lex and Rando
+# Rando
 
-Lex and Rando helps you craft the perfect identifier. `lex()` generates lexicographically sortable strings, and `rando()` generates random strings.
+Rando is a tool for generating identifiers. By default `rando()` generates a cryptographically random, universally unique identifier with 22 characters and 128 bits of entropy. Options can be adjusted to fit a variety of project requirements.
 
 ### Install
 
 ```
-npm i @balancer-team/rando-and-lex
+npm i @balancer-team/rando
 ```
 
 ### Basic Usage
 
 ```js
-import { lex, rando } from '@balancer-team/lex-and-rando'
+import { rando } from '@balancer-team/rando'
 
-const sortableString = lex() // => "1nL9fdp3"
-const randomString = rando() // => "ogm3Yzf4NSKJsDnL8ma8Xn"
-const combined = sortableString + randomString // => "1nL9fdp3ogm3Yzf4NSKJsDnL8ma8Xn"
+const id = rando() // => "ogm3Yzf4NSKJsDnL8ma8Xn"
 ```
 
-### Lex
+### Options
 
-The `lex()` function generates lexicographically sortable strings. By default, the strings are 8 characters long and can be generated until the year 6028. These settings provide for a reasonable number of leading characters with a base 58 alphabet. If you think you'll want your application to last beyond the year 6028, you can adjust the `year` property to suit your ambitions. The result will be more repeating leading characters to maintain lexicographic sortabilty.
+The following is an example of the default options object:
+
+```js
+// Default options
+const id = rando({
+  length: 22
+  alphabet: BASE_58
+  isSortable: false
+  separator: ''
+  date: new Date()
+  maxDate: null
+})
+```
+
+Options properties:
+
+- `length:` Sets the overall length of the output.
+- `alphabet:` Sets the characters to be used.
+- `isSortable:` If set to `true`, makes the output lexicographically sortable.
+- `separator:` String that separates the sortable and random parts of the identifier.
+- `date:` Set a specific date for the sortable part of the identifier.
+- `maxDate:` Set a maximum date for the sortable part of the identifier.
+
+<!--
+
+
+The `lex()` function generates lexicographically sortable strings. By default, the strings are 8 characters long and can be generated until the year 6028. These settings provide for a reasonable number of leading characters with a base 58 alphabet. If you think you'll want your application to last beyond the year 6028, you can adjust the `year` property to suit your ambitions. The result will be more repeating leading characters to maintain lexicographic sortabilty. -->
 
 ```js
 const defaultLexOptions = {
