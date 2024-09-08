@@ -1,12 +1,31 @@
-type LexOptions = {
-    date?: Date;
-    alphabet?: string;
-    maxDate?: Date | null;
-};
 type RandoOptions = {
-    length?: number;
     alphabet?: string;
+    randomLength?: number;
+    randomAlphabet?: string;
+    isSortable?: boolean;
+    sortableSeparator?: string;
+    sortableAlphabet?: string;
+    sortableLength?: number;
+    sortableDate?: Date;
+    sortableMaxDate?: Date;
+    sortableTrim?: number;
 };
-export declare function lex({ date, alphabet, maxDate }?: LexOptions): string;
-export declare function rando({ length, alphabet }?: RandoOptions): string;
+export declare class Rando {
+    readonly alphabet: string;
+    readonly randomLength: number;
+    readonly randomAlphabet: string;
+    readonly randomBase: number;
+    readonly isSortable: boolean;
+    readonly sortableSeparator: string;
+    readonly sortableLength: number;
+    readonly sortableAlphabet: string;
+    readonly sortableBase: number;
+    readonly sortableDate: Date;
+    constructor({ alphabet, randomLength, randomAlphabet, isSortable, sortableSeparator, sortableLength, sortableAlphabet, sortableDate, }?: RandoOptions);
+    generate(): string;
+    generateRandomString(): string;
+    generateSortableString(): string;
+    sortAlphabet(alphabet: string): string;
+    decodeSortableString(encoded: string): Date;
+}
 export {};
