@@ -24,8 +24,8 @@ rando.generate() // => "ogm3Yzf4NSKJsDnL8ma8Xn" (128 bits of entropy)
 If you want a longer random string, for example if you wanted extra security for an API key, it is easy to modify the length:
 
 ```js
-const randoKey = new Rando({ randomLength: 44 })
-randoKey.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44" (256 bits of entropy)
+const rando = new Rando({ randomLength: 44 })
+rando.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44" (256 bits of entropy)
 ```
 
 ### Sortable Identifiers
@@ -33,8 +33,8 @@ randoKey.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44" (256 bit
 Rando can generate lexicographically sortable IDs.
 
 ```js
-const randoSortable = new Rando({ isSortable: true, sortableSeparator: '-' })
-randoSortable.generate() //=> "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
+const rando = new Rando({ isSortable: true, sortableSeparator: '-' })
+rando.generate() //=> "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
 
 // "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
 //  |------| |--------------------|
@@ -42,15 +42,15 @@ randoSortable.generate() //=> "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
 //  Segment         Segment
 ```
 
-Sortable IDs can easily be decoded to return a date object.
+Sortable IDs can easily be decoded to return a date object. Note that the instance doing the decoding must have the same options set as the instance that did the generating.
 
 ```js
-randoSortable.decodeSortable('1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp') //=> 2024-09-11T17:51:46.274Z
+rando.decodeSortable('1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp') //=> 2024-09-11T17:51:46.274Z
 ```
 
 ### All Options
 
-Rando instances can be extensively customized. Here's the type definition of all available options, with additional details below:
+Rando instances can be extensively customized to generate the perfect identifier to meet your requirements. Here's the type definition of all available options, with additional details below:
 
 ```ts
 type RandoOptions = {
@@ -61,9 +61,6 @@ type RandoOptions = {
   sortableSeparator?: string
   sortableAlphabet?: string
   sortableLength?: number
-  sortableDate?: Date
-  sortableMaxDate?: Date
-  sortableTrim?: number
 }
 ```
 
@@ -80,5 +77,3 @@ type RandoOptions = {
 - `sortableAlphabet` allows you to specify an alphabet for the sortable segment of the ID.
 
 - `sortableLength` allows you to specify the length of the sortable segment of the ID. Rando uses practical default lengths that vary depending on the size of the alphabet. The defaults provide support for at least the year 3000 for any alphabet length from `2` to `88`. A longer sortable segment is needed with a 16-character `HEX` alphabet than with a `BASE_64` alphabet to represent the same date. If you increase the length beyond what is necessary, the sortable segment will be left-padded to allow you to represent dates further into the future. If you decrease the length below what is necessary, the instance will return an error.
-
-- `sortableDate` allows you to set a specific date for the sortable segment.
