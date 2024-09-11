@@ -6,9 +6,9 @@ type RandoOptions = {
     sortableSeparator?: string;
     sortableAlphabet?: string;
     sortableLength?: number;
-    sortableDate?: Date;
-    sortableMaxDate?: Date;
-    sortableTrim?: number;
+};
+type GenerateOptions = {
+    date?: Date;
 };
 export declare class Rando {
     readonly alphabet: string;
@@ -20,12 +20,11 @@ export declare class Rando {
     readonly sortableLength: number;
     readonly sortableAlphabet: string;
     readonly sortableBase: number;
-    readonly sortableDate: Date;
-    constructor({ alphabet, randomLength, randomAlphabet, isSortable, sortableSeparator, sortableLength, sortableAlphabet, sortableDate, }?: RandoOptions);
-    generate(): string;
-    generateRandomString(): string;
-    generateSortableString(): string;
+    constructor({ alphabet, randomLength, randomAlphabet, isSortable, sortableSeparator, sortableLength, sortableAlphabet, }?: RandoOptions);
+    generate({ date }?: GenerateOptions): string;
+    generateRandomSegment(): string;
+    generateSortableSegment({ date }?: GenerateOptions): string;
     sortAlphabet(alphabet: string): string;
-    decodeSortableString(encoded: string): Date;
+    decodeSortable(id: string): Date;
 }
 export {};

@@ -1,7 +1,7 @@
 {
-  "name": "@balancer-team/lex-and-rando",
-  "version": "0.0.1",
-  "description": "Generate identifiers with Lex and Rando.",
+  "name": "@balancer-team/rando",
+  "version": "1.0.1",
+  "description": "Generate identifiers with Rando.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -14,7 +14,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   },
-  "repository": "github:balancer-team/lex-and-rando-js",
+  "repository": "github:balancer-team/rando-js",
   "homepage": "https://www.balancer.team",
   "keywords": [
     "sid",

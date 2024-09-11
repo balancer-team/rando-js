@@ -9,7 +9,11 @@ type RandoOptions = {
   sortableSeparator?: string
   sortableAlphabet?: string
   sortableLength?: number
-  sortableDate?: Date
+  // sortableDate?: Date
+}
+
+type GenerateOptions = {
+  date?: Date
 }
 
 export class Rando {
@@ -23,7 +27,7 @@ export class Rando {
   readonly sortableLength: number
   readonly sortableAlphabet: string
   readonly sortableBase: number
-  readonly sortableDate: Date
+  // readonly sortableDate: Date
 
   // Constructor
   constructor({
@@ -34,8 +38,8 @@ export class Rando {
     sortableSeparator = '',
     sortableLength = undefined,
     sortableAlphabet = undefined,
-    sortableDate = undefined,
-  }: RandoOptions = {}) {
+  }: // sortableDate = undefined,
+  RandoOptions = {}) {
     // Validation logic
     if (typeof alphabet !== 'string' || alphabet.length < 2) {
       throw new Error('alphabet must be at least two characters.')
@@ -55,17 +59,14 @@ export class Rando {
     if (sortableAlphabet && (typeof sortableAlphabet !== 'string' || sortableAlphabet.length < 2)) {
       throw new Error('sortableAlphabet: must be a non-empty string or null.')
     }
-    if (sortableLength && (typeof sortableLength !== 'number' || sortableLength <= 0)) {
-      throw new Error('sortableLength must be greater than zero.')
+    if (sortableLength && (typeof sortableLength !== 'number' || sortableLength < 7)) {
+      throw new Error('sortableLength must be at least 7.')
     }
 
-    // If sortableLength is less than the default, throw an error
+    // Ensure sortableLength is at least the default length for the given base
     if (sortableLength && sortableLength < SORTABLE_DEFAULTS[sortableLength].length) {
+      console.log(sortableLength)
       throw new Error('sortableLength must be at least the default length for the given base.')
-    }
-
-    if (sortableDate && !(sortableDate instanceof Date)) {
-      throw new Error('sortableDate must be a Date object.')
     }
 
     // Ensure all alphabets have unique characters
@@ -99,15 +100,15 @@ export class Rando {
     else this.sortableAlphabet = this.sortAlphabet(sortableAlphabet)
     this.sortableBase = this.sortableAlphabet.length
     this.sortableLength = sortableLength || SORTABLE_DEFAULTS[this.sortableBase].length
-    this.sortableDate = sortableDate || new Date()
+    // this.sortableDate = sortableDate || new Date()
   }
 
   // Methods
-  generate(): string {
+  generate({ date = new Date() }: GenerateOptions = {}): string {
     if (!this.isSortable) {
       return this.generateRandomSegment()
     } else {
-      return this.generateSortableSegment() + this.sortableSeparator + this.generateRandomSegment()
+      return this.generateSortableSegment({ date }) + this.sortableSeparator + this.generateRandomSegment()
     }
   }
 
@@ -118,8 +119,8 @@ export class Rando {
     return randomArray.join('')
   }
 
-  generateSortableSegment(): string {
-    const timestamp = this.sortableDate.getTime()
+  generateSortableSegment({ date = new Date() }: GenerateOptions = {}): string {
+    const timestamp = date.getTime()
     // const maxTimestamp = Math.pow(this.sortableBase, this.sortableLength)
 
     let result = ''

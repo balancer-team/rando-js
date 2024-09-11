@@ -17,10 +17,10 @@ class Rando {
     sortableLength;
     sortableAlphabet;
     sortableBase;
-    sortableDate;
-    // readonly sortableMaxDate: Date
+    // readonly sortableDate: Date
     // Constructor
-    constructor({ alphabet = constants_1.BASE_58, randomLength = 22, randomAlphabet = undefined, isSortable = false, sortableSeparator = '', sortableLength = undefined, sortableAlphabet = undefined, sortableDate = undefined, } = {}) {
+    constructor({ alphabet = constants_1.BASE_58, randomLength = 22, randomAlphabet = undefined, isSortable = false, sortableSeparator = '', sortableLength = undefined, sortableAlphabet = undefined, } = // sortableDate = undefined,
+     {}) {
         // Validation logic
         if (typeof alphabet !== 'string' || alphabet.length < 2) {
             throw new Error('alphabet must be at least two characters.');
@@ -40,11 +40,30 @@ class Rando {
         if (sortableAlphabet && (typeof sortableAlphabet !== 'string' || sortableAlphabet.length < 2)) {
             throw new Error('sortableAlphabet: must be a non-empty string or null.');
         }
-        if (sortableLength && (typeof sortableLength !== 'number' || sortableLength <= 0)) {
-            throw new Error('sortableLength must be greater than zero.');
+        if (sortableLength && (typeof sortableLength !== 'number' || sortableLength < 7)) {
+            throw new Error('sortableLength must be at least 7.');
         }
-        if (sortableDate && !(sortableDate instanceof Date)) {
-            throw new Error('sortableDate must be a Date object.');
+        // Ensure sortableLength is at least the default length for the given base
+        if (sortableLength && sortableLength < constants_1.SORTABLE_DEFAULTS[sortableLength].length) {
+            console.log(sortableLength);
+            throw new Error('sortableLength must be at least the default length for the given base.');
+        }
+        // Ensure all alphabets have unique characters
+        const uniqueAlphabet = new Set(alphabet);
+        if (uniqueAlphabet.size !== alphabet.length) {
+            throw new Error('alphabet must have unique characters.');
+        }
+        if (randomAlphabet) {
+            const uniqueRandomAlphabet = new Set(randomAlphabet);
+            if (uniqueRandomAlphabet.size !== randomAlphabet.length) {
+                throw new Error('randomAlphabet must have unique characters.');
+            }
+        }
+        if (sortableAlphabet) {
+            const uniqueSortableAlphabet = new Set(sortableAlphabet);
+            if (uniqueSortableAlphabet.size !== sortableAlphabet.length) {
+                throw new Error('sortableAlphabet must have unique characters.');
+            }
         }
         // Assign properties
         this.alphabet = alphabet;
@@ -59,21 +78,26 @@ class Rando {
             this.sortableAlphabet = this.sortAlphabet(sortableAlphabet);
         this.sortableBase = this.sortableAlphabet.length;
         this.sortableLength = sortableLength || constants_1.SORTABLE_DEFAULTS[this.sortableBase].length;
-        this.sortableDate = sortableDate || new Date();
+        // this.sortableDate = sortableDate || new Date()
     }
     // Methods
-    generate() {
-        return this.generateSortableString() + this.sortableSeparator + this.generateRandomString();
+    generate({ date = new Date() } = {}) {
+        if (!this.isSortable) {
+            return this.generateRandomSegment();
+        }
+        else {
+            return this.generateSortableSegment({ date }) + this.sortableSeparator + this.generateRandomSegment();
+        }
     }
-    generateRandomString() {
+    generateRandomSegment() {
         const randomArray = Array.from({ length: this.randomLength }, () => {
-            this.randomAlphabet[crypto_1.default.randomInt(this.randomAlphabet.length)];
+            return this.randomAlphabet[crypto_1.default.randomInt(this.randomBase)];
         });
         return randomArray.join('');
     }
-    generateSortableString() {
-        const timestamp = this.sortableDate.getTime();
-        const maxTimestamp = Math.pow(this.sortableBase, this.sortableLength);
+    generateSortableSegment({ date = new Date() } = {}) {
+        const timestamp = date.getTime();
+        // const maxTimestamp = Math.pow(this.sortableBase, this.sortableLength)
         let result = '';
         let remaining = timestamp;
         while (remaining > 0 || result.length < this.sortableLength) {
@@ -86,7 +110,9 @@ class Rando {
     sortAlphabet(alphabet) {
         return alphabet.split('').sort().join('');
     }
-    decodeSortableString(encoded) {
+    decodeSortable(id) {
+        // Use the sortableLength to get the sortable segment of the ID
+        const encoded = id.slice(0, this.sortableLength);
         let decoded = 0;
         for (let i = 0; i < encoded.length; i++) {
             decoded = decoded * this.sortableBase + this.sortableAlphabet.indexOf(encoded[i]);

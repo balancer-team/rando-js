@@ -1,6 +1,6 @@
 # Rando
 
-Rando is a tool for generating identifiers. By default `rando()` generates a cryptographically random, universally unique identifier with 22 characters and 128 bits of entropy. Options can be modified to fit a variety of project requirements.
+Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique identifier with 22 characters and 128 bits of entropy. Options can be modified to fit a variety of requirements.
 
 ### Install
 
@@ -21,7 +21,7 @@ rando.generate() // => "ogm3Yzf4NSKJsDnL8ma8Xn" (128 bits of entropy)
 
 ### Customizing the Length
 
-If you want a longer random string, for example if you wanted more security for an API key, it is easy to modify the length:
+If you want a longer random string, for example if you wanted extra security for an API key, it is easy to modify the length:
 
 ```js
 const randoKey = new Rando({ randomLength: 44 })
@@ -30,7 +30,7 @@ randoKey.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44" (256 bit
 
 ### Sortable Identifiers
 
-Rando has powerful features that enable you to generate lexicographically sortable IDs.
+Rando can generate lexicographically sortable IDs.
 
 ```js
 const randoSortable = new Rando({ isSortable: true, sortableSeparator: '-' })
@@ -38,11 +38,11 @@ randoSortable.generate() //=> "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
 
 // "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
 //  |------| |--------------------|
-//  Sortable         Random
-//  Segment          Segment
+//  Sortable        Random
+//  Segment         Segment
 ```
 
-Sortable IDs can be decoded to return a date object.
+Sortable IDs can easily be decoded to return a date object.
 
 ```js
 randoSortable.decodeSortable('1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp') //=> 2024-09-11T17:51:46.274Z
@@ -50,9 +50,9 @@ randoSortable.decodeSortable('1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp') //=> 2024-09-11T
 
 ### All Options
 
-Rando instances can be extensively customized. Here are all the availble options:
+Rando instances can be extensively customized. Here's the type definition of all available options, with additional details below:
 
-```js
+```ts
 type RandoOptions = {
   alphabet?: string
   randomLength?: number

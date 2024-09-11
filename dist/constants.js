@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SORTABLE_DEFAULTS = exports.ACE = exports.NUMBERS = exports.HEX = exports.BASE_32_CROCKFORD = exports.BASE_32 = exports.BASE_64_URL = exports.BASE_64 = exports.BASE_58 = void 0;
+exports.SORTABLE_DEFAULTS = exports.PASSWORD = exports.ACE = exports.NUMBERS = exports.HEX = exports.BASE_32_CROCKFORD = exports.BASE_32 = exports.BASE_64_URL = exports.BASE_64 = exports.BASE_58 = void 0;
 exports.BASE_58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 exports.BASE_64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 exports.BASE_64_URL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
@@ -9,6 +9,7 @@ exports.BASE_32_CROCKFORD = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 exports.HEX = '0123456789abcdef';
 exports.NUMBERS = '0123456789';
 exports.ACE = 'weruoaszxcvnm';
+exports.PASSWORD = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
 // Maps the base of an alphabet to practical limits, supporting at least the year 3000
 exports.SORTABLE_DEFAULTS = {
     2: { length: 45, timestamp: 35184372088832, year: 3084 },
@@ -74,4 +75,68 @@ exports.SORTABLE_DEFAULTS = {
     62: { length: 8, timestamp: 218340105584896, year: 8888 },
     63: { length: 8, timestamp: 248155780267521, year: 9833 },
     64: { length: 8, timestamp: 281474976710656, year: 10889 },
+    65: { length: 8, timestamp: 318644812890625, year: 12067 },
+    66: { length: 8, timestamp: 360040606269696, year: 13379 },
+    67: { length: 8, timestamp: 406067677556641, year: 14837 },
+    68: { length: 8, timestamp: 457163239653376, year: 16456 },
+    69: { length: 8, timestamp: 513798374428641, year: 18251 },
+    70: { length: 8, timestamp: 576480100000000, year: 20237 },
+    71: { length: 8, timestamp: 645753531245761, year: 22433 },
+    72: { length: 8, timestamp: 722204136308736, year: 24855 },
+    73: { length: 8, timestamp: 806460091894081, year: 27525 },
+    74: { length: 8, timestamp: 899194740203776, year: 30464 },
+    75: { length: 8, timestamp: 1001129150390625, year: 33694 },
+    76: { length: 8, timestamp: 1113034787454976, year: 37240 },
+    77: { length: 8, timestamp: 1235736291547681, year: 41128 },
+    78: { length: 8, timestamp: 1370114370683136, year: 45387 },
+    79: { length: 8, timestamp: 1517108809906561, year: 50045 },
+    80: { length: 8, timestamp: 1677721600000000, year: 55134 },
+    81: { length: 8, timestamp: 1853020188851841, year: 60689 },
+    82: { length: 8, timestamp: 2044140858654976, year: 66746 },
+    83: { length: 8, timestamp: 2252292232139041, year: 73342 },
+    84: { length: 8, timestamp: 2478758911082496, year: 80518 },
+    85: { length: 8, timestamp: 2724905250390625, year: 88318 },
+    86: { length: 7, timestamp: 34792782221696, year: 3072 },
+    87: { length: 7, timestamp: 37725479487783, year: 3165 },
+    88: { length: 7, timestamp: 40867559636992, year: 3265 },
+    89: { length: 7, timestamp: 44231334895529, year: 3371 },
+    90: { length: 7, timestamp: 47829690000000, year: 3485 },
+    91: { length: 7, timestamp: 51676101935731, year: 3607 },
+    92: { length: 7, timestamp: 55784660123648, year: 3737 },
+    93: { length: 7, timestamp: 60170087060757, year: 3876 },
+    94: { length: 7, timestamp: 64847759419264, year: 4024 },
+    95: { length: 7, timestamp: 69833729609375, year: 4182 },
+    96: { length: 7, timestamp: 75144747810816, year: 4351 },
+    97: { length: 7, timestamp: 80798284478113, year: 4530 },
+    98: { length: 7, timestamp: 86812553324672, year: 4720 },
+    99: { length: 7, timestamp: 93206534790699, year: 4923 },
+    100: { length: 7, timestamp: 100000000000000, year: 5138 },
+    101: { length: 7, timestamp: 107213535210701, year: 5367 },
+    102: { length: 7, timestamp: 114868566764928, year: 5610 },
+    103: { length: 7, timestamp: 122987386542487, year: 5867 },
+    104: { length: 7, timestamp: 131593177923584, year: 6140 },
+    105: { length: 7, timestamp: 140710042265625, year: 6428 },
+    106: { length: 7, timestamp: 150363025899136, year: 6734 },
+    107: { length: 7, timestamp: 160578147647843, year: 7058 },
+    108: { length: 7, timestamp: 171382426877952, year: 7400 },
+    109: { length: 7, timestamp: 182803912081669, year: 7762 },
+    110: { length: 7, timestamp: 194871710000000, year: 8145 },
+    111: { length: 7, timestamp: 207616015289871, year: 8549 },
+    112: { length: 7, timestamp: 221068140740608, year: 8975 },
+    113: { length: 7, timestamp: 235260548044817, year: 9425 },
+    114: { length: 7, timestamp: 250226879128704, year: 9899 },
+    115: { length: 7, timestamp: 266001988046875, year: 10399 },
+    116: { length: 7, timestamp: 282621973446656, year: 10925 },
+    117: { length: 7, timestamp: 300124211606973, year: 11480 },
+    118: { length: 7, timestamp: 318547390056832, year: 12064 },
+    119: { length: 7, timestamp: 337931541778439, year: 12678 },
+    120: { length: 7, timestamp: 358318080000000, year: 13324 },
+    121: { length: 7, timestamp: 379749833583241, year: 14003 },
+    122: { length: 7, timestamp: 402271083010688, year: 14717 },
+    123: { length: 7, timestamp: 425927596977747, year: 15467 },
+    124: { length: 7, timestamp: 450766669594624, year: 16254 },
+    125: { length: 7, timestamp: 476837158203125, year: 17080 },
+    126: { length: 7, timestamp: 504189521813376, year: 17947 },
+    127: { length: 7, timestamp: 532875860165503, year: 18856 },
+    128: { length: 7, timestamp: 562949953421312, year: 19809 },
 };
