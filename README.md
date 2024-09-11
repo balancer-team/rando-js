@@ -1,6 +1,6 @@
 # Rando
 
-Rando is a tool for generating identifiers. By default `rando()` generates a cryptographically random, universally unique identifier with 22 characters and 128 bits of entropy. Options can be adjusted to fit a variety of project requirements.
+Rando is a tool for generating identifiers. By default `rando()` generates a cryptographically random, universally unique identifier with 22 characters and 128 bits of entropy. Options can be modified to fit a variety of project requirements.
 
 ### Install
 
@@ -10,128 +10,75 @@ npm i @balancer-team/rando
 
 ### Basic Usage
 
-```js
-import { rando } from '@balancer-team/rando'
-
-const id = rando() // => "ogm3Yzf4NSKJsDnL8ma8Xn"
-```
-
-### Options
-
-The following is an example of the default options object:
+Import the rando class and create an instance. The instance generates IDs with the `generate()` method.
 
 ```js
-// Default options
-const id = rando({
-  length: 22
-  alphabet: BASE_58
-  isSortable: false
-  separator: ''
-  date: new Date()
-  maxDate: null
-})
+import { Rando } from '@balancer-team/rando'
+
+const rando = new Rando()
+rando.generate() // => "ogm3Yzf4NSKJsDnL8ma8Xn" (128 bits of entropy)
 ```
 
-Options properties:
+### Customizing the Length
 
-- `length:` Sets the overall length of the output.
-- `alphabet:` Sets the characters to be used.
-- `isSortable:` If set to `true`, makes the output lexicographically sortable.
-- `separator:` String that separates the sortable and random parts of the identifier.
-- `date:` Set a specific date for the sortable part of the identifier.
-- `maxDate:` Set a maximum date for the sortable part of the identifier.
-
-<!--
-
-
-The `lex()` function generates lexicographically sortable strings. By default, the strings are 8 characters long and can be generated until the year 6028. These settings provide for a reasonable number of leading characters with a base 58 alphabet. If you think you'll want your application to last beyond the year 6028, you can adjust the `year` property to suit your ambitions. The result will be more repeating leading characters to maintain lexicographic sortabilty. -->
+If you want a longer random string, for example if you wanted more security for an API key, it is easy to modify the length:
 
 ```js
-const defaultLexOptions = {
-  date: new Date() // Current date by default
-  alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz' // Base 58
-  maxYear: 6000 // After the year 6000, these options won't work
-}
-
-const id = lex(defaultLexOptions) ///////////// INSERT
+const randoKey = new Rando({ randomLength: 44 })
+randoKey.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44" (256 bits of entropy)
 ```
 
-### Rando
+### Sortable Identifiers
 
-The `rando()` function generates cryptographically random strings. By default, the strings are universally unique with 128 bits of entropy. If you don't want to change the defaults, you don't have to provide an options object, but it is provided below for the sake of illustration.
+Rando has powerful features that enable you to generate lexicographically sortable IDs.
 
 ```js
-const defaultRandoOptions = {
-  length: 22, // 22 characters provides 128 bits of entropy, comparable to a UUID
-  alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz', // Base 58
-}
+const randoSortable = new Rando({ isSortable: true, sortableSeparator: '-' })
+randoSortable.generate() //=> "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
 
-const id = rando(defaultRandoOptions) // => "8fzKWQL1oD9cr6UgZ3gHBu"
+// "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
+//  |------| |--------------------|
+//  Sortable         Random
+//  Segment          Segment
 ```
 
-### Putting it All Together
-
-Of course, `rando()` and `lex()` can be combined to create the perfect identifier. Here's an example that fits the `ulid` spec:
+Sortable IDs can be decoded to return a date object.
 
 ```js
-const lexOptions = {
-  alphabet: '0123456789ABCDEFGHJKMNPQRSTVWXYZ', // Crockford's base32
-  maxYear: 10889, // ulid spec
-}
-
-const randoOptions = {
-  length: 16, // 80 bits of entropy
-  alphabet: '0123456789ABCDEFGHJKMNPQRSTVWXYZ', // Crockford's base32
-}
-
-const id = lex(lexOptions) + rando(randoOptions)
+randoSortable.decodeSortable('1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp') //=> 2024-09-11T17:51:46.274Z
 ```
 
-### More examples
+### All Options
 
-The options object can be modified by providing one or more properties. For example, these options would generate a cryptographically random 6-digit pin.
+Rando instances can be extensively customized. Here are all the availble options:
 
 ```js
-// Generate a 6-digit pin
-const pinOptions = {
-  length: 6, // Common length for a pin
-  alphabet: '0123456789', // Common to use only numbers
+type RandoOptions = {
+  alphabet?: string
+  randomLength?: number
+  randomAlphabet?: string
+  isSortable?: boolean
+  sortableSeparator?: string
+  sortableAlphabet?: string
+  sortableLength?: number
+  sortableDate?: Date
+  sortableMaxDate?: Date
+  sortableTrim?: number
 }
-
-const pin = rando(pinOptions) // => "383620"
-
-// Generate an API key
-const apiKeyOptions = {
-  length: 44, // 256 bits of entropy
-}
-
-const key = 'live_' + rando(apiKeyOptions) // => "live_NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44"
-
-// Generate a short ID
-const shortId = {
-  length: 14, // 82 bits of entropy
-}
-
-const key = rando(shortId) // => "8fzKWQL1oD9cr6"
-
-// Generate a Snowflake-like ID
-const snowflakeLexOptions = {
-  maxYear: 2080,
-  alphabet: '0123456789', // Snowflake uses numbers only
-}
-
-const snowflakeRandoOptions = {
-  length: 10,
-  alphabet: '0123456789', // Snowflake uses numbers onle
-}
-
-const snowflakeLike = lex(snowflakeLexOptions) + rando(snowflakeRandoOptions)
 ```
 
-### Why Base 58 by Default?
+- `alphabet` is a string of characters you want to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy.
 
-There are edge cases where it is helpful to have a human-readable ID. Base 58 excludes the characters "0", "O", "I", and "l", which are hard to tell apart with certain fonts. Base 58 is used in Bitcoin, Solana and other projects for this reason.
+- `randomLength` is the output length of the random segment of the ID. By default, the `randomLength` is `22` which provides 128 bits of entropy with a base 58 alphabet.
 
-Base 58 also excludes special characters "-" and "\_", which can imply a meaningful segmentation of the ID where there is none. Dashes can also get in the way of quickly selecting an ID to copy and paste it.
+- `randomAlphabet` allows you to specify an alphabet for the random segment of the ID.
 
-If you prefer to use a different alphabet, such as base 64, Crockford's 32, or hex, you can easily set the `alphabet` property to whatever your project requires.
+- `isSortable` if set to true, adds a sortable segment in front of the random segment. The sortable segment provides millisecond precision.
+
+- `sortableSeparator` adds a string in between the sortable and random segments of the ID. By default, this is an empty string.
+
+- `sortableAlphabet` allows you to specify an alphabet for the sortable segment of the ID.
+
+- `sortableLength` allows you to specify the length of the sortable segment of the ID. Rando uses practical default lengths that vary depending on the size of the alphabet. The defaults provide support for at least the year 3000 for any alphabet length from `2` to `88`. A longer sortable segment is needed with a 16-character `HEX` alphabet than with a `BASE_64` alphabet to represent the same date. If you increase the length beyond what is necessary, the sortable segment will be left-padded to allow you to represent dates further into the future. If you decrease the length below what is necessary, the instance will return an error.
+
+- `sortableDate` allows you to set a specific date for the sortable segment.

@@ -6,6 +6,7 @@ export const BASE_32_CROCKFORD = '0123456789ABCDEFGHJKMNPQRSTVWXYZ'
 export const HEX = '0123456789abcdef'
 export const NUMBERS = '0123456789'
 export const ACE = 'weruoaszxcvnm'
+export const PASSWORD = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
 
 // Maps the base of an alphabet to practical limits, supporting at least the year 3000
 export const SORTABLE_DEFAULTS: {
@@ -78,4 +79,28 @@ export const SORTABLE_DEFAULTS: {
   62: { length: 8, timestamp: 218340105584896, year: 8888 },
   63: { length: 8, timestamp: 248155780267521, year: 9833 },
   64: { length: 8, timestamp: 281474976710656, year: 10889 },
+  65: { length: 8, timestamp: 318644812890625, year: 12067 },
+  66: { length: 8, timestamp: 360040606269696, year: 13379 },
+  67: { length: 8, timestamp: 406067677556641, year: 14837 },
+  68: { length: 8, timestamp: 457163239653376, year: 16456 },
+  69: { length: 8, timestamp: 513798374428641, year: 18251 },
+  70: { length: 8, timestamp: 576480100000000, year: 20237 },
+  71: { length: 8, timestamp: 645753531245761, year: 22433 },
+  72: { length: 8, timestamp: 722204136308736, year: 24855 },
+  73: { length: 8, timestamp: 806460091894081, year: 27525 },
+  74: { length: 8, timestamp: 899194740203776, year: 30464 },
+  75: { length: 8, timestamp: 1001129150390625, year: 33694 },
+  76: { length: 8, timestamp: 1113034787454976, year: 37240 },
+  77: { length: 8, timestamp: 1235736291547681, year: 41128 },
+  78: { length: 8, timestamp: 1370114370683136, year: 45387 },
+  79: { length: 8, timestamp: 1517108809906561, year: 50045 },
+  80: { length: 8, timestamp: 1677721600000000, year: 55134 },
+  81: { length: 8, timestamp: 1853020188851841, year: 60689 },
+  82: { length: 8, timestamp: 2044140858654976, year: 66746 },
+  83: { length: 8, timestamp: 2252292232139041, year: 73342 },
+  84: { length: 8, timestamp: 2478758911082496, year: 80518 },
+  85: { length: 8, timestamp: 2724905250390625, year: 88318 },
+  86: { length: 7, timestamp: 34792782221696, year: 3072 },
+  87: { length: 7, timestamp: 37725479487783, year: 3165 },
+  88: { length: 7, timestamp: 40867559636992, year: 3265 },
 }

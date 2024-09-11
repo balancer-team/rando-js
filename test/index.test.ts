@@ -2,7 +2,8 @@ import test from 'node:test'
 import assert from 'node:assert'
 // import { rando, lex } from '../src'
 // import { decodeLex } from '../src/utils'
-// import { getPracticalSortableLengths } from '../src/temp'
+import { generateSortableDefaults } from '../src/analytics'
+import { Rando } from '../src'
 
 // test('Rando default length', () => {
 //   assert.strictEqual(rando().length, 22)
@@ -47,6 +48,9 @@ import assert from 'node:assert'
 //   assert.strictEqual(id.length, 26)
 // })
 
-// test('Test', () => {
-//   console.log(getPracticalSortableLengths())
-// })
+test('Test', () => {
+  // console.log(generateSortableDefaults())
+  const rando = new Rando({ isSortable: true, sortableSeparator: '-' })
+  console.log(rando.generate())
+  console.log(rando.decodeSortable('1nLnXM5B'))
+})
