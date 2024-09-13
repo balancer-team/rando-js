@@ -1,8 +1,7 @@
 type RandoOptions = {
     alphabet?: string;
-    randomLength?: number;
-    randomAlphabet?: string;
-    isSortable?: boolean;
+    length?: number;
+    sortable?: 'prefix' | 'suffix';
     sortableSeparator?: string;
     sortableAlphabet?: string;
     sortableLength?: number;
@@ -12,19 +11,32 @@ type GenerateOptions = {
 };
 export declare class Rando {
     readonly alphabet: string;
-    readonly randomLength: number;
-    readonly randomAlphabet: string;
-    readonly randomBase: number;
-    readonly isSortable: boolean;
+    readonly length: number;
+    readonly base: number;
+    readonly sortable?: string;
     readonly sortableSeparator: string;
     readonly sortableLength: number;
     readonly sortableAlphabet: string;
     readonly sortableBase: number;
-    constructor({ alphabet, randomLength, randomAlphabet, isSortable, sortableSeparator, sortableLength, sortableAlphabet, }?: RandoOptions);
+    readonly maxDate: Date;
+    readonly bitsOfEntropy: number;
+    constructor({ alphabet, length, sortable, sortableSeparator, sortableLength, sortableAlphabet, }?: RandoOptions);
     generate({ date }?: GenerateOptions): string;
     generateRandomSegment(): string;
     generateSortableSegment({ date }?: GenerateOptions): string;
     sortAlphabet(alphabet: string): string;
-    decodeSortable(id: string): Date;
+    getDate(id: string): Date;
+    getInfo(): {
+        alphabet: string;
+        length: number;
+        base: number;
+        sortable: string | undefined;
+        sortableSeparator: string;
+        sortableLength: number;
+        sortableAlphabet: string;
+        sortableBase: number;
+        maxDate: Date;
+        bitsOfEntropy: number;
+    };
 }
 export {};

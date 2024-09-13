@@ -3,13 +3,11 @@ import { BASE_58, SORTABLE_DEFAULTS } from './constants'
 
 type RandoOptions = {
   alphabet?: string
-  randomLength?: number
-  randomAlphabet?: string
-  isSortable?: boolean
+  length?: number
+  sortable?: 'prefix' | 'suffix'
   sortableSeparator?: string
   sortableAlphabet?: string
   sortableLength?: number
-  // sortableDate?: Date
 }
 
 type GenerateOptions = {
@@ -19,39 +17,34 @@ type GenerateOptions = {
 export class Rando {
   // Properties
   readonly alphabet: string
-  readonly randomLength: number
-  readonly randomAlphabet: string
-  readonly randomBase: number
-  readonly isSortable: boolean
+  readonly length: number
+  readonly base: number
+  readonly sortable?: string
   readonly sortableSeparator: string
   readonly sortableLength: number
   readonly sortableAlphabet: string
   readonly sortableBase: number
-  // readonly sortableDate: Date
+  readonly maxDate: Date
+  readonly bitsOfEntropy: number
 
   // Constructor
   constructor({
     alphabet = BASE_58,
-    randomLength = 22,
-    randomAlphabet = undefined,
-    isSortable = false,
+    length = 22,
+    sortable = undefined,
     sortableSeparator = '',
     sortableLength = undefined,
     sortableAlphabet = undefined,
-  }: // sortableDate = undefined,
-  RandoOptions = {}) {
+  }: RandoOptions = {}) {
     // Validation logic
     if (typeof alphabet !== 'string' || alphabet.length < 2) {
       throw new Error('alphabet must be at least two characters.')
     }
-    if (typeof randomLength !== 'number' || randomLength <= 0) {
+    if (typeof length !== 'number' || length <= 0) {
       throw new Error('randomLength must be greater than zero.')
     }
-    if (randomAlphabet && (typeof randomAlphabet !== 'string' || randomAlphabet.length < 2)) {
-      throw new Error('randomAlphabet must at least two characters.')
-    }
-    if (typeof isSortable !== 'boolean') {
-      throw new Error('isSortable must be a boolean.')
+    if (sortable && sortable !== 'prefix' && sortable !== 'suffix') {
+      throw new Error('sortable must be either "prefix" or "suffix".')
     }
     if (typeof sortableSeparator !== 'string') {
       throw new Error('sortableSeparator must be a string.')
@@ -65,7 +58,6 @@ export class Rando {
 
     // Ensure sortableLength is at least the default length for the given base
     if (sortableLength && sortableLength < SORTABLE_DEFAULTS[sortableLength].length) {
-      console.log(sortableLength)
       throw new Error('sortableLength must be at least the default length for the given base.')
     }
 
@@ -73,13 +65,6 @@ export class Rando {
     const uniqueAlphabet = new Set(alphabet)
     if (uniqueAlphabet.size !== alphabet.length) {
       throw new Error('alphabet must have unique characters.')
-    }
-
-    if (randomAlphabet) {
-      const uniqueRandomAlphabet = new Set(randomAlphabet)
-      if (uniqueRandomAlphabet.size !== randomAlphabet.length) {
-        throw new Error('randomAlphabet must have unique characters.')
-      }
     }
 
     if (sortableAlphabet) {
@@ -91,37 +76,36 @@ export class Rando {
 
     // Assign properties
     this.alphabet = alphabet
-    this.randomLength = randomLength
-    this.randomAlphabet = randomAlphabet || alphabet
-    this.randomBase = this.randomAlphabet.length
-    this.isSortable = isSortable
+    this.length = length
+    this.base = this.alphabet.length
+    this.sortable = sortable
     this.sortableSeparator = sortableSeparator
     if (!sortableAlphabet) this.sortableAlphabet = this.sortAlphabet(alphabet)
     else this.sortableAlphabet = this.sortAlphabet(sortableAlphabet)
     this.sortableBase = this.sortableAlphabet.length
     this.sortableLength = sortableLength || SORTABLE_DEFAULTS[this.sortableBase].length
-    // this.sortableDate = sortableDate || new Date()
+    this.maxDate = new Date(Math.pow(this.sortableBase, this.sortableLength))
+    this.bitsOfEntropy = Math.floor(Math.log2(this.base) * this.length * 100) / 100
   }
 
   // Methods
   generate({ date = new Date() }: GenerateOptions = {}): string {
-    if (!this.isSortable) {
-      return this.generateRandomSegment()
-    } else {
+    if (this.sortable === 'prefix') {
       return this.generateSortableSegment({ date }) + this.sortableSeparator + this.generateRandomSegment()
+    } else if (this.sortable === 'suffix') {
+      return this.generateRandomSegment() + this.sortableSeparator + this.generateSortableSegment({ date })
+    } else {
+      return this.generateRandomSegment()
     }
   }
 
   generateRandomSegment() {
-    const randomArray = Array.from({ length: this.randomLength }, () => {
-      return this.randomAlphabet[crypto.randomInt(this.randomBase)]
-    })
-    return randomArray.join('')
+    const arr = Array.from({ length: this.length }, () => this.alphabet[crypto.randomInt(this.base)])
+    return arr.join('')
   }
 
   generateSortableSegment({ date = new Date() }: GenerateOptions = {}): string {
     const timestamp = date.getTime()
-    // const maxTimestamp = Math.pow(this.sortableBase, this.sortableLength)
 
     let result = ''
     let remaining = timestamp
@@ -139,14 +123,36 @@ export class Rando {
     return alphabet.split('').sort().join('')
   }
 
-  decodeSortable(id: string): Date {
+  getDate(id: string): Date {
     // Use the sortableLength to get the sortable segment of the ID
-    const encoded = id.slice(0, this.sortableLength)
+    let encoded = ''
+    if (this.sortable === 'prefix') {
+      encoded = id.slice(0, this.sortableLength)
+    } else if (this.sortable === 'suffix') {
+      encoded = id.slice(-this.sortableLength)
+    } else {
+      throw new Error('getDate is only available for sortable IDs.')
+    }
 
     let decoded = 0
     for (let i = 0; i < encoded.length; i++) {
       decoded = decoded * this.sortableBase + this.sortableAlphabet.indexOf(encoded[i])
     }
     return new Date(decoded)
+  }
+
+  getInfo() {
+    return {
+      alphabet: this.alphabet,
+      length: this.length,
+      base: this.base,
+      sortable: this.sortable,
+      sortableSeparator: this.sortableSeparator,
+      sortableLength: this.sortableLength,
+      sortableAlphabet: this.sortableAlphabet,
+      sortableBase: this.sortableBase,
+      maxDate: this.maxDate,
+      bitsOfEntropy: this.bitsOfEntropy,
+    }
   }
 }
