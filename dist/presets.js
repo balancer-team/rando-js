@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.key = exports.particle = exports.sortable = exports.password = exports.pin = exports.ulid = void 0;
+exports.machine = exports.key = exports.particle = exports.sortable = exports.password = exports.pin = exports.ulid = void 0;
 const _1 = require("./");
 const constants_1 = require("./constants");
 // ulid
@@ -39,4 +39,8 @@ exports.particle = new _1.Rando({
 exports.key = new _1.Rando({
     alphabet: constants_1.BASE_58,
     randomLength: 44,
+});
+exports.machine = new _1.Rando({
+    includeTimestamp: true,
+    separator: '-1-',
 });

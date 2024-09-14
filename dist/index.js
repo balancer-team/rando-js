@@ -16,15 +16,15 @@ class Rando {
     includeTimestamp;
     obfuscateTimestamp;
     timestampPosition;
-    timestampSeparator;
     timestampAlphabet;
     timestampLength;
     timestampBase;
     timestampMax;
-    lastTimestamp;
+    separator;
+    lastTimestampSegment;
     lastRandomSegments;
     // Constructor
-    constructor({ alphabet = constants_1.BASE_58, randomLength = 22, randomAlphabet = undefined, includeTimestamp = false, obfuscateTimestamp = false, timestampPosition = 'start', timestampSeparator = '', timestampAlphabet = undefined, timestampLength = undefined, } = {}) {
+    constructor({ alphabet = constants_1.BASE_58, randomLength = 22, randomAlphabet = undefined, includeTimestamp = false, obfuscateTimestamp = false, timestampPosition = 'start', timestampAlphabet = undefined, timestampLength = undefined, separator = '', } = {}) {
         // Validation logic
         if (typeof alphabet !== 'string' || alphabet.length < 2) {
             throw new Error('alphabet must be at least two characters.');
@@ -60,18 +60,12 @@ class Rando {
         if (typeof obfuscateTimestamp !== 'boolean') {
             throw new Error('obfuscateTimestamp must be a boolean.');
         }
-        if (typeof timestampSeparator !== 'string') {
-            throw new Error('timestampSeparator must be a string.');
+        if (typeof separator !== 'string') {
+            throw new Error('separator must be a string.');
         }
         if (timestampLength && (typeof timestampLength !== 'number' || timestampLength <= 0)) {
             throw new Error('timestampLength must be greater than zero.');
         }
-        // // Calculate interdependent properties for the timestamp
-        // const timestampAlphabet = this.sortAlphabet(timestamp.alphabet ?? alphabet)
-        // const timestampBase = timestampAlphabet.length
-        // const timestampDefaultLength = TIMESTAMP_DEFAULTS[timestampBase].length
-        // const timestampLength = timestamp.length ?? timestampDefaultLength
-        // const timestampMax = new Date(Math.pow(timestampBase, timestampLength))
         // Assign properties
         this.alphabet = alphabet;
         this.randomAlphabet = randomAlphabet ?? alphabet;
@@ -81,10 +75,10 @@ class Rando {
         this.includeTimestamp = includeTimestamp;
         this.obfuscateTimestamp = obfuscateTimestamp;
         this.timestampPosition = timestampPosition;
-        this.timestampSeparator = timestampSeparator;
         this.timestampAlphabet = timestampAlphabet ?? alphabet;
         this.timestampBase = this.timestampAlphabet.length;
-        this.lastTimestamp = 0;
+        this.separator = separator;
+        this.lastTimestampSegment = '';
         this.lastRandomSegments = [];
         // Ensure timestamp.length is at least the default length for the given base
         const timestampDefaultLength = constants_1.TIMESTAMP_DEFAULTS[this.timestampBase].length;
@@ -94,29 +88,34 @@ class Rando {
         this.timestampLength = timestampLength ?? timestampDefaultLength;
         this.timestampMax = new Date(Math.pow(this.timestampBase, this.timestampLength));
     }
+    // Utility to check if the last date and random segments generated are the same
+    isDuplicate({ timestampSegment, randomSegment }) {
+        return this.lastTimestampSegment === timestampSegment && this.lastRandomSegments.includes(randomSegment);
+    }
+    // Utility to store the last date and random segments generated in a specific millisecond
+    setLastData({ timestampSegment, randomSegment }) {
+        if (this.lastTimestampSegment === timestampSegment) {
+            this.lastRandomSegments.push(randomSegment);
+        }
+        else {
+            this.lastTimestampSegment = timestampSegment;
+            this.lastRandomSegments = [randomSegment];
+        }
+    }
     // Methods
     generate({ date = new Date() } = {}) {
         const randomSegment = this.generateRandomSegment();
         if (!this.includeTimestamp)
             return randomSegment;
-        // OPTION 2: Try different random segments
-        // If the same millisecond, check if the random segment is the list of last random segments
-        // If so, generate a new random segment
-        if (date.getTime() === this.lastTimestamp) {
-            if (this.lastRandomSegments.includes(randomSegment)) {
-                return this.generate({ date });
-            }
-            this.lastRandomSegments.push(randomSegment);
-        }
-        else {
-            this.lastRandomSegments = [randomSegment];
-        }
         const timestampSegment = this.generateTimestampSegment({ date, randomSegment });
+        if (this.isDuplicate({ timestampSegment, randomSegment }))
+            return this.generate();
+        this.setLastData({ timestampSegment, randomSegment });
         if (this.timestampPosition === 'start') {
-            return timestampSegment + this.timestampSeparator + randomSegment;
+            return timestampSegment + this.separator + randomSegment;
         }
         else {
-            return randomSegment + this.timestampSeparator + timestampSegment;
+            return randomSegment + this.separator + timestampSegment;
         }
     }
     generateRandomSegment() {
@@ -151,15 +150,6 @@ class Rando {
         if (!this.includeTimestamp)
             throw new Error('generateTimestampSegment requires including a timestamp.');
         let timestamp = date.getTime();
-        // OPTION 1: Roll timestamp forward by 1 millisecond if it's the same as the
-        // Safeguard against duplicate timestampSegment and randomSegment collisions
-        // Note that this is not useful if multiple machines are generating IDs
-        // This also immaterially can create timestamps in the 'future'
-        // if (timestamp <= this.lastTimestamp) {
-        //   timestamp = this.lastTimestamp + 1
-        //   console.log('Rolling timestamp forward by 1 millisecond.')
-        // }
-        // this.lastTimestamp = timestamp
         let timestampSegment = '';
         let remaining = timestamp;
         while (remaining > 0 || timestampSegment.length < this.timestampLength) {
@@ -178,10 +168,10 @@ class Rando {
         // Use the sortableLength to get the sortable segment of the ID
         let randomSegment = '';
         if (this.timestampPosition === 'start') {
-            randomSegment = id.slice(this.timestampLength + this.timestampSeparator.length);
+            randomSegment = id.slice(this.timestampLength + this.separator.length);
         }
         else {
-            randomSegment = id.slice(0, -this.timestampLength - this.timestampSeparator.length);
+            randomSegment = id.slice(0, -this.timestampLength - this.separator.length);
         }
         return randomSegment;
     }
@@ -237,12 +227,12 @@ class Rando {
             includeTimestamp: this.includeTimestamp,
             obfuscateTimestamp: this.obfuscateTimestamp,
             timestampPosition: this.timestampPosition,
-            timestampSeparator: this.timestampSeparator,
             timestampAlphabet: this.timestampAlphabet,
             timestampLength: this.timestampLength,
             timestampBase: this.timestampBase,
             timestampMax: this.timestampMax,
-            overallLength: this.randomLength + this.timestampLength + this.timestampSeparator.length,
+            separator: this.separator,
+            overallLength: this.timestampLength + this.separator.length + this.randomLength,
         };
     }
 }

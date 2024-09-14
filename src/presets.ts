@@ -43,3 +43,8 @@ export const key = new Rando({
   alphabet: BASE_58,
   randomLength: 44,
 })
+
+export const machine = new Rando({
+  includeTimestamp: true,
+  separator: '-1-',
+})

@@ -5,9 +5,9 @@ type RandoOptions = {
     includeTimestamp?: boolean;
     obfuscateTimestamp?: boolean;
     timestampPosition?: 'start' | 'end';
-    timestampSeparator?: string;
     timestampAlphabet?: string;
     timestampLength?: number;
+    separator?: string;
 };
 type GenerateOptions = {
     date?: Date;
@@ -25,14 +25,22 @@ export declare class Rando {
     readonly includeTimestamp?: boolean;
     readonly obfuscateTimestamp: boolean;
     readonly timestampPosition: 'start' | 'end';
-    readonly timestampSeparator: string;
     readonly timestampAlphabet: string;
     readonly timestampLength: number;
     readonly timestampBase: number;
     readonly timestampMax: Date;
-    private lastTimestamp;
+    readonly separator: string;
+    private lastTimestampSegment;
     private lastRandomSegments;
-    constructor({ alphabet, randomLength, randomAlphabet, includeTimestamp, obfuscateTimestamp, timestampPosition, timestampSeparator, timestampAlphabet, timestampLength, }?: RandoOptions);
+    constructor({ alphabet, randomLength, randomAlphabet, includeTimestamp, obfuscateTimestamp, timestampPosition, timestampAlphabet, timestampLength, separator, }?: RandoOptions);
+    isDuplicate({ timestampSegment, randomSegment }: {
+        randomSegment: string;
+        timestampSegment: string;
+    }): boolean;
+    setLastData({ timestampSegment, randomSegment }: {
+        timestampSegment: string;
+        randomSegment: string;
+    }): void;
     generate({ date }?: GenerateOptions): string;
     generateRandomSegment(): string;
     obfuscateTimestampSegment({ randomSegment, timestampSegment, }: {
@@ -58,11 +66,11 @@ export declare class Rando {
         includeTimestamp: boolean | undefined;
         obfuscateTimestamp: boolean;
         timestampPosition: "start" | "end";
-        timestampSeparator: string;
         timestampAlphabet: string;
         timestampLength: number;
         timestampBase: number;
         timestampMax: Date;
+        separator: string;
         overallLength: number;
     };
 }

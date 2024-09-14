@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { NUMBERS, BASE_32_CROCKFORD } from '../src/constants'
-import { ulid, pin, password, sortable, particle } from '../src/presets'
+import { ulid, pin, password, sortable, particle, machine } from '../src/presets'
 
 // test('test', () => {
 //   const rando = new Rando({ timestamp: { position: 'start', separator: '-', obfuscate: true } })
@@ -68,8 +68,8 @@ test('Date matches after encode and decode with obfuscated timestamp', () => {
     includeTimestamp: true,
     timestampPosition: 'end',
     obfuscateTimestamp: true,
-    timestampSeparator: '-',
     timestampAlphabet: BASE_32_CROCKFORD,
+    separator: '-',
   })
   const id = rando.generate({ date })
   assert.strictEqual(date.getTime(), rando.getDate(id).getTime())
@@ -81,9 +81,9 @@ test('Date matches after encode and decode with all options', () => {
     includeTimestamp: true,
     timestampPosition: 'start',
     obfuscateTimestamp: true,
-    timestampSeparator: '-',
     timestampAlphabet: NUMBERS,
     timestampLength: 16,
+    separator: '-',
   })
   assert.strictEqual(date.getTime(), rando.getDate(rando.generate({ date })).getTime())
 })
@@ -131,10 +131,10 @@ test('Particle performance', () => {
   // const start = Date.now()
   let i = 0
   while (i < 20) {
-    console.log(particle.generate())
+    console.log(machine.generate())
     i++
   }
-  console.log(particle.getInfo())
+  console.log(machine.getInfo())
 })
 
-// DXq2aMvm2mHA
+// // DXq2aMvm2mHA
