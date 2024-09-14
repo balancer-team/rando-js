@@ -299,7 +299,7 @@ export class Rando {
       timestampBase: this.timestampBase,
       timestampMax: this.timestampMax,
       separator: this.separator,
-      overallLength: this.timestampLength + this.separator.length + this.randomLength,
+      totalLength: this.timestampLength + this.separator.length + this.randomLength,
     }
   }
 }

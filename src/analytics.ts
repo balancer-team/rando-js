@@ -1,5 +1,5 @@
 export function generateTimestampDefaults() {
-  const targetTimestamp = new Date('3000-01-01').getTime()
+  const targetTimestamp = new Date('2200-01-01').getTime()
 
   for (let base = 2; base <= 128; base++) {
     // Find the length of a string represntation of a timestamp, given the base

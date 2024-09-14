@@ -2,7 +2,8 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { NUMBERS, BASE_32_CROCKFORD } from '../src/constants'
-import { ulid, pin, password, sortable, particle, machine } from '../src/presets'
+import { ulid, pin, password, sortable, particle, machine, snowflake } from '../src/presets'
+import { generateTimestampDefaults } from '../src/analytics'
 
 // test('test', () => {
 //   const rando = new Rando({ timestamp: { position: 'start', separator: '-', obfuscate: true } })
@@ -128,13 +129,24 @@ test('Particle performance', () => {
   //   includeTimestamp: true,
   //   timestampSeparator: '-',
   // })
-  // const start = Date.now()
+  const start = Date.now()
   let i = 0
-  while (i < 20) {
-    console.log(machine.generate())
+  while (i < 100) {
+    console.log(particle.generate())
     i++
   }
-  console.log(machine.getInfo())
+  // console.log(particle.getInfo())
+  const end = Date.now()
+  console.log('ms for 100: ' + (end - start))
 })
 
-// // DXq2aMvm2mHA
+// test('Example case', () => {
+//   const rando = new Rando({
+//     includeTimestamp: true,
+
+//     separator: '-',
+//   })
+//   const id = rando.generate()
+//   console.log(id)
+//   assert.strictEqual(id.length, 31)
+// })

@@ -33,7 +33,7 @@ rando.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44"
 Rando can generate lexicographically sortable IDs.
 
 ```js
-const rando = new Rando({ sortable: 'prefix', sortableSeparator: '-' })
+const rando = new Rando({ includeTimestamp: true, separator: '-' })
 rando.generate() //=> "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
 
 // "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
