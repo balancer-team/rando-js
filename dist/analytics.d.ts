@@ -1,1 +1,1 @@
-export declare function generateSortableDefaults(): string;
+export declare function generateTimestampDefaults(): string;

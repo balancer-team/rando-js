@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateSortableDefaults = generateSortableDefaults;
-function generateSortableDefaults() {
+exports.generateTimestampDefaults = generateTimestampDefaults;
+function generateTimestampDefaults() {
     const targetTimestamp = new Date('3000-01-01').getTime();
     for (let base = 2; base <= 128; base++) {
         // Find the length of a string represntation of a timestamp, given the base

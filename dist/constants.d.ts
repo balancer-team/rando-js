@@ -7,7 +7,7 @@ export declare const HEX = "0123456789abcdef";
 export declare const NUMBERS = "0123456789";
 export declare const ACE = "weruoaszxcvnm";
 export declare const PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
-export declare const SORTABLE_DEFAULTS: {
+export declare const TIMESTAMP_DEFAULTS: {
     [key: number]: {
         length: number;
         timestamp: number;

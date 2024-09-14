@@ -1,4 +1,4 @@
-export function generateSortableDefaults() {
+export function generateTimestampDefaults() {
   const targetTimestamp = new Date('3000-01-01').getTime()
 
   for (let base = 2; base <= 128; base++) {

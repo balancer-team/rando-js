@@ -1,21 +1,42 @@
 "use strict";
-// import { lex, rando } from './index'
-// import { BASE_32_CROCKFORD, NUMBERS } from './constants'
 Object.defineProperty(exports, "__esModule", { value: true });
-// export function ulid() {
-//   const lexOptions = { maxYear: 10889, alphabet: BASE_32_CROCKFORD }
-//   const randoOptions = { length: 16, alphabet: BASE_32_CROCKFORD }
-//   return lex(lexOptions) + rando(randoOptions) // ulid spec: 48 bit timestamp, 80 bit random string
-// }
-// export function flake() {
-//   // Generate a Snowflake-like ID
-//   // Not exactly snowflake spec
-//   const lexOptions = { maxYear: 2287, alphabet: NUMBERS }
-//   const randoOptions = { length: 5, alphabet: NUMBERS }
-//   return lex(lexOptions) + rando(randoOptions)
-// }
-// export function fav() {
-//   const lexOptions = { date: new Date('6000-01-01') }
-//   const randoOptions = { length: 8 }
-//   return lex(lexOptions) + rando(randoOptions)
-// }
+exports.key = exports.particle = exports.sortable = exports.password = exports.pin = exports.ulid = void 0;
+const _1 = require("./");
+const constants_1 = require("./constants");
+// ulid
+exports.ulid = new _1.Rando({
+    alphabet: constants_1.BASE_32_CROCKFORD,
+    randomLength: 16,
+    includeTimestamp: true,
+    timestampPosition: 'start',
+    timestampLength: 10,
+});
+// Pin
+exports.pin = new _1.Rando({
+    alphabet: constants_1.NUMBERS,
+    randomLength: 6,
+});
+// Password
+exports.password = new _1.Rando({
+    alphabet: constants_1.PASSWORD,
+    randomLength: 16,
+});
+// Sortable (near UUIDv7 spec but with base 58)
+exports.sortable = new _1.Rando({
+    alphabet: constants_1.BASE_58,
+    randomLength: 12,
+    includeTimestamp: true,
+    timestampPosition: 'start',
+});
+// Particle (short with hidden timestamp, not for high-frequency use)
+exports.particle = new _1.Rando({
+    alphabet: constants_1.BASE_58,
+    randomLength: 4,
+    includeTimestamp: true,
+    obfuscateTimestamp: true,
+    timestampPosition: 'end',
+});
+exports.key = new _1.Rando({
+    alphabet: constants_1.BASE_58,
+    randomLength: 44,
+});

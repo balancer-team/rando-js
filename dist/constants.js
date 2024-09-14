@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SORTABLE_DEFAULTS = exports.PASSWORD = exports.ACE = exports.NUMBERS = exports.HEX = exports.BASE_32_CROCKFORD = exports.BASE_32 = exports.BASE_64_URL = exports.BASE_64 = exports.BASE_58 = void 0;
+exports.TIMESTAMP_DEFAULTS = exports.PASSWORD = exports.ACE = exports.NUMBERS = exports.HEX = exports.BASE_32_CROCKFORD = exports.BASE_32 = exports.BASE_64_URL = exports.BASE_64 = exports.BASE_58 = void 0;
 exports.BASE_58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 exports.BASE_64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 exports.BASE_64_URL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
@@ -11,7 +11,7 @@ exports.NUMBERS = '0123456789';
 exports.ACE = 'weruoaszxcvnm';
 exports.PASSWORD = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
 // Maps the base of an alphabet to practical limits, supporting at least the year 3000
-exports.SORTABLE_DEFAULTS = {
+exports.TIMESTAMP_DEFAULTS = {
     2: { length: 45, timestamp: 35184372088832, year: 3084 },
     3: { length: 29, timestamp: 68630377364883, year: 4144 },
     4: { length: 23, timestamp: 70368744177664, year: 4199 },

@@ -9,7 +9,7 @@ export const ACE = 'weruoaszxcvnm'
 export const PASSWORD = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
 
 // Maps the base of an alphabet to practical limits, supporting at least the year 3000
-export const SORTABLE_DEFAULTS: {
+export const TIMESTAMP_DEFAULTS: {
   [key: number]: {
     length: number
     timestamp: number

@@ -1,22 +1,45 @@
-// import { lex, rando } from './index'
-// import { BASE_32_CROCKFORD, NUMBERS } from './constants'
+import { Rando } from './'
+import { BASE_58, BASE_32_CROCKFORD, NUMBERS, PASSWORD } from './constants'
 
-// export function ulid() {
-//   const lexOptions = { maxYear: 10889, alphabet: BASE_32_CROCKFORD }
-//   const randoOptions = { length: 16, alphabet: BASE_32_CROCKFORD }
-//   return lex(lexOptions) + rando(randoOptions) // ulid spec: 48 bit timestamp, 80 bit random string
-// }
+// ulid
+export const ulid = new Rando({
+  alphabet: BASE_32_CROCKFORD,
+  randomLength: 16,
+  includeTimestamp: true,
+  timestampPosition: 'start',
+  timestampLength: 10,
+})
 
-// export function flake() {
-//   // Generate a Snowflake-like ID
-//   // Not exactly snowflake spec
-//   const lexOptions = { maxYear: 2287, alphabet: NUMBERS }
-//   const randoOptions = { length: 5, alphabet: NUMBERS }
-//   return lex(lexOptions) + rando(randoOptions)
-// }
+// Pin
+export const pin = new Rando({
+  alphabet: NUMBERS,
+  randomLength: 6,
+})
 
-// export function fav() {
-//   const lexOptions = { date: new Date('6000-01-01') }
-//   const randoOptions = { length: 8 }
-//   return lex(lexOptions) + rando(randoOptions)
-// }
+// Password
+export const password = new Rando({
+  alphabet: PASSWORD,
+  randomLength: 16,
+})
+
+// Sortable (near UUIDv7 spec but with base 58)
+export const sortable = new Rando({
+  alphabet: BASE_58,
+  randomLength: 12,
+  includeTimestamp: true,
+  timestampPosition: 'start',
+})
+
+// Particle (short with hidden timestamp, not for high-frequency use)
+export const particle = new Rando({
+  alphabet: BASE_58,
+  randomLength: 4,
+  includeTimestamp: true,
+  obfuscateTimestamp: true,
+  timestampPosition: 'end',
+})
+
+export const key = new Rando({
+  alphabet: BASE_58,
+  randomLength: 44,
+})
