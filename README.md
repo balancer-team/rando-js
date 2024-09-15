@@ -96,7 +96,7 @@ type RandoOptions = {
 | `separator`          | `''`      | Adds a string in between the timestamp and random segments of the ID.                                                                                          |
 | `suffix`             | `''`      | Adds a string to the end of the ID.                                                                                                                            |
 
-### Options Special Considerations
+### Special Considerations
 
 The `randomLength` and alphabet length together determine how many bits of entropy your ID will have. Using a tool such as a collision calculator, you can adjust these properties as needed to achieve your desired level of entropy.
 
