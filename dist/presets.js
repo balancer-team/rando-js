@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sortable = exports.pinto = exports.novella = exports.particle = exports.rando = void 0;
+exports.sortable = exports.pinto = exports.locker = exports.particle = exports.rando = void 0;
 const _1 = require("./");
 const constants_1 = require("./constants");
 // Rando
@@ -12,7 +12,7 @@ exports.particle = new _1.Rando({
     obfuscateTimestamp: true,
 });
 // Creates a secure key with 256 bits of entropy
-exports.novella = new _1.Rando({
+exports.locker = new _1.Rando({
     randomLength: 44,
 });
 // Pin

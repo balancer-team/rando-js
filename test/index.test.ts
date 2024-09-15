@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { NUMBERS, BASE_32_CROCKFORD } from '../src/constants'
-import { rando, particle, novella, pinto, sortable } from '../src/presets'
+import { rando, particle, locker, pinto, sortable } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -119,8 +119,8 @@ test('Particle preset', () => {
   assert.strictEqual(particle.generate().length, 10)
 })
 
-test('Novella preset', () => {
-  assert.strictEqual(novella.generate().length, 44)
+test('Locker preset', () => {
+  assert.strictEqual(locker.generate().length, 44)
 })
 
 test('Pinto preset', () => {

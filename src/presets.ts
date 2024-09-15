@@ -12,7 +12,7 @@ export const particle = new Rando({
 })
 
 // Creates a secure key with 256 bits of entropy
-export const novella = new Rando({
+export const locker = new Rando({
   randomLength: 44,
 })
 
