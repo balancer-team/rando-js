@@ -1,6 +1,6 @@
 # Rando
 
-Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique identifier with 22 characters and 128 bits of entropy. Options can be modified to fit a wide variety of ID requirements.
+Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique identifier with 22 characters and 128 bits of entropy. Options can be modified to fit a wide variety of requirements.
 
 ### Install
 
@@ -89,7 +89,7 @@ type RandoOptions = {
 | `randomLength`       | `22`      | The output length of the random segment of the ID. By default, the `length` is `22` which provides 128 bits of entropy with a base 58 alphabet.                |
 | `includeTimestamp`   | `false`   | Adds a timestamp segment to the beginning or end of the id. By default, the timestamp segment is sortable and uses millisecond precision.                      |
 | `obfuscateTimestamp` | `false`   | Obfuscates the timestamp by adding an offset to the characters in the timestamp segment.                                                                       |
-| `timestampPosition`  | `start`   | Can be set to `start` or `end` which moves the timestamp segment to the beginning or end of the id, respectively.                                              |
+| `timestampPosition`  | `'start'` | Can be set to `start` or `end` which moves the timestamp segment to the beginning or end of the id, respectively.                                              |
 | `timestampAlphabet`  | `BASE_58` | Allows you to specify a different alphabet for the timestamp segment of the ID.                                                                                |
 | `timestampLength`    | `8`       | Allows you to specify the length of the timestamp segment of the ID (see below for additional details).                                                        |
 | `prefix`             | `''`      | Adds a string to the beginning of the ID.                                                                                                                      |
