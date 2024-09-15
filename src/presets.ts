@@ -22,9 +22,9 @@ export const pinto = new Rando({
   randomLength: 6,
 })
 
-// Sortable (near UUIDv7 spec but with base 58)
+// Sortable (like UUIDv7 but more compact)
 export const sortable = new Rando({
-  randomLength: 12,
+  randomLength: 14,
   includeTimestamp: true,
   timestampPosition: 'start',
 })

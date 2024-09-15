@@ -20,9 +20,9 @@ exports.pinto = new _1.Rando({
     alphabet: constants_1.NUMBERS,
     randomLength: 6,
 });
-// Sortable (near UUIDv7 spec but with base 58)
+// Sortable (like UUIDv7 but more compact)
 exports.sortable = new _1.Rando({
-    randomLength: 12,
+    randomLength: 14,
     includeTimestamp: true,
     timestampPosition: 'start',
 });
