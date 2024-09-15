@@ -68,28 +68,21 @@ type RandoOptions = {
 }
 ```
 
-| Property   | Type     | Default   | Description                                                                                                                                                    |
-| ---------- | -------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alphabet` | `string` | `BASE_58` | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy. |
+| Property             | Type      | Default     | Description                                                                                                                                                    |
+| -------------------- | --------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alphabet`           | `string`  | `BASE_58`   | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy. |
+| `randomAlphabet`     | `string`  | `undefined` | A string of characters to use to generate the random segment of your IDs. By default, the `alphabet` is used.                                                  |
+| `randomLength`       | `number`  | `22`        | The output length of the random segment of the ID. By default, the `length` is `22` which provides 128 bits of entropy with a base 58 alphabet.                |
+| `includeTimestamp`   | `boolean` | `false`     | Adds a timestamp segment to the beginning or end of the id. By default, the timestamp segment is sortable and uses millisecond precision.                      |
+| `obfuscateTimestamp` | `boolean` | `false`     | Obfuscates the timestamp by adding an offset to the characters in the timestamp segment.                                                                       |
+| `timestampPosition`  | `literal` | `start`     | Can be set to `start` or `end` which moves the timestamp segment to the beginning or end of the id, respectively.                                              |
+| `timestampAlphabet`  | `string`  | `BASE_64`   | Allows you to specify a different alphabet for the timestamp segment of the ID.                                                                                |
+| `timestampLength`    | `number`  | `undefined` | Allows you to specify the length of the timestamp segment of the ID (see below for additional details).                                                        |
+| `prefix`             | `string`  | `undefined` | Adds a string to the beginning of the ID.                                                                                                                      |
+| `separator`          | `string`  | `undefined` | Adds a string in between the timestamp and random segments of the ID.                                                                                          |
+| `suffix`             | `string`  | `undefined` | Adds a string to the end of the ID.                                                                                                                            |
 
-**`alphabet`** A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy.
-
-`length`
-
-The output length of the random segment of the ID. By default, the `length` is `22` which provides 128 bits of entropy with a base 58 alphabet.
-
-`sortable`
-
-Can be set to `prefix` or `suffix` which adds a sortable segment to the beginning or end of the id, respectively. The sortable segment uses millisecond precision.
-
-`sortableSeparator`
-
-Adds a string in between the sortable and random segments of the ID. By default, this is an empty string.
-
-`sortableAlphabet`
-
-Allows you to specify a different alphabet for the sortable segment of the ID.
-
-`sortableLength`
-
-Allows you to specify the length of the sortable segment of the ID. Rando uses practical default lengths that vary depending on the size of the alphabet. The defaults provide support for at least the year 2200 for any alphabet length from `2` to `128`. A longer sortable segment is needed with a 16-character `HEX` alphabet than with a `BASE_64` alphabet to represent the same date. If you increase the length beyond what is necessary, the sortable segment will be left-padded to allow you to represent dates further into the future. If you decrease the length below what is necessary, the instance will return an error. |
+> **Options Special Considerations:**
+>
+> - If `timestampLength` is set, `timestampAlphabet` must also be set.
+> - If `timestampAlphabet` is set, `timestampLength` must also be set.
