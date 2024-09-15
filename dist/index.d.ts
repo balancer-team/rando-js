@@ -37,6 +37,7 @@ export declare class Rando {
     private lastTimestamp;
     private lastRandomSegments;
     constructor({ alphabet, randomLength, randomAlphabet, includeTimestamp, obfuscateTimestamp, timestampPosition, timestampAlphabet, timestampLength, prefix, separator, suffix, }?: RandoOptions);
+    generate({ date }?: GenerateOptions): string;
     isDuplicate({ date, randomSegment }: {
         date: Date;
         randomSegment: string;
@@ -45,7 +46,6 @@ export declare class Rando {
         date: Date;
         randomSegment: string;
     }): void;
-    generate({ date }?: GenerateOptions): string;
     generateRandomSegment(): string;
     obfuscateTimestampSegment({ randomSegment, timestampSegment, }: {
         randomSegment: string;

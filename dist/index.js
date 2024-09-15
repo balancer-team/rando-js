@@ -92,6 +92,23 @@ class Rando {
         this.timestampLength = timestampLength ?? timestampDefaultLength;
         this.timestampMax = new Date(Math.pow(this.timestampBase, this.timestampLength));
     }
+    // Methods
+    generate({ date = new Date() } = {}) {
+        const randomSegment = this.generateRandomSegment();
+        if (!this.includeTimestamp)
+            return this.prefix + randomSegment + this.suffix;
+        const timestampSegment = this.generateTimestampSegment({ date, randomSegment });
+        console.log('timestampSegment:', timestampSegment);
+        if (this.isDuplicate({ date, randomSegment }))
+            return this.generate();
+        this.setLast({ date, randomSegment });
+        if (this.timestampPosition === 'start') {
+            return this.prefix + timestampSegment + this.separator + randomSegment + this.suffix;
+        }
+        else {
+            return this.prefix + randomSegment + this.separator + timestampSegment + this.suffix;
+        }
+    }
     // Utility to check if the last date and random segments generated are the same
     isDuplicate({ date, randomSegment }) {
         const timestamp = date.getTime();
@@ -106,22 +123,6 @@ class Rando {
         else {
             this.lastTimestamp = timestamp;
             this.lastRandomSegments = [randomSegment];
-        }
-    }
-    // Methods
-    generate({ date = new Date() } = {}) {
-        const randomSegment = this.generateRandomSegment();
-        if (!this.includeTimestamp)
-            return this.prefix + randomSegment + this.suffix;
-        const timestampSegment = this.generateTimestampSegment({ date, randomSegment });
-        if (this.isDuplicate({ date, randomSegment }))
-            return this.generate();
-        this.setLast({ date, randomSegment });
-        if (this.timestampPosition === 'start') {
-            return this.prefix + timestampSegment + this.separator + randomSegment + this.suffix;
-        }
-        else {
-            return this.prefix + randomSegment + this.separator + timestampSegment + this.suffix;
         }
     }
     generateRandomSegment() {
@@ -171,28 +172,28 @@ class Rando {
     getRandomSegment(id) {
         if (!this.includeTimestamp)
             throw new Error('getRandomSegment requires including a timestamp.');
-        // Use the sortableLength to get the sortable segment of the ID
-        let randomSegment = '';
-        if (this.timestampPosition === 'start') {
-            randomSegment = id.slice(this.timestampLength + this.separator.length);
-        }
-        else {
-            randomSegment = id.slice(0, -this.timestampLength - this.separator.length);
-        }
-        return randomSegment;
+        if (this.prefix)
+            id = id.slice(this.prefix.length);
+        if (this.suffix)
+            id = id.slice(0, -this.suffix.length);
+        if (this.timestampPosition === 'start')
+            id = id.slice(this.timestampLength + this.separator.length);
+        if (this.timestampPosition === 'end')
+            id = id.slice(0, -this.timestampLength - this.separator.length);
+        return id;
     }
     getTimestampSegment(id) {
         if (!this.includeTimestamp)
             throw new Error('getTimestampSegment requires including a timestamp.');
-        // Use the sortableLength to get the sortable segment of the ID
-        let segment = '';
-        if (this.timestampPosition === 'start') {
-            segment = id.slice(0, this.timestampLength);
-        }
-        else {
-            segment = id.slice(-this.timestampLength);
-        }
-        return segment;
+        if (this.prefix)
+            id = id.slice(this.prefix.length);
+        if (this.suffix)
+            id = id.slice(0, -this.suffix.length);
+        if (this.timestampPosition === 'start')
+            id = id.slice(0, this.timestampLength);
+        if (this.timestampPosition === 'end')
+            id = id.slice(-this.timestampLength);
+        return id;
     }
     generateOffset(randomSegment) {
         if (!this.includeTimestamp)

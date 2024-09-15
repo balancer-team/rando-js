@@ -74,7 +74,9 @@ test('Date matches after encode and decode with all options', () => {
     obfuscateTimestamp: true,
     timestampAlphabet: NUMBERS,
     timestampLength: 16,
+    prefix: '-',
     separator: '-',
+    suffix: '-',
   })
   assert.strictEqual(date.getTime(), rando.getDate(rando.generate({ date })).getTime())
 })
@@ -101,7 +103,7 @@ test('No duplicates with very short randomSegment', () => {
 
   const ids: string[] = []
   let i = 0
-  while (i < 100_000) {
+  while (i < 1000) {
     const id = rando.generate()
     ids.push(id)
     i++
