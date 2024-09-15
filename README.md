@@ -123,7 +123,7 @@ rando.getInfo()
 Rando comes with a few presets to make it easy to generate IDs for common use cases.
 
 ```js
-import { rando, particle, locker, pinto, sortable } from '@balancer-team/rando/presets'
+import { rando, locker, pinto, sortable, particle } from '@balancer-team/rando/presets'
 
 rando.generate() //=> "pFyNp2RUxhTQRprcsJ5NHN" (default options, 128 bits, universally unique)
 locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX" (256 bits of entropy)
