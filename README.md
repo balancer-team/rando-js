@@ -28,9 +28,9 @@ const rando = new Rando({ length: 44 })
 rando.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44"
 ```
 
-### Sortable Identifiers
+### Including Timestamps
 
-Rando can generate lexicographically sortable IDs.
+Rando can add a timestamp to the beginning or end of an ID. Adding a timestamp to the beginning makes the ID lexicographically sortable. Rando will automatically check the `timestampAlphabet` to ensure it only contains unique characters, and that it is lexicographically sorted.
 
 ```js
 const rando = new Rando({ includeTimestamp: true, separator: '-' })
@@ -46,6 +46,13 @@ Sortable IDs can easily be decoded to return a date object. Note that the instan
 
 ```js
 rando.getDate('1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp') //=> 2024-09-11T17:51:46.274Z
+```
+
+You can conceal your timestamp by obfuscating it. This adds an offset to the characters in the timestamp segment. Obfuscated timestamps can still be decoded for the correct date!
+
+```js
+const rando = new Rando({ includeTimestamp: true, obfuscateTimestamp: true })
+rando.generate() //=> "NSKJsDnLVUQBxRu1W4Jw6nBkLzhhGp"
 ```
 
 ### All Options
