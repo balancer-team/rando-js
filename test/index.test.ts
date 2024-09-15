@@ -112,6 +112,7 @@ test('No duplicates with very short randomSegment', () => {
 })
 
 test('Particle preset', () => {
+  console.log(particle.generate())
   assert.strictEqual(particle.generate().length, 10)
 })
 

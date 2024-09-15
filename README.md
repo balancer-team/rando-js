@@ -55,6 +55,13 @@ const rando = new Rando({ includeTimestamp: true, obfuscateTimestamp: true })
 rando.generate() //=> "NSKJsDnLVUQBxRu1W4Jw6nBkLzhhGp"
 ```
 
+When timestamps are included, Rando checks all IDs generated within the same millisecond for uniqueness. This prevents generating duplicate IDs, and enables you to confidently use very short random segments in your ID.
+
+```js
+const rando = new Rando({ includeTimestamp: true, randomLength: 2, obfuscateTimestamp: true })
+rando.generate() //=> "pbA6j7Y2cD"
+```
+
 ### All Options
 
 Rando instances can be extensively customized to generate the perfect identifier for your requirements. Here's the type definition of all available options, with details below:
