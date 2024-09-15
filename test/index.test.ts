@@ -2,17 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { NUMBERS, BASE_32_CROCKFORD } from '../src/constants'
-import { ulid, pin, password, sortable, particle, machine, snowflake } from '../src/presets'
-import { generateTimestampDefaults } from '../src/analytics'
-
-// test('test', () => {
-//   const rando = new Rando({ timestamp: { position: 'start', separator: '-', obfuscate: true } })
-//   const id = rando.generate()
-//   console.log(id)
-//   const date = rando.getDate(id)
-//   console.log(date)
-//   assert.strictEqual(rando.generate().length, 31)
-// })
+import { particle, key, machine, snowflake, sortable, password, pin, ulid } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -90,13 +80,12 @@ test('Date matches after encode and decode with all options', () => {
 })
 
 test('Throws an error if timestamp length is too short', () => {
-  assert.throws(
-    () =>
-      new Rando({
-        includeTimestamp: true,
-        timestampLength: 7,
-      })
-  )
+  assert.throws(() => {
+    new Rando({
+      includeTimestamp: true,
+      timestampLength: 7,
+    })
+  })
 })
 
 test('Info returns bits of entropy', () => {
@@ -104,49 +93,52 @@ test('Info returns bits of entropy', () => {
   assert.strictEqual(rando.getInfo().randomEntropy, 128)
 })
 
-// test('Presets', () => {
-//   console.log('ulid: ' + ulid.generate())
-//   console.log(ulid.getInfo())
-//   // assert.strictEqual(ulid.generate().length, 26)
-//   console.log('pin: ' + pin.generate())
-//   console.log(pin.getInfo())
-//   // assert.strictEqual(pin.generate().length, 6)
-//   console.log('password: ' + password.generate())
-//   console.log(password.getInfo())
-//   // assert.strictEqual(password.generate().length, 16)
-//   console.log('sortable: ' + sortable.generate())
-//   console.log(sortable.getInfo())
-//   // assert.strictEqual(sortable.generate().length, 12)
-//   console.log('particle: ' + particle.generate())
-//   console.log(particle.getInfo())
-// })
+test('No duplicates with very short randomSegment', () => {
+  const rando = new Rando({
+    randomLength: 1,
+    includeTimestamp: true,
+  })
 
-// Test how many particles can be generated in a second
-test('Particle performance', () => {
-  // const rando = new Rando({
-  //   alphabet: NUMBERS,
-  //   randomLength: 4,
-  //   includeTimestamp: true,
-  //   timestampSeparator: '-',
-  // })
-  const start = Date.now()
+  const ids: string[] = []
   let i = 0
-  while (i < 100) {
-    console.log(particle.generate())
+  while (i < 100_000) {
+    const id = rando.generate()
+    ids.push(id)
     i++
   }
-  // console.log(particle.getInfo())
-  const end = Date.now()
-  console.log('ms for 100: ' + (end - start))
+
+  const set = new Set(ids)
+  assert.strictEqual(set.size, ids.length)
 })
 
-// test('Example case', () => {
-//   const rando = new Rando({
-//     includeTimestamp: true,
+test('Particle preset', () => {
+  assert.strictEqual(particle.generate().length, 10)
+})
 
-//     separator: '-',
-//   })
-//   const id = rando.generate()
-//   console.log(id)
-//   assert.strictEqual(id.length, 31)
-// })
+test('Key preset', () => {
+  assert.strictEqual(key.generate().length, 44)
+})
+
+test('Machine preset', () => {
+  assert.strictEqual(machine.generate().length, 32)
+})
+
+test('Snowflake preset', () => {
+  assert.strictEqual(snowflake.generate().length, 19)
+})
+
+test('Password preset', () => {
+  assert.strictEqual(password.generate().length, 16)
+})
+
+test('Sortable preset', () => {
+  assert.strictEqual(sortable.generate().length, 20)
+})
+
+test('Pin preset', () => {
+  assert.strictEqual(pin.generate().length, 6)
+})
+
+test('ulid preset', () => {
+  assert.strictEqual(ulid.generate().length, 26)
+})

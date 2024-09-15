@@ -30,12 +30,11 @@ export const sortable = new Rando({
   timestampPosition: 'start',
 })
 
-// Particle (short with hidden timestamp)
+// Particle (short with hidden timestamp, supports generating over 3,000 ids per millisecond)
 export const particle = new Rando({
-  randomLength: 4,
+  randomLength: 2,
   includeTimestamp: true,
   obfuscateTimestamp: true,
-  timestampPosition: 'end',
 })
 
 // Creates a key with 256 bits of entropy
@@ -47,7 +46,7 @@ export const key = new Rando({
 // Creates an id that includes a machine identifier
 export const machine = new Rando({
   includeTimestamp: true,
-  separator: '-1-',
+  suffix: '-1',
 })
 
 // Snowflake-like, not to spec

@@ -7,7 +7,9 @@ type RandoOptions = {
     timestampPosition?: 'start' | 'end';
     timestampAlphabet?: string;
     timestampLength?: number;
+    prefix?: string;
     separator?: string;
+    suffix?: string;
 };
 type GenerateOptions = {
     date?: Date;
@@ -29,16 +31,18 @@ export declare class Rando {
     readonly timestampLength: number;
     readonly timestampBase: number;
     readonly timestampMax: Date;
+    readonly prefix: string;
     readonly separator: string;
-    private lastTimestampSegment;
+    readonly suffix: string;
+    private lastTimestamp;
     private lastRandomSegments;
-    constructor({ alphabet, randomLength, randomAlphabet, includeTimestamp, obfuscateTimestamp, timestampPosition, timestampAlphabet, timestampLength, separator, }?: RandoOptions);
-    isDuplicate({ timestampSegment, randomSegment }: {
+    constructor({ alphabet, randomLength, randomAlphabet, includeTimestamp, obfuscateTimestamp, timestampPosition, timestampAlphabet, timestampLength, prefix, separator, suffix, }?: RandoOptions);
+    isDuplicate({ date, randomSegment }: {
+        date: Date;
         randomSegment: string;
-        timestampSegment: string;
     }): boolean;
-    setLastData({ timestampSegment, randomSegment }: {
-        timestampSegment: string;
+    setLast({ date, randomSegment }: {
+        date: Date;
         randomSegment: string;
     }): void;
     generate({ date }?: GenerateOptions): string;
@@ -71,7 +75,7 @@ export declare class Rando {
         timestampBase: number;
         timestampMax: Date;
         separator: string;
-        overallLength: number;
+        totalLength: number;
     };
 }
 export {};

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.machine = exports.key = exports.particle = exports.sortable = exports.password = exports.pin = exports.ulid = void 0;
+exports.snowflake = exports.machine = exports.key = exports.particle = exports.sortable = exports.password = exports.pin = exports.ulid = void 0;
 const _1 = require("./");
 const constants_1 = require("./constants");
 // ulid
@@ -28,19 +28,26 @@ exports.sortable = new _1.Rando({
     includeTimestamp: true,
     timestampPosition: 'start',
 });
-// Particle (short with hidden timestamp, not for high-frequency use)
+// Particle (short with hidden timestamp, supports generating over 3,000 ids per millisecond)
 exports.particle = new _1.Rando({
-    alphabet: constants_1.BASE_58,
-    randomLength: 4,
+    randomLength: 2,
     includeTimestamp: true,
     obfuscateTimestamp: true,
-    timestampPosition: 'end',
 });
+// Creates a key with 256 bits of entropy
 exports.key = new _1.Rando({
     alphabet: constants_1.BASE_58,
     randomLength: 44,
 });
+// Creates an id that includes a machine identifier
 exports.machine = new _1.Rando({
     includeTimestamp: true,
-    separator: '-1-',
+    suffix: '-1',
+});
+// Snowflake-like, not to spec
+exports.snowflake = new _1.Rando({
+    includeTimestamp: true,
+    alphabet: constants_1.NUMBERS,
+    randomLength: 6,
+    timestampPosition: 'start',
 });
