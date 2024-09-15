@@ -68,19 +68,19 @@ type RandoOptions = {
 }
 ```
 
-| Property             | Type      | Default     | Description                                                                                                                                                    |
-| -------------------- | --------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alphabet`           | `string`  | `BASE_58`   | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy. |
-| `randomAlphabet`     | `string`  | `undefined` | A string of characters to use to generate the random segment of your IDs. By default, the `alphabet` is used.                                                  |
-| `randomLength`       | `number`  | `22`        | The output length of the random segment of the ID. By default, the `length` is `22` which provides 128 bits of entropy with a base 58 alphabet.                |
-| `includeTimestamp`   | `boolean` | `false`     | Adds a timestamp segment to the beginning or end of the id. By default, the timestamp segment is sortable and uses millisecond precision.                      |
-| `obfuscateTimestamp` | `boolean` | `false`     | Obfuscates the timestamp by adding an offset to the characters in the timestamp segment.                                                                       |
-| `timestampPosition`  | `literal` | `start`     | Can be set to `start` or `end` which moves the timestamp segment to the beginning or end of the id, respectively.                                              |
-| `timestampAlphabet`  | `string`  | `undefined` | Allows you to specify a different alphabet for the timestamp segment of the ID.                                                                                |
-| `timestampLength`    | `number`  | `undefined` | Allows you to specify the length of the timestamp segment of the ID (see below for additional details).                                                        |
-| `prefix`             | `string`  | `undefined` | Adds a string to the beginning of the ID.                                                                                                                      |
-| `separator`          | `string`  | `undefined` | Adds a string in between the timestamp and random segments of the ID.                                                                                          |
-| `suffix`             | `string`  | `undefined` | Adds a string to the end of the ID.                                                                                                                            |
+| Property             | Default     | Description                                                                                                                                                    |
+| -------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alphabet`           | `BASE_58`   | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy. |
+| `randomAlphabet`     | `undefined` | A string of characters to use to generate the random segment of your IDs. By default, the `alphabet` is used.                                                  |
+| `randomLength`       | `22`        | The output length of the random segment of the ID. By default, the `length` is `22` which provides 128 bits of entropy with a base 58 alphabet.                |
+| `includeTimestamp`   | `false`     | Adds a timestamp segment to the beginning or end of the id. By default, the timestamp segment is sortable and uses millisecond precision.                      |
+| `obfuscateTimestamp` | `false`     | Obfuscates the timestamp by adding an offset to the characters in the timestamp segment.                                                                       |
+| `timestampPosition`  | `start`     | Can be set to `start` or `end` which moves the timestamp segment to the beginning or end of the id, respectively.                                              |
+| `timestampAlphabet`  | `undefined` | Allows you to specify a different alphabet for the timestamp segment of the ID.                                                                                |
+| `timestampLength`    | `undefined` | Allows you to specify the length of the timestamp segment of the ID (see below for additional details).                                                        |
+| `prefix`             | `undefined` | Adds a string to the beginning of the ID.                                                                                                                      |
+| `separator`          | `undefined` | Adds a string in between the timestamp and random segments of the ID.                                                                                          |
+| `suffix`             | `undefined` | Adds a string to the end of the ID.                                                                                                                            |
 
 ### Options Special Considerations
 
