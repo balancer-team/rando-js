@@ -71,13 +71,11 @@ type RandoOptions = {
 | Property
 | Type
 | Default
-| Description
-|
+| Description |
 | ---
 | ---
 | ---
-| ---
-|
+| --- |
 | `alphabet`
 | `string`
 | `BASE_58`
