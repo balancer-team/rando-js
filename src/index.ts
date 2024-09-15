@@ -42,8 +42,8 @@ export class Rando {
   readonly separator: string
   readonly suffix: string
 
-  private lastTimestamp: number
-  private lastRandomSegments: string[]
+  // private lastTimestamp: number
+  // private lastRandomSegments: string[]
 
   // Constructor
   constructor({
@@ -120,8 +120,8 @@ export class Rando {
     this.separator = separator
     this.suffix = suffix
 
-    this.lastTimestamp = new Date().getTime()
-    this.lastRandomSegments = []
+    // this.lastTimestamp = new Date().getTime()
+    // this.lastRandomSegments = []
 
     // Ensure timestamp.length is at least the default length for the given base
     const timestampDefaultLength = TIMESTAMP_DEFAULTS[this.timestampBase].length
@@ -138,8 +138,8 @@ export class Rando {
     const randomSegment = this.generateRandomSegment()
     if (!this.includeTimestamp) return this.prefix + randomSegment + this.suffix
     const timestampSegment = this.generateTimestampSegment({ date, randomSegment })
-    if (this.isDuplicate({ date, randomSegment })) return this.generate()
-    this.setLast({ date, randomSegment })
+    // if (this.isDuplicate({ date, randomSegment })) return this.generate()
+    // this.setLast({ date, randomSegment })
     if (this.timestampPosition === 'start') {
       return this.prefix + timestampSegment + this.separator + randomSegment + this.suffix
     } else {
@@ -147,22 +147,22 @@ export class Rando {
     }
   }
 
-  // Utility to check if the last date and random segments generated are the same
-  isDuplicate({ date, randomSegment }: { date: Date; randomSegment: string }): boolean {
-    const timestamp = date.getTime()
-    return this.lastTimestamp === timestamp && this.lastRandomSegments.includes(randomSegment)
-  }
+  // // Utility to check if the last date and random segments generated are the same
+  // isDuplicate({ date, randomSegment }: { date: Date; randomSegment: string }): boolean {
+  //   const timestamp = date.getTime()
+  //   return this.lastTimestamp === timestamp && this.lastRandomSegments.includes(randomSegment)
+  // }
 
-  // Utility to store the last date and random segments generated in a specific millisecond
-  setLast({ date, randomSegment }: { date: Date; randomSegment: string }): void {
-    const timestamp = date.getTime()
-    if (this.lastTimestamp === timestamp) {
-      this.lastRandomSegments.push(randomSegment)
-    } else {
-      this.lastTimestamp = timestamp
-      this.lastRandomSegments = [randomSegment]
-    }
-  }
+  // // Utility to store the last date and random segments generated in a specific millisecond
+  // setLast({ date, randomSegment }: { date: Date; randomSegment: string }): void {
+  //   const timestamp = date.getTime()
+  //   if (this.lastTimestamp === timestamp) {
+  //     this.lastRandomSegments.push(randomSegment)
+  //   } else {
+  //     this.lastTimestamp = timestamp
+  //     this.lastRandomSegments = [randomSegment]
+  //   }
+  // }
 
   generateRandomSegment() {
     const arr = Array.from({ length: this.randomLength }, () => this.alphabet[crypto.randomInt(this.randomBase)])

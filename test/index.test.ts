@@ -95,15 +95,15 @@ test('Info returns bits of entropy', () => {
   assert.strictEqual(rando.getInfo().randomEntropy, 128)
 })
 
-test('No duplicates with very short randomSegment', () => {
+test('No duplicates with 1 million particles', () => {
   const rando = new Rando({
-    randomLength: 1,
+    randomLength: 8,
     includeTimestamp: true,
   })
 
   const ids: string[] = []
   let i = 0
-  while (i < 1000) {
+  while (i < 1_000_000) {
     const id = rando.generate()
     ids.push(id)
     i++
@@ -118,7 +118,7 @@ test('Rando preset', () => {
 })
 
 test('Particle preset', () => {
-  assert.strictEqual(particle.generate().length, 10)
+  assert.strictEqual(particle.generate().length, 16)
 })
 
 test('Locker preset', () => {
