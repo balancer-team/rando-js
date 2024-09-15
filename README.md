@@ -76,13 +76,39 @@ type RandoOptions = {
 | `includeTimestamp`   | `boolean` | `false`     | Adds a timestamp segment to the beginning or end of the id. By default, the timestamp segment is sortable and uses millisecond precision.                      |
 | `obfuscateTimestamp` | `boolean` | `false`     | Obfuscates the timestamp by adding an offset to the characters in the timestamp segment.                                                                       |
 | `timestampPosition`  | `literal` | `start`     | Can be set to `start` or `end` which moves the timestamp segment to the beginning or end of the id, respectively.                                              |
-| `timestampAlphabet`  | `string`  | `BASE_64`   | Allows you to specify a different alphabet for the timestamp segment of the ID.                                                                                |
+| `timestampAlphabet`  | `string`  | `undefined` | Allows you to specify a different alphabet for the timestamp segment of the ID.                                                                                |
 | `timestampLength`    | `number`  | `undefined` | Allows you to specify the length of the timestamp segment of the ID (see below for additional details).                                                        |
 | `prefix`             | `string`  | `undefined` | Adds a string to the beginning of the ID.                                                                                                                      |
 | `separator`          | `string`  | `undefined` | Adds a string in between the timestamp and random segments of the ID.                                                                                          |
 | `suffix`             | `string`  | `undefined` | Adds a string to the end of the ID.                                                                                                                            |
 
-> **Options Special Considerations:**
->
-> - If `timestampLength` is set, `timestampAlphabet` must also be set.
-> - If `timestampAlphabet` is set, `timestampLength` must also be set.
+### Options Special Considerations
+
+The `randomLength` and alphabet length together determine how many bits of entropy your ID will have. Using a tool such as a collision calculator, you can adjust these properties as needed to achieve your desired level of entropy.
+
+When you use `includeTimestamp`, Rando checks all IDs generated within the same millisecond for uniqueness. This prevents generating duplicate IDs, and enables you to use extremely short random segments in your ID.
+
+The `timestampLength` must be long enough to support at least the year 2200. The required minimum length varies depending on the size (or base) of the alphabet. For example, an alphabet size of 10 requires a `timestampLength` of 13, whereas an alphabet size of 64 only requires a `timestampLength` of 8.
+
+You can easily get useful information about any configuration by calling `getInfo()` on your instance.
+
+```js
+const rando = new Rando({ includeTimestamp: true, separator: '-' })
+rando.getInfo()
+
+// Output:
+//
+// {
+//   alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
+//   randomAlphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
+//   randomLength: 22,
+//   includeTimestamp: true,
+//   obfuscateTimestamp: false,
+//   timestampPosition: 'start',
+//   timestampAlphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
+//   timestampLength: 8,
+//   prefix: '',
+//   separator: '-',
+//   suffix: '',
+// }
+```
