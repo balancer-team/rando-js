@@ -138,7 +138,6 @@ export class Rando {
     const randomSegment = this.generateRandomSegment()
     if (!this.includeTimestamp) return this.prefix + randomSegment + this.suffix
     const timestampSegment = this.generateTimestampSegment({ date, randomSegment })
-    console.log('timestampSegment:', timestampSegment)
     if (this.isDuplicate({ date, randomSegment })) return this.generate()
     this.setLast({ date, randomSegment })
     if (this.timestampPosition === 'start') {

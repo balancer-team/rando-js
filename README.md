@@ -96,7 +96,7 @@ type RandoOptions = {
 | `separator`          | `''`      | Adds a string in between the timestamp and random segments of the ID.                                                                                          |
 | `suffix`             | `''`      | Adds a string to the end of the ID.                                                                                                                            |
 
-### Special Considerations
+### Special Considerations for Options
 
 The `randomLength` and alphabet length together determine how many bits of entropy your ID will have. Using a tool such as a collision calculator, you can adjust these properties as needed to achieve your desired level of entropy.
 
@@ -125,4 +125,18 @@ rando.getInfo()
 //   separator: '-',
 //   suffix: '',
 // }
+```
+
+### Presets
+
+Rando comes with a few presets to make it easy to generate IDs for common use cases.
+
+```js
+import { rando, particle, locker, pinto, sortable } from '../src/presets'
+
+rando.generate() //=> "pFyNp2RUxhTQRprcsJ5NHN" (default options, 128 bits, universally unique)
+particle.generate() //=> "M8hfPAFVdj" (short with obfuscated timestamp)
+locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX" (256 bits of entropy)
+pinto.generate() //=> "368230" (for 6-digit pins)
+sortable.generate() //=> "1nMK3pu9oQ8ff2jV5PRb" (like a compact UUIDv7)
 ```
