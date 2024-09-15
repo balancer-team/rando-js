@@ -130,5 +130,5 @@ test('Pinto preset', () => {
 })
 
 test('Sortable preset', () => {
-  assert.strictEqual(sortable.generate().length, 20)
+  assert.strictEqual(sortable.generate().length, 22)
 })
