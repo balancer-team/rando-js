@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { NUMBERS, BASE_32_CROCKFORD } from '../src/constants'
-import { particle, key, rando, snowflake, sortable, password, pin, ulid } from '../src/presets'
+import { rando, randoShort, randoKey, randoPin, randoSortable, randoUlid, randoFlake } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -115,31 +115,26 @@ test('Rando preset', () => {
   assert.strictEqual(rando.generate().length, 22)
 })
 
-test('Particle preset', () => {
-  console.log(particle.generate())
-  assert.strictEqual(particle.generate().length, 10)
+test('Rando short preset', () => {
+  assert.strictEqual(randoShort.generate().length, 10)
 })
 
-test('Key preset', () => {
-  assert.strictEqual(key.generate().length, 44)
+test('Rando key preset', () => {
+  assert.strictEqual(randoKey.generate().length, 44)
 })
 
-test('Snowflake preset', () => {
-  assert.strictEqual(snowflake.generate().length, 19)
+test('Rando pin preset', () => {
+  assert.strictEqual(randoPin.generate().length, 6)
 })
 
-test('Password preset', () => {
-  assert.strictEqual(password.generate().length, 16)
+test('Rando sortable preset', () => {
+  assert.strictEqual(randoSortable.generate().length, 20)
 })
 
-test('Sortable preset', () => {
-  assert.strictEqual(sortable.generate().length, 20)
+test('Rando ulid preset', () => {
+  assert.strictEqual(randoUlid.generate().length, 26)
 })
 
-test('Pin preset', () => {
-  assert.strictEqual(pin.generate().length, 6)
-})
-
-test('ulid preset', () => {
-  assert.strictEqual(ulid.generate().length, 26)
+test('Rando flake preset', () => {
+  assert.strictEqual(randoFlake.generate().length, 19)
 })

@@ -4,8 +4,34 @@ import { BASE_58, BASE_32_CROCKFORD, NUMBERS, PASSWORD } from './constants'
 // Rando
 export const rando = new Rando()
 
+// Creates a very short 10-character id (supports generating over 3,000 unique ids per ms)
+export const randoShort = new Rando({
+  randomLength: 2,
+  includeTimestamp: true,
+  obfuscateTimestamp: true,
+})
+
+// Creates a secure key with 256 bits of entropy
+export const randoKey = new Rando({
+  alphabet: BASE_58,
+  randomLength: 44,
+})
+
+// Pin
+export const randoPin = new Rando({
+  alphabet: NUMBERS,
+  randomLength: 6,
+})
+
+// Sortable (near UUIDv7 spec but with base 58)
+export const randoSortable = new Rando({
+  randomLength: 12,
+  includeTimestamp: true,
+  timestampPosition: 'start',
+})
+
 // ulid
-export const ulid = new Rando({
+export const randoUlid = new Rando({
   alphabet: BASE_32_CROCKFORD,
   randomLength: 16,
   includeTimestamp: true,
@@ -13,41 +39,8 @@ export const ulid = new Rando({
   timestampLength: 10,
 })
 
-// Pin
-export const pin = new Rando({
-  alphabet: NUMBERS,
-  randomLength: 6,
-})
-
-// Password
-export const password = new Rando({
-  alphabet: PASSWORD,
-  randomLength: 16,
-})
-
-// Sortable (near UUIDv7 spec but with base 58)
-export const sortable = new Rando({
-  alphabet: BASE_58,
-  randomLength: 12,
-  includeTimestamp: true,
-  timestampPosition: 'start',
-})
-
-// Particle (short with hidden timestamp, supports generating over 3,000 ids per millisecond)
-export const particle = new Rando({
-  randomLength: 2,
-  includeTimestamp: true,
-  obfuscateTimestamp: true,
-})
-
-// Creates a key with 256 bits of entropy
-export const key = new Rando({
-  alphabet: BASE_58,
-  randomLength: 44,
-})
-
 // Snowflake-like, not to spec
-export const snowflake = new Rando({
+export const randoFlake = new Rando({
   includeTimestamp: true,
   alphabet: NUMBERS,
   randomLength: 6,
