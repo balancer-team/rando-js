@@ -119,7 +119,7 @@ test('Particle preset', () => {
   assert.strictEqual(particle.generate().length, 10)
 })
 
-test('Vault preset', () => {
+test('Novella preset', () => {
   assert.strictEqual(novella.generate().length, 44)
 })
 
