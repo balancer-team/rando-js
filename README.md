@@ -68,9 +68,13 @@ type RandoOptions = {
 }
 ```
 
-`alphabet` _string_
+`alphabet`
+
+_string_ | Default: `BASE_58`
 
 A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy.
+
+---
 
 **`alphabet`** _string_
 
