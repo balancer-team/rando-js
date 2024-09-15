@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.snowflake = exports.machine = exports.key = exports.particle = exports.sortable = exports.password = exports.pin = exports.ulid = void 0;
+exports.snowflake = exports.key = exports.particle = exports.sortable = exports.password = exports.pin = exports.ulid = exports.rando = void 0;
 const _1 = require("./");
 const constants_1 = require("./constants");
+// Rando
+exports.rando = new _1.Rando();
 // ulid
 exports.ulid = new _1.Rando({
     alphabet: constants_1.BASE_32_CROCKFORD,
@@ -38,11 +40,6 @@ exports.particle = new _1.Rando({
 exports.key = new _1.Rando({
     alphabet: constants_1.BASE_58,
     randomLength: 44,
-});
-// Creates an id that includes a machine identifier
-exports.machine = new _1.Rando({
-    includeTimestamp: true,
-    suffix: '-1',
 });
 // Snowflake-like, not to spec
 exports.snowflake = new _1.Rando({

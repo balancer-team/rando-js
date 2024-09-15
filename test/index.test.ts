@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { NUMBERS, BASE_32_CROCKFORD } from '../src/constants'
-import { particle, key, machine, snowflake, sortable, password, pin, ulid } from '../src/presets'
+import { particle, key, rando, snowflake, sortable, password, pin, ulid } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -111,6 +111,10 @@ test('No duplicates with very short randomSegment', () => {
   assert.strictEqual(set.size, ids.length)
 })
 
+test('Rando preset', () => {
+  assert.strictEqual(rando.generate().length, 22)
+})
+
 test('Particle preset', () => {
   console.log(particle.generate())
   assert.strictEqual(particle.generate().length, 10)
@@ -118,10 +122,6 @@ test('Particle preset', () => {
 
 test('Key preset', () => {
   assert.strictEqual(key.generate().length, 44)
-})
-
-test('Machine preset', () => {
-  assert.strictEqual(machine.generate().length, 32)
 })
 
 test('Snowflake preset', () => {

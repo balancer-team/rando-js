@@ -1,6 +1,9 @@
 import { Rando } from './'
 import { BASE_58, BASE_32_CROCKFORD, NUMBERS, PASSWORD } from './constants'
 
+// Rando
+export const rando = new Rando()
+
 // ulid
 export const ulid = new Rando({
   alphabet: BASE_32_CROCKFORD,
@@ -41,12 +44,6 @@ export const particle = new Rando({
 export const key = new Rando({
   alphabet: BASE_58,
   randomLength: 44,
-})
-
-// Creates an id that includes a machine identifier
-export const machine = new Rando({
-  includeTimestamp: true,
-  suffix: '-1',
 })
 
 // Snowflake-like, not to spec
