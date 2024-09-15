@@ -23,8 +23,6 @@ class Rando {
     prefix;
     separator;
     suffix;
-    // private lastTimestamp: number
-    // private lastRandomSegments: string[]
     // Constructor
     constructor({ alphabet = constants_1.BASE_58, randomLength = 22, randomAlphabet = undefined, includeTimestamp = false, obfuscateTimestamp = false, timestampPosition = 'start', timestampAlphabet = undefined, timestampLength = undefined, prefix = '', separator = '', suffix = '', } = {}) {
         // Validation logic
@@ -82,8 +80,6 @@ class Rando {
         this.prefix = prefix;
         this.separator = separator;
         this.suffix = suffix;
-        // this.lastTimestamp = new Date().getTime()
-        // this.lastRandomSegments = []
         // Ensure timestamp.length is at least the default length for the given base
         const timestampDefaultLength = constants_1.TIMESTAMP_DEFAULTS[this.timestampBase].length;
         if (timestampLength && timestampLength < timestampDefaultLength) {
@@ -107,21 +103,6 @@ class Rando {
             return this.prefix + randomSegment + this.separator + timestampSegment + this.suffix;
         }
     }
-    // // Utility to check if the last date and random segments generated are the same
-    // isDuplicate({ date, randomSegment }: { date: Date; randomSegment: string }): boolean {
-    //   const timestamp = date.getTime()
-    //   return this.lastTimestamp === timestamp && this.lastRandomSegments.includes(randomSegment)
-    // }
-    // // Utility to store the last date and random segments generated in a specific millisecond
-    // setLast({ date, randomSegment }: { date: Date; randomSegment: string }): void {
-    //   const timestamp = date.getTime()
-    //   if (this.lastTimestamp === timestamp) {
-    //     this.lastRandomSegments.push(randomSegment)
-    //   } else {
-    //     this.lastTimestamp = timestamp
-    //     this.lastRandomSegments = [randomSegment]
-    //   }
-    // }
     generateRandomSegment() {
         const arr = Array.from({ length: this.randomLength }, () => this.alphabet[crypto_1.default.randomInt(this.randomBase)]);
         return arr.join('');

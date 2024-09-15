@@ -55,13 +55,6 @@ const rando = new Rando({ includeTimestamp: true, obfuscateTimestamp: true })
 rando.generate() //=> "NSKJsDnLVUQBxRu1W4Jw6nBkLzhhGp"
 ```
 
-When timestamps are included, Rando checks all IDs generated within the same millisecond for uniqueness. This prevents generating duplicate IDs, and enables you to use very short random segments in your ID.
-
-```js
-const rando = new Rando({ includeTimestamp: true, randomLength: 2, obfuscateTimestamp: true })
-rando.generate() //=> "pbA6j7Y2cD" up to 3,364 unique IDs per millisecond!
-```
-
 ### All Options
 
 Rando instances can be extensively customized to generate the perfect identifier for your requirements. Here's the type definition of all available options, with details below:
@@ -100,11 +93,9 @@ type RandoOptions = {
 
 The `randomLength` and alphabet length together determine how many bits of entropy your ID will have. Using a tool such as a collision calculator, you can adjust these properties as needed to achieve your desired level of entropy.
 
-When you use `includeTimestamp`, Rando checks all IDs generated within the same millisecond for uniqueness. This prevents generating duplicate IDs, and enables you to use extremely short random segments in your ID.
-
 The `timestampLength` must be long enough to support at least the year 2200. The required minimum length varies depending on the size (or base) of the alphabet. For example, an alphabet size of 10 requires a `timestampLength` of 13, whereas an alphabet size of 64 only requires a `timestampLength` of 8.
 
-You can easily get useful information about any configuration by calling `getInfo()` on your instance.
+You can easily get useful information about any configuration, such as the maximum date is supports, by calling `getInfo()` on your instance.
 
 ```js
 const rando = new Rando({ includeTimestamp: true, separator: '-' })
@@ -135,8 +126,8 @@ Rando comes with a few presets to make it easy to generate IDs for common use ca
 import { rando, particle, locker, pinto, sortable } from '@balancer-team/rando/presets'
 
 rando.generate() //=> "pFyNp2RUxhTQRprcsJ5NHN" (default options, 128 bits, universally unique)
-particle.generate() //=> "M8hfPAFVdj" (short with obfuscated timestamp)
 locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX" (256 bits of entropy)
 pinto.generate() //=> "368230" (for 6-digit pins)
 sortable.generate() //=> "1nMK3pu9oQ8ff2jVtn5PRb" (like a compact UUIDv7)
+particle.generate() //=> "1nMLukngZdML6q1r" (short sortable id with 46 bits of entropy)
 ```

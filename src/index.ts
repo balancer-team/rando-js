@@ -42,9 +42,6 @@ export class Rando {
   readonly separator: string
   readonly suffix: string
 
-  // private lastTimestamp: number
-  // private lastRandomSegments: string[]
-
   // Constructor
   constructor({
     alphabet = BASE_58,
@@ -120,9 +117,6 @@ export class Rando {
     this.separator = separator
     this.suffix = suffix
 
-    // this.lastTimestamp = new Date().getTime()
-    // this.lastRandomSegments = []
-
     // Ensure timestamp.length is at least the default length for the given base
     const timestampDefaultLength = TIMESTAMP_DEFAULTS[this.timestampBase].length
     if (timestampLength && timestampLength < timestampDefaultLength) {
@@ -146,23 +140,6 @@ export class Rando {
       return this.prefix + randomSegment + this.separator + timestampSegment + this.suffix
     }
   }
-
-  // // Utility to check if the last date and random segments generated are the same
-  // isDuplicate({ date, randomSegment }: { date: Date; randomSegment: string }): boolean {
-  //   const timestamp = date.getTime()
-  //   return this.lastTimestamp === timestamp && this.lastRandomSegments.includes(randomSegment)
-  // }
-
-  // // Utility to store the last date and random segments generated in a specific millisecond
-  // setLast({ date, randomSegment }: { date: Date; randomSegment: string }): void {
-  //   const timestamp = date.getTime()
-  //   if (this.lastTimestamp === timestamp) {
-  //     this.lastRandomSegments.push(randomSegment)
-  //   } else {
-  //     this.lastTimestamp = timestamp
-  //     this.lastRandomSegments = [randomSegment]
-  //   }
-  // }
 
   generateRandomSegment() {
     const arr = Array.from({ length: this.randomLength }, () => this.alphabet[crypto.randomInt(this.randomBase)])
