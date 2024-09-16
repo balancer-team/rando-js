@@ -48,7 +48,7 @@ Sortable IDs can easily be decoded to return a date object. Note that the instan
 rando.getDate('1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp') //=> 2024-09-11T17:51:46.274Z
 ```
 
-You can conceal your timestamp by obfuscating it. This uses the random segment to calculate an offset to the timestamp segment. Obfuscated timestamps can still be decoded for the correct date!
+You can conceal the timestamp by obfuscating it. This uses the random segment to calculate an offset to the timestamp segment. This may be useful in situations where you don't want to reveal an inherent order to your IDs. Obfuscated timestamps can still be decoded for the correct date!
 
 ```js
 const rando = new Rando({ includeTimestamp: true, obfuscateTimestamp: true })

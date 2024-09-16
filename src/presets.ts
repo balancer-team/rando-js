@@ -15,7 +15,7 @@ export const pinto = new Rando({
   randomLength: 6,
 })
 
-// Particle (like UUIDv7 but shorter and with 6 extra entropy bits)
+// Particle (like a compact UUIDv7 with 6 extra entropy bits)
 export const particle = new Rando({
   randomLength: 14,
   includeTimestamp: true,
