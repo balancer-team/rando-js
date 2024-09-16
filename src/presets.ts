@@ -15,15 +15,8 @@ export const pinto = new Rando({
   randomLength: 6,
 })
 
-// Sortable (like UUIDv7 but more compact)
-export const sortable = new Rando({
-  randomLength: 14,
-  includeTimestamp: true,
-  timestampPosition: 'start',
-})
-
-// Creates a short sortable id with a practical amount of entropy for many use cases
+// Particle (like UUIDv7 but shorter and with 6 extra entropy bits)
 export const particle = new Rando({
-  randomLength: 8,
+  randomLength: 14,
   includeTimestamp: true,
 })

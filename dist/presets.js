@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.particle = exports.sortable = exports.pinto = exports.locker = exports.rando = void 0;
+exports.particle = exports.pinto = exports.locker = exports.rando = void 0;
 const _1 = require("./");
 const constants_1 = require("./constants");
 // Rando
@@ -14,14 +14,8 @@ exports.pinto = new _1.Rando({
     alphabet: constants_1.NUMBERS,
     randomLength: 6,
 });
-// Sortable (like UUIDv7 but more compact)
-exports.sortable = new _1.Rando({
-    randomLength: 14,
-    includeTimestamp: true,
-    timestampPosition: 'start',
-});
-// Creates a short sortable id with a practical amount of entropy for many use cases
+// Particle (like UUIDv7 but shorter and with 6 extra entropy bits)
 exports.particle = new _1.Rando({
-    randomLength: 8,
+    randomLength: 14,
     includeTimestamp: true,
 });

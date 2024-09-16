@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { NUMBERS, BASE_32_CROCKFORD } from '../src/constants'
-import { rando, particle, locker, pinto, sortable } from '../src/presets'
+import { rando, particle, locker, pinto } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -95,24 +95,6 @@ test('Info returns bits of entropy', () => {
   assert.strictEqual(rando.getInfo().randomEntropy, 128)
 })
 
-test('No duplicates with 1 million particles', () => {
-  const rando = new Rando({
-    randomLength: 8,
-    includeTimestamp: true,
-  })
-
-  const ids: string[] = []
-  let i = 0
-  while (i < 1_000_000) {
-    const id = rando.generate()
-    ids.push(id)
-    i++
-  }
-
-  const set = new Set(ids)
-  assert.strictEqual(set.size, ids.length)
-})
-
 test('Rando preset', () => {
   assert.strictEqual(rando.generate().length, 22)
 })
@@ -125,10 +107,6 @@ test('Pinto preset', () => {
   assert.strictEqual(pinto.generate().length, 6)
 })
 
-test('Sortable preset', () => {
-  assert.strictEqual(sortable.generate().length, 22)
-})
-
 test('Particle preset', () => {
-  assert.strictEqual(particle.generate().length, 16)
+  assert.strictEqual(particle.generate().length, 22)
 })
