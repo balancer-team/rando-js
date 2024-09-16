@@ -117,10 +117,6 @@ test('Rando preset', () => {
   assert.strictEqual(rando.generate().length, 22)
 })
 
-test('Particle preset', () => {
-  assert.strictEqual(particle.generate().length, 16)
-})
-
 test('Locker preset', () => {
   assert.strictEqual(locker.generate().length, 44)
 })
@@ -131,4 +127,8 @@ test('Pinto preset', () => {
 
 test('Sortable preset', () => {
   assert.strictEqual(sortable.generate().length, 22)
+})
+
+test('Particle preset', () => {
+  assert.strictEqual(particle.generate().length, 16)
 })

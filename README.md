@@ -129,5 +129,5 @@ rando.generate() //=> "pFyNp2RUxhTQRprcsJ5NHN" (default options, 128 bits, unive
 locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX" (256 bits of entropy)
 pinto.generate() //=> "368230" (for 6-digit pins)
 sortable.generate() //=> "1nMK3pu9oQ8ff2jVtn5PRb" (like a compact UUIDv7)
-particle.generate() //=> "1nMLukngZdML6q1r" (short sortable id with 46 bits of entropy)
+particle.generate() //=> "1nMLukngZdML6q1r" (short, sortable, practical for non-distributed systems)
 ```

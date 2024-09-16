@@ -94,8 +94,6 @@ class Rando {
         if (!this.includeTimestamp)
             return this.prefix + randomSegment + this.suffix;
         const timestampSegment = this.generateTimestampSegment({ date, randomSegment });
-        // if (this.isDuplicate({ date, randomSegment })) return this.generate()
-        // this.setLast({ date, randomSegment })
         if (this.timestampPosition === 'start') {
             return this.prefix + timestampSegment + this.separator + randomSegment + this.suffix;
         }
@@ -104,8 +102,7 @@ class Rando {
         }
     }
     generateRandomSegment() {
-        const arr = Array.from({ length: this.randomLength }, () => this.alphabet[crypto_1.default.randomInt(this.randomBase)]);
-        return arr.join('');
+        return Array.from({ length: this.randomLength }, () => this.alphabet[crypto_1.default.randomInt(this.randomBase)]).join('');
     }
     obfuscateTimestampSegment({ randomSegment, timestampSegment, }) {
         if (!this.includeTimestamp)
@@ -134,9 +131,8 @@ class Rando {
     generateTimestampSegment({ date = new Date(), randomSegment = '' } = {}) {
         if (!this.includeTimestamp)
             throw new Error('generateTimestampSegment requires including a timestamp.');
-        let timestamp = date.getTime();
         let timestampSegment = '';
-        let remaining = timestamp;
+        let remaining = date.getTime();
         while (remaining > 0 || timestampSegment.length < this.timestampLength) {
             const index = remaining % this.timestampBase;
             timestampSegment = this.timestampAlphabet[index] + timestampSegment;
