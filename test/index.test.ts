@@ -1,8 +1,8 @@
 import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
-import { NUMBERS, BASE_32_CROCKFORD } from '../src/constants'
-import { rando, particle, locker, pinto } from '../src/presets'
+import { NUMBERS, CROCKFORD } from '../src/constants'
+import { rando, particle, locker, pinto, slug } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -59,7 +59,7 @@ test('Date matches after encode and decode with obfuscated timestamp', () => {
     includeTimestamp: true,
     timestampPosition: 'end',
     obfuscateTimestamp: true,
-    timestampAlphabet: BASE_32_CROCKFORD,
+    timestampAlphabet: CROCKFORD,
     separator: '-',
   })
   const id = rando.generate({ date })
@@ -99,6 +99,10 @@ test('Rando preset', () => {
   assert.strictEqual(rando.generate().length, 22)
 })
 
+test('Particle preset', () => {
+  assert.strictEqual(particle.generate().length, 22)
+})
+
 test('Locker preset', () => {
   assert.strictEqual(locker.generate().length, 44)
 })
@@ -107,6 +111,6 @@ test('Pinto preset', () => {
   assert.strictEqual(pinto.generate().length, 6)
 })
 
-test('Particle preset', () => {
-  assert.strictEqual(particle.generate().length, 22)
+test('Slug preset', () => {
+  assert.strictEqual(slug.generate().length, 8)
 })

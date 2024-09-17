@@ -2,15 +2,15 @@
  * Constants
  */
 
+export const PASSWORD = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
+export const BASE_64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
 export const BASE_58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
-export const BASE_64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-export const BASE_64_URL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
+export const CLEAN = '123456789BCDFGHJKLMNPQRSTVWXYZbcdfghjkmnpqrstvwxyz'
+export const CROCKFORD = '0123456789ABCDEFGHJKMNPQRSTVWXYZ'
 export const BASE_32 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
-export const BASE_32_CROCKFORD = '0123456789ABCDEFGHJKMNPQRSTVWXYZ'
 export const HEX = '0123456789abcdef'
 export const NUMBERS = '0123456789'
 export const ACE = 'weruoaszxcvnm'
-export const PASSWORD = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
 
 /**
  * Default timestamp lengths and maximum dates for different bases.
