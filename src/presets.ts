@@ -10,6 +10,13 @@ export const particle = new Rando({
   includeTimestamp: true,
 })
 
+// Tracker (hidden timestamp, can't assume unique)
+export const tracker = new Rando({
+  randomLength: 2,
+  includeTimestamp: true,
+  obfuscateTimestamp: true,
+})
+
 // Locker (creates a secure key with 256 bits of entropy)
 export const locker = new Rando({
   randomLength: 44,

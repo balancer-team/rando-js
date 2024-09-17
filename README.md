@@ -123,9 +123,10 @@ rando.getInfo()
 Rando comes with a few presets to make it easy to generate IDs for common use cases.
 
 ```js
-import { particle, locker, pinto, slug } from '@balancer-team/rando/presets'
+import { particle, tracker, locker, pinto, slug } from '@balancer-team/rando/presets'
 
 particle.generate() //=> "1nMK3pu9oQ8ff2jVtn5PRb" (like a compact UUIDv7)
+tracker.generate() //=> "zmLUmEHtDn" (short, hidden timestamp, can't assume unique)
 locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX" (256 bits)
 pinto.generate() //=> "368230" (for 6-digit pins)
 slug.generate() //=> "D2JRcMd3" (very short, no vowels, can't assume unique)
