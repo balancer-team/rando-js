@@ -1,6 +1,6 @@
 {
   "name": "@balancer-team/rando",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "Generate identifiers with Rando.",
   "main": "dist/index.js",
   "exports": {
