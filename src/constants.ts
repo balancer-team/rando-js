@@ -10,7 +10,7 @@ export const BASE_32 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
 export const CLEAN = '123456789ABCDEFGHJKLMNPQRSTVWXYZ'
 export const HEX = '0123456789abcdef'
 export const NUMBERS = '0123456789'
-export const ACE = 'weruoaszxcvnm'
+export const ACE = 'acemnorsuvwxz'
 
 /**
  * Default timestamp lengths and maximum dates for different bases.
