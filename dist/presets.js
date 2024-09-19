@@ -25,7 +25,7 @@ exports.pinto = new _1.Rando({
     alphabet: constants_1.NUMBERS,
     randomLength: 6,
 });
-// Slug (very short, no vowels, can't assume unique)
+// Slug (very short, can't assume unique)
 exports.slug = new _1.Rando({
     alphabet: constants_1.CLEAN,
     randomLength: 8,

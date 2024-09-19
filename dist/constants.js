@@ -3,13 +3,13 @@
  * Constants
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TIMESTAMP_DEFAULTS = exports.ACE = exports.NUMBERS = exports.HEX = exports.BASE_32 = exports.CROCKFORD = exports.CLEAN = exports.BASE_58 = exports.BASE_64 = exports.PASSWORD = void 0;
+exports.TIMESTAMP_DEFAULTS = exports.ACE = exports.NUMBERS = exports.HEX = exports.CLEAN = exports.BASE_32 = exports.CROCKFORD = exports.BASE_58 = exports.BASE_64 = exports.PASSWORD = void 0;
 exports.PASSWORD = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
 exports.BASE_64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 exports.BASE_58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
-exports.CLEAN = '123456789BCDFGHJKLMNPQRSTVWXYZbcdfghjkmnpqrstvwxyz';
 exports.CROCKFORD = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 exports.BASE_32 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+exports.CLEAN = '123456789ABCDEFGHJKLMNPQRSTVWXYZ';
 exports.HEX = '0123456789abcdef';
 exports.NUMBERS = '0123456789';
 exports.ACE = 'weruoaszxcvnm';

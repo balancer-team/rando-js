@@ -28,7 +28,7 @@ export const pinto = new Rando({
   randomLength: 6,
 })
 
-// Slug (very short, no vowels, can't assume unique)
+// Slug (very short, can't assume unique)
 export const slug = new Rando({
   alphabet: CLEAN,
   randomLength: 8,

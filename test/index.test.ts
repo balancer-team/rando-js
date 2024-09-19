@@ -104,7 +104,6 @@ test('Particle preset', () => {
 })
 
 test('Tracker preset', () => {
-  console.log(tracker.generate())
   assert.strictEqual(tracker.generate().length, 10)
 })
 
