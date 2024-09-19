@@ -129,5 +129,5 @@ particle.generate() //=> "1nMK3pu9oQ8ff2jVtn5PRb" (like a compact UUIDv7)
 tracker.generate() //=> "zmLUmEHtDn" (short, hidden timestamp, can't assume unique)
 locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX" (256 bits)
 pinto.generate() //=> "368230" (for 6-digit pins)
-slug.generate() //=> "WXGYWRW1" (very short, can't assume unique)
+slug.generate() //=> "WXGYWRW1" (short, good readability, can't assume unique)
 ```
