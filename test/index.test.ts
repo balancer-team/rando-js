@@ -6,7 +6,7 @@ import { rando, particle, tracker, locker, pinto, slug } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
-  assert.strictEqual(rando.generate().length, 22)
+  assert.strictEqual(rando.generate().length, 21)
 })
 
 test('Rando with custom length', () => {
@@ -28,20 +28,20 @@ test('Rando with custom alphabet', () => {
 test('Timestamp at start', () => {
   const rando = new Rando({ includeTimestamp: true, timestampPosition: 'start' })
   const id = rando.generate()
-  assert.strictEqual(id.length, 30)
+  assert.strictEqual(id.length, 29)
   assert.strictEqual(id.startsWith('1'), true)
 })
 
 test('Timestamp at end', () => {
   const rando = new Rando({ includeTimestamp: true, timestampPosition: 'end' })
   const id = rando.generate()
-  assert.strictEqual(id.length, 30)
-  assert.strictEqual(id.charAt(22), '1')
+  assert.strictEqual(id.length, 29)
+  assert.strictEqual(id.charAt(21), '1')
 })
 
 test('Date matches after encode and decode with timestamp at start', () => {
   const date = new Date()
-  const rando = new Rando({ includeTimestamp: true, timestampPosition: 'start' })
+  const rando = new Rando({ includeTimestamp: true })
   const id = rando.generate({ date })
   assert.strictEqual(date.getTime(), rando.getDate(id).getTime())
 })
@@ -92,15 +92,15 @@ test('Throws an error if timestamp length is too short', () => {
 
 test('Info returns bits of entropy', () => {
   const rando = new Rando()
-  assert.strictEqual(rando.getInfo().randomEntropy, 128)
+  assert.strictEqual(rando.getInfo().randomEntropy, 123)
 })
 
 test('Rando preset', () => {
-  assert.strictEqual(rando.generate().length, 22)
+  assert.strictEqual(rando.generate().length, 21)
 })
 
 test('Particle preset', () => {
-  assert.strictEqual(particle.generate().length, 22)
+  assert.strictEqual(particle.generate().length, 21)
 })
 
 test('Tracker preset', () => {

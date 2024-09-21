@@ -45,7 +45,7 @@ export class Rando {
   // Constructor
   constructor({
     alphabet = BASE_58,
-    randomLength = 22,
+    randomLength = 21,
     randomAlphabet = undefined,
     includeTimestamp = false,
     obfuscateTimestamp = false,

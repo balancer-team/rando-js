@@ -1,6 +1,6 @@
 # Rando
 
-Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique identifier with 22 characters and 128 bits of entropy. Options can be modified to fit a wide variety of requirements.
+Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique identifier with collision resistance comparable to a UUIDv4. Options can be modified to fit a wide variety of requirements.
 
 ### Install
 
@@ -16,7 +16,7 @@ Import the rando class and create an instance. The instance generates IDs with t
 import { Rando } from '@balancer-team/rando'
 
 const rando = new Rando()
-rando.generate() // => "ogm3Yzf4NSKJsDnL8ma8Xn"
+rando.generate() // => "ogm3Yzf4NSKJsDnL8ma8X" (123 bits of entropy)
 ```
 
 ### Customizing the Length
@@ -25,7 +25,7 @@ If you want a longer random string, for example if you wanted extra entropy for 
 
 ```js
 const rando = new Rando({ length: 44 })
-rando.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44"
+rando.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44" (257 bits of entropy)
 ```
 
 ### Including Timestamps
@@ -34,10 +34,12 @@ Rando can add a timestamp to the beginning or end of an ID. Adding a timestamp t
 
 ```js
 const rando = new Rando({ includeTimestamp: true, separator: '-' })
-rando.generate() //=> "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
+rando.generate()
 
-// "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
-//  |------| |--------------------|
+// Output:
+//
+// "1nN6oZkd-AnxQck8bPqUCzG6S3pEoS"
+//  |------| |-------------------|
 //  Sortable        Random
 //  Segment         Segment
 ```
@@ -45,14 +47,14 @@ rando.generate() //=> "1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp"
 Sortable IDs can easily be decoded to return a date object. Note that the instance doing the decoding must have the same options set as the instance that did the generating.
 
 ```js
-rando.getDate('1nLnXM5B-VUQBxRu1W4Jw6nBkLzhhGp') //=> 2024-09-11T17:51:46.274Z
+rando.getDate('1nN6oZkd-AnxQck8bPqUCzG6S3pEoS').toISOString() //=> 2024-09-21T17:38:44.418Z
 ```
 
 You can conceal the timestamp by obfuscating it. This uses the random segment to calculate an offset to the timestamp segment. This may be useful in situations where you don't want to reveal a predictable order. Obfuscated timestamps can still be decoded for the correct date to handle things like expirations and other time-sensitive operations.
 
 ```js
 const rando = new Rando({ includeTimestamp: true, obfuscateTimestamp: true })
-rando.generate() //=> "NSKJsDnLVUQBxRu1W4Jw6nBkLzhhGp"
+rando.generate() //=> "VGraJhvDodC3w3LoUSeermwccizba"
 ```
 
 ### All Options
@@ -106,15 +108,18 @@ rando.getInfo()
 // {
 //   alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
 //   randomAlphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
-//   randomLength: 22,
-//   includeTimestamp: true,
+//   randomLength: 21,
+//   randomBase: 58,
+//   randomEntropy: 123,
+//   includeTimestamp: false,
 //   obfuscateTimestamp: false,
 //   timestampPosition: 'start',
 //   timestampAlphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
 //   timestampLength: 8,
-//   prefix: '',
-//   separator: '-',
-//   suffix: '',
+//   timestampBase: 58,
+//   timestampMax: 6028-02-27T14:15:18.016Z,
+//   separator: '',
+//   totalLength: 29
 // }
 ```
 
@@ -125,9 +130,15 @@ Rando comes with a few presets to make it easy to generate IDs for common use ca
 ```js
 import { particle, tracker, locker, pinto, slug } from '@balancer-team/rando/presets'
 
-particle.generate() //=> "1nMK3pu9oQ8ff2jVtn5PRb" (like a compact UUIDv7)
+particle.generate() //=> "1nMK3pu9oQ8ff2jVtn5PR"
 tracker.generate() //=> "zmLUmEHtDn" (short, hidden timestamp, can't assume unique)
-locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX" (256 bits)
+locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX" (257 bits)
 pinto.generate() //=> "368230" (for 6-digit pins)
 slug.generate() //=> "A7GYWRH1" (short, good readability, can't assume unique)
 ```
+
+- `particle` generates a sortable ID with 76 bits of entropy, like a compact UUIDv7.
+- `tracker` generates a short ID with a hidden timestamp. Not guaranteed to be unique.
+- `locker` generates a long ID with 257 bits of entropy, suitable for API keys.
+- `pinto` generates a 6-digit pin.
+- `slug` generates a short, human-readable ID using a profanity-resistant alphabet. Not guaranteed to be unique.
