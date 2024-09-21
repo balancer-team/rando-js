@@ -25,12 +25,12 @@ If you want a longer random string, for example if you want extra security for a
 
 ```js
 const rando = new Rando({ randomLength: 44 })
-rando.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44" (257 bits of entropy)
+rando.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44"
 ```
 
 ### Including Timestamps
 
-Rando can add a timestamp to the beginning or end of an ID. Adding a timestamp to the beginning makes the ID lexicographically sortable. Rando will automatically check the `timestampAlphabet` to ensure it only contains unique characters, and that it is lexicographically sorted.
+Rando can add a timestamp to the beginning or end of an ID. Adding a timestamp to the beginning makes the ID lexicographically sortable. Rando will validate the `timestampAlphabet` to ensure it contains unique characters, and that it is lexicographically sorted.
 
 ```js
 const rando = new Rando({ includeTimestamp: true, separator: '-' })
