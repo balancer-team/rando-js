@@ -1,6 +1,6 @@
 # Rando
 
-Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique identifier with collision resistance comparable to a UUIDv4. Options can be modified to fit a wide variety of requirements.
+Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique identifier with slightly more collision resistance than a UUIDv4. Options can be modified to fit a wide variety of requirements.
 
 ### Install
 
