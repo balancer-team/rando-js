@@ -1,6 +1,6 @@
 # Rando
 
-Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique identifier with slightly more collision resistance than a UUIDv4. Options can be modified to fit a wide variety of requirements.
+Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique ID. Options can be modified to fit a wide variety of requirements.
 
 ### Install
 
@@ -8,23 +8,23 @@ Rando is a tool for generating identifiers. By default, `rando()` generates a cr
 npm i @balancer-team/rando
 ```
 
-### Basic Usage
+### Usage
 
-Import the rando class and create an instance. The instance generates IDs with the `generate()` method.
+Import the rando class and create an instance. The instance generates IDs with the `generate()` method. By default, IDs are 21 characters long, use a base 58 alphabet, and have 123 bits of entropy. The default settings provide a good balance of entropy, human-readability, and URL safety, while delivering a compact ID with an extra bit of entropy compared to a UUIDv4.
 
 ```js
 import { Rando } from '@balancer-team/rando'
 
 const rando = new Rando()
-rando.generate() // => "ogm3Yzf4NSKJsDnL8ma8X" (123 bits of entropy)
+rando.generate() // => "ogm3Yzf4NSKJsDnL8ma8X"
 ```
 
 ### Customizing the Length
 
-If you want a longer random string, for example if you wanted extra entropy for an API key, it is easy to modify the length:
+If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 44-character ID with 257 bits of entropy:
 
 ```js
-const rando = new Rando({ length: 44 })
+const rando = new Rando({ randomLength: 44 })
 rando.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44" (257 bits of entropy)
 ```
 
@@ -81,7 +81,7 @@ type RandoOptions = {
 | -------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `alphabet`           | `BASE_58` | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy. |
 | `randomAlphabet`     | `BASE_58` | A string of characters to use to generate the random segment of your IDs. By default, the `alphabet` is used.                                                  |
-| `randomLength`       | `21`      | The output length of the random segment of the ID. By default, the `length` is `21` which provides 123 bits of entropy with a base 58 alphabet.                |
+| `randomLength`       | `21`      | The length of the random segment of the ID. By default, the `randomLength` is `21` which provides 123 bits of entropy with a base 58 alphabet.                 |
 | `includeTimestamp`   | `false`   | Adds a timestamp segment to the beginning or end of the id. By default, the timestamp segment is sortable and uses millisecond precision.                      |
 | `obfuscateTimestamp` | `false`   | Obfuscates the timestamp by adding an offset to the characters in the timestamp segment.                                                                       |
 | `timestampPosition`  | `'start'` | Can be set to `start` or `end` which moves the timestamp segment to the beginning or end of the id, respectively.                                              |
