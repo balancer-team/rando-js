@@ -7,7 +7,7 @@ const constants_1 = require("./constants");
 exports.rando = new _1.Rando();
 // Particle (like a compact UUIDv7 with 6 extra entropy bits)
 exports.particle = new _1.Rando({
-    randomLength: 14,
+    randomLength: 13,
     includeTimestamp: true,
 });
 // Tracker (hidden timestamp, can't assume unique)
@@ -16,7 +16,7 @@ exports.tracker = new _1.Rando({
     includeTimestamp: true,
     obfuscateTimestamp: true,
 });
-// Locker (creates a secure key with 256 bits of entropy)
+// Locker (creates a secure key with 256+ bits of entropy)
 exports.locker = new _1.Rando({
     randomLength: 44,
 });
@@ -25,7 +25,7 @@ exports.pinto = new _1.Rando({
     alphabet: constants_1.NUMBERS,
     randomLength: 6,
 });
-// Slug (very short, can't assume unique)
+// Slug (short, good readability, profanity-resistant alphabet, can't assume unique)
 exports.slug = new _1.Rando({
     alphabet: constants_1.CLEAN,
     randomLength: 8,

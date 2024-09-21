@@ -24,7 +24,7 @@ class Rando {
     separator;
     suffix;
     // Constructor
-    constructor({ alphabet = constants_1.BASE_58, randomLength = 22, randomAlphabet = undefined, includeTimestamp = false, obfuscateTimestamp = false, timestampPosition = 'start', timestampAlphabet = undefined, timestampLength = undefined, prefix = '', separator = '', suffix = '', } = {}) {
+    constructor({ alphabet = constants_1.BASE_58, randomLength = 21, randomAlphabet = undefined, includeTimestamp = false, obfuscateTimestamp = false, timestampPosition = 'start', timestampAlphabet = undefined, timestampLength = undefined, prefix = '', separator = '', suffix = '', } = {}) {
         // Validation logic
         if (typeof alphabet !== 'string' || alphabet.length < 2) {
             throw new Error('alphabet must be at least two characters.');
