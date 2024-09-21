@@ -131,14 +131,14 @@ Rando comes with a few presets to make it easy to generate IDs for common use ca
 import { particle, tracker, locker, pinto, slug } from '@balancer-team/rando/presets'
 
 particle.generate() //=> "1nMK3pu9oQ8ff2jVtn5PR"
-tracker.generate() //=> "zmLUmEHtDn" (short, hidden timestamp, can't assume unique)
-locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX" (257 bits)
-pinto.generate() //=> "368230" (for 6-digit pins)
-slug.generate() //=> "A7GYWRH1" (short, good readability, can't assume unique)
+tracker.generate() //=> "zmLUmEHtDn"
+locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX"
+pinto.generate() //=> "368230"
+slug.generate() //=> "A7GYWRH1"
 ```
 
 - `particle` generates a sortable ID with 76 bits of entropy, like a compact UUIDv7.
-- `tracker` generates a short ID with a hidden timestamp. Not guaranteed to be unique.
+- `tracker` generates a short ID with a hidden timestamp. Not guaranteed unique.
 - `locker` generates a long ID with 257 bits of entropy, suitable for API keys.
 - `pinto` generates a 6-digit pin.
-- `slug` generates a short, human-readable ID using a profanity-resistant alphabet. Not guaranteed to be unique.
+- `slug` generates a short, readable ID using a profanity-resistant alphabet. Not guaranteed unique.
