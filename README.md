@@ -82,6 +82,7 @@ type RandoOptions = {
 | `alphabet`           | `BASE_58` | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy. |
 | `randomAlphabet`     | `BASE_58` | A string of characters to use to generate the random segment of your IDs. By default, the `alphabet` is used.                                                  |
 | `randomLength`       | `21`      | The length of the random segment of the ID. By default, the `randomLength` is `21` which provides 123 bits of entropy with a base 58 alphabet.                 |
+| `requireAllClasses`  | `false`   | Ensures that the random segment of the ID contains at least one character from each character class available in the `randomAlphabet`.                         |
 | `includeTimestamp`   | `false`   | Adds a timestamp segment to the beginning or end of the id. By default, the timestamp segment is sortable and uses millisecond precision.                      |
 | `obfuscateTimestamp` | `false`   | Obfuscates the timestamp by adding an offset to the characters in the timestamp segment.                                                                       |
 | `timestampPosition`  | `'start'` | Can be set to `start` or `end` which moves the timestamp segment to the beginning or end of the id, respectively.                                              |
@@ -141,6 +142,6 @@ slug.generate() //=> "A7GYWRH1"
 - `particle` Sortable ID with 76 bits of entropy, like a compact UUIDv7.
 - `tracker` Short ID with a hidden timestamp. Not guaranteed unique.
 - `locker` Long ID with 257 bits of entropy, suitable for API keys.
-- `sesame` String with all character classes, suitable for passwords.
+- `sesame` String guaranteed to have all character classes for passwords.
 - `pinto` Numerical 6-digit pin.
 - `slug` Short, uppercase ID with profanity-resistant alphabet. Not guaranteed unique.
