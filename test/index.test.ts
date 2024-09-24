@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { NUMBERS, CROCKFORD } from '../src/constants'
-import { rando, particle, tracker, locker, pinto, slug, sesame } from '../src/presets'
+import { rando, particle, locker, pinto, slug, sesame } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -103,10 +103,6 @@ test('Particle preset', () => {
   assert.strictEqual(particle.generate().length, 21)
 })
 
-test('Tracker preset', () => {
-  assert.strictEqual(tracker.generate().length, 10)
-})
-
 test('Locker preset', () => {
   assert.strictEqual(locker.generate().length, 44)
 })
@@ -121,6 +117,8 @@ test('Pinto preset', () => {
   assert.strictEqual(pinto.generate().length, 6)
 })
 
+// Still experimenting with this, combining slug and tracker ideas
 test('Slug preset', () => {
-  assert.strictEqual(slug.generate().length, 8)
+  const id = slug.generate()
+  assert.strictEqual(id.length, 12)
 })

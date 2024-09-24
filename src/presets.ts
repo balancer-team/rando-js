@@ -10,12 +10,12 @@ export const particle = new Rando({
   includeTimestamp: true,
 })
 
-// Tracker (hidden timestamp, can't assume unique)
-export const tracker = new Rando({
-  randomLength: 2,
-  includeTimestamp: true,
-  obfuscateTimestamp: true,
-})
+// // Tracker (hidden timestamp, can't assume unique)
+// export const tracker = new Rando({
+//   randomLength: 2,
+//   includeTimestamp: true,
+//   obfuscateTimestamp: true,
+// })
 
 // Locker (creates a secure key with 256+ bits of entropy)
 export const locker = new Rando({
@@ -35,8 +35,10 @@ export const pinto = new Rando({
   randomLength: 6,
 })
 
-// Slug (short, good readability, profanity-resistant alphabet, can't assume unique)
+// Slug (short, readable, profanity-resistant, hidden timestamp)
 export const slug = new Rando({
   alphabet: CLEAN,
-  randomLength: 8,
+  randomLength: 3,
+  includeTimestamp: true,
+  obfuscateTimestamp: true,
 })
