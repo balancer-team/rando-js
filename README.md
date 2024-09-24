@@ -138,9 +138,9 @@ pinto.generate() //=> "368230"
 slug.generate() //=> "A7GYWRH1"
 ```
 
-- `particle` generates a sortable ID with 76 bits of entropy, like a compact UUIDv7.
-- `tracker` generates a short ID with a hidden timestamp. Not guaranteed unique.
-- `locker` generates a long ID with 257 bits of entropy, suitable for API keys.
-- `sesame` generates a string with all character classes, suitable for passwords.
-- `pinto` generates a 6-digit pin.
-- `slug` generates a short ID using a profanity-resistant alphabet. Not guaranteed unique.
+- `particle` Sortable ID with 76 bits of entropy, like a compact UUIDv7.
+- `tracker` Short ID with a hidden timestamp. Not guaranteed unique.
+- `locker` Long ID with 257 bits of entropy, suitable for API keys.
+- `sesame` String with all character classes, suitable for passwords.
+- `pinto` Numerical 6-digit pin.
+- `slug` Short, uppercase ID with profanity-resistant alphabet. Not guaranteed unique.
