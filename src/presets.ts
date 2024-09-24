@@ -1,5 +1,5 @@
 import { Rando } from './'
-import { NUMBERS, CLEAN } from './constants'
+import { NUMBERS, CLEAN, PASSWORD } from './constants'
 
 // Rando (like a compact UUIDv4 with 6 extra entropy bits)
 export const rando = new Rando()
@@ -20,6 +20,13 @@ export const tracker = new Rando({
 // Locker (creates a secure key with 256+ bits of entropy)
 export const locker = new Rando({
   randomLength: 44,
+})
+
+// Sesame (for passwords)
+export const sesame = new Rando({
+  randomLength: 16,
+  alphabet: PASSWORD,
+  requireAllClasses: true,
 })
 
 // Pin (for verification codes, etc)

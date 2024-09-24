@@ -5,6 +5,7 @@ type RandoOptions = {
   alphabet?: string
   randomAlphabet?: string
   randomLength?: number
+  requireAllClasses?: boolean
   includeTimestamp?: boolean
   obfuscateTimestamp?: boolean
   timestampPosition?: 'start' | 'end'
@@ -31,6 +32,13 @@ export class Rando {
   readonly randomLength: number
   readonly randomBase: number
   readonly randomEntropy: number
+  readonly randomClasses: {
+    lowercase: boolean
+    uppercase: boolean
+    numbers: boolean
+    special: boolean
+  }
+  readonly requireAllClasses: boolean
   readonly includeTimestamp?: boolean
   readonly obfuscateTimestamp: boolean
   readonly timestampPosition: 'start' | 'end'
@@ -47,6 +55,7 @@ export class Rando {
     alphabet = BASE_58,
     randomLength = 21,
     randomAlphabet = undefined,
+    requireAllClasses = false,
     includeTimestamp = false,
     obfuscateTimestamp = false,
     timestampPosition = 'start',
@@ -108,6 +117,8 @@ export class Rando {
     this.randomLength = randomLength
     this.randomBase = this.alphabet.length
     this.randomEntropy = Math.floor(Math.log2(Math.pow(this.randomBase, this.randomLength)))
+    this.randomClasses = this.getClasses(this.randomAlphabet)
+    this.requireAllClasses = requireAllClasses
     this.includeTimestamp = includeTimestamp
     this.obfuscateTimestamp = obfuscateTimestamp
     this.timestampPosition = timestampPosition
@@ -139,8 +150,37 @@ export class Rando {
     }
   }
 
-  generateRandomSegment() {
-    return Array.from({ length: this.randomLength }, () => this.alphabet[crypto.randomInt(this.randomBase)]).join('')
+  getClasses(s: string = this.randomAlphabet) {
+    const classes = {
+      lowercase: false,
+      uppercase: false,
+      numbers: false,
+      special: false,
+    }
+    for (const char of s) {
+      if (char >= 'a' && char <= 'z') classes.lowercase = true
+      else if (char >= 'A' && char <= 'Z') classes.uppercase = true
+      else if (char >= '0' && char <= '9') classes.numbers = true
+      else classes.special = true
+    }
+    return classes
+  }
+
+  hasAllClasses(s: string) {
+    const generatedClasses = this.getClasses(s)
+    return (
+      (!this.randomClasses.lowercase || generatedClasses.lowercase) &&
+      (!this.randomClasses.uppercase || generatedClasses.uppercase) &&
+      (!this.randomClasses.numbers || generatedClasses.numbers) &&
+      (!this.randomClasses.special || generatedClasses.special)
+    )
+  }
+
+  generateRandomSegment(): string {
+    const arr = Array.from({ length: this.randomLength }, () => this.randomAlphabet[crypto.randomInt(this.randomBase)])
+    let s = arr.join('')
+    if (this.requireAllClasses && !this.hasAllClasses(s)) return this.generateRandomSegment()
+    return s
   }
 
   obfuscateTimestampSegment({

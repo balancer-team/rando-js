@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { NUMBERS, CROCKFORD } from '../src/constants'
-import { rando, particle, tracker, locker, pinto, slug } from '../src/presets'
+import { rando, particle, tracker, locker, pinto, slug, sesame } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -109,6 +109,12 @@ test('Tracker preset', () => {
 
 test('Locker preset', () => {
   assert.strictEqual(locker.generate().length, 44)
+})
+
+test('Sesame preset', () => {
+  const password = sesame.generate()
+  assert.strictEqual(sesame.hasAllClasses(password), true)
+  assert.strictEqual(password.length, 16)
 })
 
 test('Pinto preset', () => {

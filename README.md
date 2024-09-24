@@ -128,11 +128,12 @@ rando.getInfo()
 Rando comes with a few presets to make it easy to generate IDs for common use cases.
 
 ```js
-import { particle, tracker, locker, pinto, slug } from '@balancer-team/rando/presets'
+import { particle, tracker, locker, sesame, pinto, slug } from '@balancer-team/rando/presets'
 
 particle.generate() //=> "1nMK3pu9oQ8ff2jVtn5PR"
 tracker.generate() //=> "zmLUmEHtDn"
 locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX"
+sesame.generate() //=> "HBAT?!emDJ)v95ih"
 pinto.generate() //=> "368230"
 slug.generate() //=> "A7GYWRH1"
 ```
@@ -140,5 +141,6 @@ slug.generate() //=> "A7GYWRH1"
 - `particle` generates a sortable ID with 76 bits of entropy, like a compact UUIDv7.
 - `tracker` generates a short ID with a hidden timestamp. Not guaranteed unique.
 - `locker` generates a long ID with 257 bits of entropy, suitable for API keys.
+- `sesame` generates a string with all character classes, suitable for passwords.
 - `pinto` generates a 6-digit pin.
-- `slug` generates a short, readable ID using a profanity-resistant alphabet. Not guaranteed unique.
+- `slug` generates a short ID using a profanity-resistant alphabet. Not guaranteed unique.
