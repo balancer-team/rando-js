@@ -141,7 +141,7 @@ slug.generate() //=> "A7GYWRH1"
 
 - `particle` Sortable ID with 76 bits of entropy, like a compact UUIDv7.
 - `tracker` Short ID with a hidden timestamp. Not guaranteed unique.
-- `locker` Long ID with 257 bits of entropy, suitable for API keys.
-- `sesame` String guaranteed to have all character classes for passwords.
-- `pinto` Numerical 6-digit pin.
+- `locker` Long string with 257 bits of entropy, suitable for API keys.
+- `sesame` Guaranteed to have all character classes for passwords.
+- `pinto` Numerical 6-digit pin for email or phone verification.
 - `slug` Short, uppercase ID with profanity-resistant alphabet. Not guaranteed unique.
