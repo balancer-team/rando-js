@@ -1,317 +1,189 @@
-import crypto from 'crypto'
-import { BASE_58, TIMESTAMP_DEFAULTS } from './constants'
+import { createHmac, randomInt } from 'crypto'
+import { BASE_58, TIMESTAMP_RESOLUTIONS } from './constants'
 
 type RandoOptions = {
   alphabet?: string
-  randomAlphabet?: string
-  randomLength?: number
-  requireAllClasses?: boolean
-  includeTimestamp?: boolean
-  obfuscateTimestamp?: boolean
-  timestampPosition?: 'start' | 'end'
-  timestampAlphabet?: string
-  timestampLength?: number
-  prefix?: string
-  separator?: string
-  suffix?: string
+  length?: number
+  sortable?: boolean
+  sortableTarget?: Date
+  secret?: string
 }
 
 type GenerateOptions = {
   date?: Date
 }
 
-type GenerateTimestampOptions = {
-  date?: Date
-  randomSegment?: string
-}
-
 export class Rando {
   // Properties
   readonly alphabet: string
-  readonly randomAlphabet: string
+  readonly length: number
   readonly randomLength: number
-  readonly randomBase: number
-  readonly randomEntropy: number
-  readonly randomClasses: {
-    lowercase: boolean
-    uppercase: boolean
-    numbers: boolean
-    special: boolean
-  }
-  readonly requireAllClasses: boolean
-  readonly includeTimestamp?: boolean
-  readonly obfuscateTimestamp: boolean
-  readonly timestampPosition: 'start' | 'end'
-  readonly timestampAlphabet: string
-  readonly timestampLength: number
-  readonly timestampBase: number
-  readonly timestampMax: Date
-  readonly prefix: string
-  readonly separator: string
-  readonly suffix: string
+  readonly base: number
+  readonly randomBits: number
+  readonly randomLimit: number
+  readonly sortable: boolean
+  readonly sortableTarget: Date
+  readonly sortableLength: number
+  readonly sortableLimit: Date
+  readonly sortableTrim: number
+  readonly sortableResolution: string
+  private sortableFullLength: number // length of the sortable segment needed to support maximum resolution
+  private signatureFullLength: number // length of the signature segment needed to support maximum signature calc
+  secret?: string
 
   // Constructor
   constructor({
     alphabet = BASE_58,
-    randomLength = 21,
-    randomAlphabet = undefined,
-    requireAllClasses = false,
-    includeTimestamp = false,
-    obfuscateTimestamp = false,
-    timestampPosition = 'start',
-    timestampAlphabet = undefined,
-    timestampLength = undefined,
-    prefix = '',
-    separator = '',
-    suffix = '',
+    length = 21,
+    sortable = false,
+    sortableTarget = new Date(3000, 0, 1),
+    secret = undefined,
   }: RandoOptions = {}) {
     // Validation logic
     if (typeof alphabet !== 'string' || alphabet.length < 2) {
       throw new Error('alphabet must be at least two characters.')
     }
-    if (randomAlphabet && (typeof randomAlphabet !== 'string' || randomAlphabet.length < 2)) {
-      throw new Error('randomAlphabet must be a string or null.')
-    }
-    if (timestampAlphabet && (typeof timestampAlphabet !== 'string' || timestampAlphabet.length < 2)) {
-      throw new Error('timestampAlphabet must be a string or null.')
-    }
+
     const uniqueAlphabet = new Set(alphabet)
     if (uniqueAlphabet.size !== alphabet.length) {
       throw new Error('alphabet must have unique characters.')
     }
-    if (randomAlphabet) {
-      const uniqueRandomAlphabet = new Set(randomAlphabet)
-      if (uniqueRandomAlphabet.size !== randomAlphabet.length) {
-        throw new Error('randomAlphabet must have unique characters.')
-      }
-    }
-    if (timestampAlphabet) {
-      const uniqueTimestampAlphabet = new Set(timestampAlphabet)
-      if (uniqueTimestampAlphabet.size !== timestampAlphabet.length) {
-        throw new Error('timestampAlphabet must have unique characters.')
-      }
-    }
-    if (typeof randomLength !== 'number' || randomLength <= 0) {
-      throw new Error('randomLength must be greater than zero.')
+
+    if (typeof length !== 'number' || length <= 0) {
+      throw new Error('length must be greater than zero.')
     }
 
-    if (timestampPosition && timestampPosition !== 'start' && timestampPosition !== 'end') {
-      throw new Error('includeTimestamp must be "start" or "end".')
+    if (typeof sortable !== 'boolean') {
+      throw new Error('sortable must be a boolean.')
     }
 
-    if (typeof obfuscateTimestamp !== 'boolean') {
-      throw new Error('obfuscateTimestamp must be a boolean.')
+    if (!(sortableTarget instanceof Date)) {
+      throw new Error('sortableTarget must be a Date object.')
     }
 
-    if (typeof separator !== 'string') {
-      throw new Error('separator must be a string.')
+    if (sortableTarget.getTime() < Date.now()) {
+      throw new Error('sortableTarget must be in the future.')
     }
 
-    if (timestampLength && (typeof timestampLength !== 'number' || timestampLength <= 0)) {
-      throw new Error('timestampLength must be greater than zero.')
+    if (secret && typeof secret !== 'string') {
+      throw new Error('secret must be a string or undefined.')
     }
 
-    // Assign properties
-    this.alphabet = alphabet
-    this.randomAlphabet = randomAlphabet ?? alphabet
-    this.randomLength = randomLength
-    this.randomBase = this.alphabet.length
-    this.randomEntropy = Math.floor(Math.log2(Math.pow(this.randomBase, this.randomLength)))
-    this.randomClasses = this.getClasses(this.randomAlphabet)
-    this.requireAllClasses = requireAllClasses
-    this.includeTimestamp = includeTimestamp
-    this.obfuscateTimestamp = obfuscateTimestamp
-    this.timestampPosition = timestampPosition
-    this.timestampAlphabet = timestampAlphabet ?? alphabet
-    this.timestampBase = this.timestampAlphabet.length
-    this.prefix = prefix
-    this.separator = separator
-    this.suffix = suffix
+    // Assign the options
+    this.alphabet = this.sortAlphabet(alphabet)
+    this.length = length
+    this.base = this.alphabet.length
+    this.sortable = sortable
+    this.sortableTarget = sortableTarget
+    this.secret = secret
 
-    // Ensure timestamp.length is at least the default length for the given base
-    const timestampDefaultLength = TIMESTAMP_DEFAULTS[this.timestampBase].length
-    if (timestampLength && timestampLength < timestampDefaultLength) {
-      throw new Error('timestamp.length must be at least the default length for the given base.')
-    }
+    // Length of the sortable segment needed to support the target date at maximum resolution
+    this.sortableFullLength = Math.floor(Math.log(this.sortableTarget.getTime()) / Math.log(this.base)) + 1
 
-    this.timestampLength = timestampLength ?? timestampDefaultLength
-    this.timestampMax = new Date(Math.pow(this.timestampBase, this.timestampLength))
+    // Signature length needed to support the maximum hash value. Numerator is pre-calculated value of 2^256
+    this.signatureFullLength = Math.floor(Math.log(1.157920892373162e77) / Math.log(this.base)) + 1
+
+    // Set the remaining properties
+    this.sortableTrim = Math.max(0, this.sortableFullLength - this.length)
+    this.sortableLength = this.sortable ? Math.min(this.sortableFullLength, this.length) : 0
+    this.sortableLimit = new Date(Math.pow(this.base, this.sortableFullLength))
+    this.randomLength = this.length - this.sortableLength
+    this.randomBits = Math.log2(Math.pow(this.base, this.randomLength))
+    this.randomLimit = Math.round(Math.pow(2, this.randomBits))
+    const lostResolution = Math.pow(this.base, this.sortableTrim)
+    this.sortableResolution =
+      TIMESTAMP_RESOLUTIONS.find((r) => {
+        return r.max >= lostResolution
+      })?.description ?? 'Unknown'
   }
 
   // Methods
   generate({ date = new Date() }: GenerateOptions = {}): string {
     const randomSegment = this.generateRandomSegment()
-    if (!this.includeTimestamp) return this.prefix + randomSegment + this.suffix
-    const timestampSegment = this.generateTimestampSegment({ date, randomSegment })
-    if (this.timestampPosition === 'start') {
-      return this.prefix + timestampSegment + this.separator + randomSegment + this.suffix
-    } else {
-      return this.prefix + randomSegment + this.separator + timestampSegment + this.suffix
-    }
-  }
-
-  getClasses(s: string = this.randomAlphabet) {
-    const classes = {
-      lowercase: false,
-      uppercase: false,
-      numbers: false,
-      special: false,
-    }
-    for (const char of s) {
-      if (char >= 'a' && char <= 'z') classes.lowercase = true
-      else if (char >= 'A' && char <= 'Z') classes.uppercase = true
-      else if (char >= '0' && char <= '9') classes.numbers = true
-      else classes.special = true
-    }
-    return classes
-  }
-
-  hasAllClasses(s: string) {
-    const generatedClasses = this.getClasses(s)
-    return (
-      (!this.randomClasses.lowercase || generatedClasses.lowercase) &&
-      (!this.randomClasses.uppercase || generatedClasses.uppercase) &&
-      (!this.randomClasses.numbers || generatedClasses.numbers) &&
-      (!this.randomClasses.special || generatedClasses.special)
-    )
+    if (!this.sortable) return randomSegment
+    const sortableSegment = this.generateSortableSegment({ date })
+    return sortableSegment + randomSegment
   }
 
   generateRandomSegment(): string {
-    const arr = Array.from({ length: this.randomLength }, () => this.randomAlphabet[crypto.randomInt(this.randomBase)])
-    let s = arr.join('')
-    if (this.requireAllClasses && !this.hasAllClasses(s)) return this.generateRandomSegment()
+    const arr = Array.from({ length: this.randomLength }, () => this.alphabet[randomInt(this.base)])
+    const s = arr.join('')
     return s
   }
 
-  obfuscateTimestampSegment({
-    randomSegment,
-    timestampSegment,
-  }: {
-    randomSegment: string
-    timestampSegment: string
-  }): string {
-    if (!this.includeTimestamp) throw new Error('obfuscateTimestampSegment requires including a timestamp.')
+  generateSortableSegment({ date = new Date() }: GenerateOptions = {}): string {
+    if (!this.sortable) throw new Error('generateSortableSegment requires sortable.')
 
-    const offset = this.generateOffset(randomSegment)
-
-    let obfuscated = ''
-    for (const char of timestampSegment) {
-      let index = this.timestampAlphabet.indexOf(char) + offset
-      index = index % this.timestampBase
-      obfuscated = obfuscated + this.timestampAlphabet[index]
-    }
-    return obfuscated
-  }
-
-  deobfuscateTimestampSegment({
-    randomSegment,
-    timestampSegment,
-  }: {
-    randomSegment: string
-    timestampSegment: string
-  }): string {
-    if (!this.includeTimestamp) throw new Error('deobfuscateTimestampSegment requires including a timestamp.')
-
-    const deoffset = this.timestampBase - this.generateOffset(randomSegment)
-
-    let deobfuscated = ''
-    for (const char of timestampSegment) {
-      let index = this.timestampAlphabet.indexOf(char) + deoffset
-      index = index % this.timestampBase
-      deobfuscated = deobfuscated + this.timestampAlphabet[index]
-    }
-    return deobfuscated
-  }
-
-  generateTimestampSegment({ date = new Date(), randomSegment = '' }: GenerateTimestampOptions = {}): string {
-    if (!this.includeTimestamp) throw new Error('generateTimestampSegment requires including a timestamp.')
-
-    let timestampSegment = ''
+    let sortableSegment = ''
     let remaining = date.getTime()
 
-    while (remaining > 0 || timestampSegment.length < this.timestampLength) {
-      const index = remaining % this.timestampBase
-      timestampSegment = this.timestampAlphabet[index] + timestampSegment
-      remaining = Math.floor(remaining / this.timestampBase)
+    while (remaining > 0 || sortableSegment.length < this.sortableLength) {
+      const i = remaining % this.base
+      sortableSegment = this.alphabet[i] + sortableSegment
+      remaining = Math.floor(remaining / this.base)
     }
 
-    if (this.obfuscateTimestamp) {
-      timestampSegment = this.obfuscateTimestampSegment({ randomSegment, timestampSegment })
+    if (this.sortableTrim > 0) {
+      sortableSegment = sortableSegment.slice(0, -this.sortableTrim)
     }
 
-    return timestampSegment
+    return sortableSegment
   }
 
   getRandomSegment(id: string): string {
-    if (!this.includeTimestamp) throw new Error('getRandomSegment requires including a timestamp.')
-    if (this.prefix) id = id.slice(this.prefix.length)
-    if (this.suffix) id = id.slice(0, -this.suffix.length)
-    if (this.timestampPosition === 'start') id = id.slice(this.timestampLength + this.separator.length)
-    if (this.timestampPosition === 'end') id = id.slice(0, -this.timestampLength - this.separator.length)
-    return id
+    return id.slice(this.sortableLength)
   }
 
-  getTimestampSegment(id: string): string {
-    if (!this.includeTimestamp) throw new Error('getTimestampSegment requires including a timestamp.')
-    if (this.prefix) id = id.slice(this.prefix.length)
-    if (this.suffix) id = id.slice(0, -this.suffix.length)
-    if (this.timestampPosition === 'start') id = id.slice(0, this.timestampLength)
-    if (this.timestampPosition === 'end') id = id.slice(-this.timestampLength)
-    return id
-  }
-
-  generateOffset(randomSegment: string): number {
-    if (!this.includeTimestamp) throw new Error('generateOffset requires including a timestamp.')
-
-    // Sum the indexes
-    let offset = 0
-    for (const char of randomSegment) {
-      offset = offset + this.alphabet.indexOf(char)
-    }
-
-    // Get the modulus of the offset relative to the timestamp base
-    offset = offset % this.timestampBase
-
-    return offset
+  getSortableSegment(id: string): string {
+    if (!this.sortable) throw new Error('getSortableSegment requires including a timestamp.')
+    return id.slice(0, this.sortableLength)
   }
 
   sortAlphabet(alphabet: string): string {
     return alphabet.split('').sort().join('')
   }
 
-  getDate(id: string): Date {
-    if (!this.includeTimestamp) throw new Error('getDate requires including a timestamp.')
+  getDate(id: string): Date | null {
+    if (!this.sortable) return null
 
-    let timestampSegment = this.getTimestampSegment(id)
+    let sortableSegment = this.getSortableSegment(id)
 
-    if (this.obfuscateTimestamp) {
-      const randomSegment = this.getRandomSegment(id)
-      timestampSegment = this.deobfuscateTimestampSegment({ randomSegment, timestampSegment })
+    if (this.sortableTrim > 0) {
+      sortableSegment = sortableSegment.padEnd(this.sortableLength + this.sortableTrim, this.alphabet[0])
     }
 
     let decoded = 0
-    for (let i = 0; i < timestampSegment.length; i++) {
-      decoded = decoded * this.timestampBase + this.timestampAlphabet.indexOf(timestampSegment[i])
+    for (let i = 0; i < sortableSegment.length; i++) {
+      const alphabetIndex = this.alphabet.indexOf(sortableSegment[i])
+      if (alphabetIndex === -1) return null
+      decoded = decoded * this.base + alphabetIndex
     }
     return new Date(decoded)
   }
 
-  getInfo() {
-    return {
-      alphabet: this.alphabet,
-      randomAlphabet: this.randomAlphabet,
-      randomLength: this.randomLength,
-      randomBase: this.randomBase,
-      randomEntropy: this.randomEntropy,
-      includeTimestamp: this.includeTimestamp,
-      obfuscateTimestamp: this.obfuscateTimestamp,
-      timestampPosition: this.timestampPosition,
-      timestampAlphabet: this.timestampAlphabet,
-      timestampLength: this.timestampLength,
-      timestampBase: this.timestampBase,
-      timestampMax: this.timestampMax,
-      separator: this.separator,
-      totalLength: this.timestampLength + this.separator.length + this.randomLength,
+  sign(id: string): string {
+    if (!this.secret) throw new Error('sign requires a secret.')
+    const hash = createHmac('sha256', this.secret).update(id).digest('hex')
+
+    // Convert the hash from base 16 to the base of the alphabet
+    let signature = ''
+    let remaining = BigInt('0x' + hash)
+    while (remaining > 0n) {
+      const i = Number(remaining % BigInt(this.base))
+      signature = this.alphabet[i] + signature
+      remaining = remaining / BigInt(this.base)
     }
+    return id + signature.padStart(this.signatureFullLength, this.alphabet[0])
+  }
+
+  verify(signed: string): string | null {
+    if (!this.secret) throw new Error('verify requires a secret.')
+    const id = signed.slice(0, this.length)
+    if (this.sign(id) === signed) return id
+    return null
   }
 }
+
+// 1nQ3LfZaw2Dky7hVGRF3XGX7zaZmjL3EgiJxYGSVU9HNduMiw7mtGZhyUdNEHMLRRf8QovYyy9
+
+// 1nQ3NtkMUp7SotSsRnYF6Xwhn9z9TK2WcBPJgZPHKyt1LWczHoXcTihT1469k4ww

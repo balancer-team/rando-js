@@ -5,8 +5,9 @@
  *
  * @returns {void}
  */
+
 export function generateTimestampDefaults(): void {
-  const targetTimestamp = new Date('2200-01-01').getTime()
+  const targetTimestamp = new Date('3000-01-01').getTime()
 
   for (let base = 2; base <= 128; base++) {
     // Find the length of a string represntation of a timestamp, given the base
@@ -21,7 +22,7 @@ export function generateTimestampDefaults(): void {
     // Find the maximum date for the given length
     let maxDate = new Date(maxTimestamp)
     // if (maxDate > new Date('9999-12-31')) maxDate = new Date('9999-12-31')
-    const maxDateString = maxDate.toISOString().split('T')[0]
+    // const maxDateString = maxDate.toISOString().split('T')[0]
     const maxYear = maxDate.getFullYear()
     // maxTimestamp = maxDate.getTime()
 

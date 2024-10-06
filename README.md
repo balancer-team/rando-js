@@ -96,7 +96,9 @@ type RandoOptions = {
 
 The `randomLength` and alphabet length together determine how many bits of entropy your ID will have. Using a tool such as a collision calculator, you can adjust these properties as needed to achieve your desired level of entropy.
 
-The `timestampLength` must be long enough to support at least the year 2200. The required minimum length varies depending on the size (or base) of the alphabet. For example, an alphabet size of 10 requires a `timestampLength` of 13, whereas an alphabet size of 64 only requires a `timestampLength` of 8.
+<!-- If the `timestampLength` is not long enough to support at least the year 3000...
+
+The `timestampLength` must be long enough to support at least the year 3000. The required minimum length varies depending on the size (or base) of the alphabet. For example, an alphabet size of 10 requires a `timestampLength` of 13, whereas an alphabet size of 64 only requires a `timestampLength` of 8. -->
 
 You can easily get useful information about any configuration, such as the maximum date is supports, by calling `getInfo()` on your instance.
 
