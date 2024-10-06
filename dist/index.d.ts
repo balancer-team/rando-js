@@ -1,71 +1,38 @@
 type RandoOptions = {
     alphabet?: string;
-    randomAlphabet?: string;
-    randomLength?: number;
-    includeTimestamp?: boolean;
-    obfuscateTimestamp?: boolean;
-    timestampPosition?: 'start' | 'end';
-    timestampAlphabet?: string;
-    timestampLength?: number;
-    prefix?: string;
-    separator?: string;
-    suffix?: string;
+    length?: number;
+    sortable?: boolean;
+    sortableTarget?: Date;
+    secret?: string;
 };
 type GenerateOptions = {
     date?: Date;
 };
-type GenerateTimestampOptions = {
-    date?: Date;
-    randomSegment?: string;
-};
 export declare class Rando {
     readonly alphabet: string;
-    readonly randomAlphabet: string;
+    readonly length: number;
     readonly randomLength: number;
-    readonly randomBase: number;
-    readonly randomEntropy: number;
-    readonly includeTimestamp?: boolean;
-    readonly obfuscateTimestamp: boolean;
-    readonly timestampPosition: 'start' | 'end';
-    readonly timestampAlphabet: string;
-    readonly timestampLength: number;
-    readonly timestampBase: number;
-    readonly timestampMax: Date;
-    readonly prefix: string;
-    readonly separator: string;
-    readonly suffix: string;
-    constructor({ alphabet, randomLength, randomAlphabet, includeTimestamp, obfuscateTimestamp, timestampPosition, timestampAlphabet, timestampLength, prefix, separator, suffix, }?: RandoOptions);
+    readonly base: number;
+    readonly randomBits: number;
+    readonly randomLimit: number;
+    readonly sortable: boolean;
+    readonly sortableTarget: Date;
+    readonly sortableLength: number;
+    readonly sortableLimit: Date;
+    readonly sortableTrim: number;
+    readonly sortableResolution: string;
+    private sortableFullLength;
+    private signatureFullLength;
+    secret?: string;
+    constructor({ alphabet, length, sortable, sortableTarget, secret, }?: RandoOptions);
     generate({ date }?: GenerateOptions): string;
     generateRandomSegment(): string;
-    obfuscateTimestampSegment({ randomSegment, timestampSegment, }: {
-        randomSegment: string;
-        timestampSegment: string;
-    }): string;
-    deobfuscateTimestampSegment({ randomSegment, timestampSegment, }: {
-        randomSegment: string;
-        timestampSegment: string;
-    }): string;
-    generateTimestampSegment({ date, randomSegment }?: GenerateTimestampOptions): string;
+    generateSortableSegment({ date }?: GenerateOptions): string;
     getRandomSegment(id: string): string;
-    getTimestampSegment(id: string): string;
-    generateOffset(randomSegment: string): number;
+    getSortableSegment(id: string): string;
     sortAlphabet(alphabet: string): string;
-    getDate(id: string): Date;
-    getInfo(): {
-        alphabet: string;
-        randomAlphabet: string;
-        randomLength: number;
-        randomBase: number;
-        randomEntropy: number;
-        includeTimestamp: boolean | undefined;
-        obfuscateTimestamp: boolean;
-        timestampPosition: "start" | "end";
-        timestampAlphabet: string;
-        timestampLength: number;
-        timestampBase: number;
-        timestampMax: Date;
-        separator: string;
-        totalLength: number;
-    };
+    getDate(id: string): Date | null;
+    sign(id: string): string;
+    verify(signed: string): string | null;
 }
 export {};
