@@ -2,11 +2,11 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { CLEAN } from '../src/constants'
-import { rando, particle, milk, locker, pinto, trip } from '../src/presets'
+import { rando, particle, locker, pinto } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
-  assert.strictEqual(rando.generate().length, 21)
+  assert.strictEqual(rando.generate().length, 22)
 })
 
 test('Rando with custom length', () => {
@@ -58,7 +58,6 @@ test('Date matches to within 1 hour with trimmed timestamp', () => {
 
 test('Date matches after encode and decode with all options', () => {
   const date = new Date()
-  // console.log(date)
   const rando = new Rando({
     alphabet: CLEAN,
     length: 22,
@@ -72,19 +71,19 @@ test('Date matches after encode and decode with all options', () => {
 
 test('Info returns bits of entropy', () => {
   const rando = new Rando()
-  assert.strictEqual(rando.randomBits, 123.01760089767902)
+  assert.strictEqual(Math.floor(rando.randomBits), 128)
 })
 
 test('Rando preset', () => {
-  assert.strictEqual(rando.generate().length, 21)
+  assert.strictEqual(rando.generate().length, 22)
 })
 
 test('Particle preset', () => {
-  assert.strictEqual(particle.generate().length, 21)
+  particle.secret = 'secret'
+  assert.strictEqual(particle.generate().length, 22)
 })
 
 test('Locker preset', () => {
-  console.log(locker)
   assert.strictEqual(locker.generate().length, 44)
 })
 
@@ -93,29 +92,19 @@ test('Pinto preset', () => {
   assert.strictEqual(/^\d{6}$/.test(pin), true)
 })
 
-test('Trip preset', () => {
-  const code = trip.generate()
-  assert.strictEqual(/^[A-Z0-9]{6}$/.test(code), true)
-})
-
 test('Get invalid date', () => {
   const rando = new Rando({ sortable: true })
   assert.strictEqual(rando.getDate('OIl0'), null)
 })
 
 test('Sign and verify', () => {
-  milk.secret = 'secret'
-  console.log(milk)
-  const id = milk.generate()
-  const signed = milk.sign(id)
-  const verified = milk.verify(signed)
-  console.log(id, signed, verified)
+  rando.secret = 'secret'
+  const id = rando.generate()
+  const signed = rando.sign(id)
+  const verified = rando.verify(signed)
   if (!verified) assert.fail('Verification failed')
-  console.log(milk.getDate(verified))
   assert.strictEqual(verified, id)
 })
-
-// i9m7MCcL1nzi6E2rTyf7qc87MRRpidUrgQfXY8mpcim41BEDni1Mwhvs2TBHZZ5egeBnhx1apfUkmswiv95AbY13
 
 test('Sign and verify fails with modified id', () => {
   particle.secret = 'secret'
@@ -131,7 +120,7 @@ test('Consistent signature length', () => {
   for (let i = 0; i < 100; i++) {
     const id = particle.generate()
     const signed = particle.sign(id)
-    assert.strictEqual(signed.length, 65)
+    assert.strictEqual(signed.length, 66)
   }
 })
 

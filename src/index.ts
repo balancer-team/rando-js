@@ -34,9 +34,9 @@ export class Rando {
   // Constructor
   constructor({
     alphabet = BASE_58,
-    length = 21,
+    length = 22,
     sortable = false,
-    sortableTarget = new Date(3000, 0, 1),
+    sortableTarget = new Date('3000-01-01'),
     secret = undefined,
   }: RandoOptions = {}) {
     // Validation logic

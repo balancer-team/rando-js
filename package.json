@@ -21,13 +21,15 @@
   "repository": "github:balancer-team/rando-js",
   "homepage": "https://www.balancer.team",
   "keywords": [
-    "sid",
-    "lex",
+    "id",
     "uuid",
     "guid",
+    "rando",
     "short",
     "unique",
+    "particle",
     "sortable",
+    "generator",
     "identifier",
     "lexicographic"
   ]
