@@ -62,7 +62,7 @@ test('Date matches after encode and decode with all options', () => {
     alphabet: CLEAN,
     length: 22,
     sortable: true,
-    sortableTarget: new Date('5022-01-01'),
+    supportDate: new Date('5022-01-01'),
     secret: 'secret',
   })
   const id = rando.generate({ date })

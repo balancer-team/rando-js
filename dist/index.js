@@ -12,7 +12,7 @@ class Rando {
     randomBits;
     randomLimit;
     sortable;
-    sortableTarget;
+    supportDate;
     sortableLength;
     sortableLimit;
     sortableTrim;
@@ -21,7 +21,7 @@ class Rando {
     signatureFullLength; // length of the signature segment needed to support maximum signature calc
     secret;
     // Constructor
-    constructor({ alphabet = constants_1.BASE_58, length = 22, sortable = false, sortableTarget = new Date('3000-01-01'), secret = undefined, } = {}) {
+    constructor({ alphabet = constants_1.BASE_58, length = 22, sortable = false, supportDate = new Date('3000-01-01'), secret = undefined, } = {}) {
         // Validation logic
         if (typeof alphabet !== 'string' || alphabet.length < 2) {
             throw new Error('alphabet must be at least two characters.');
@@ -36,11 +36,11 @@ class Rando {
         if (typeof sortable !== 'boolean') {
             throw new Error('sortable must be a boolean.');
         }
-        if (!(sortableTarget instanceof Date)) {
-            throw new Error('sortableTarget must be a Date object.');
+        if (!(supportDate instanceof Date)) {
+            throw new Error('supportDate must be a Date object.');
         }
-        if (sortableTarget.getTime() < Date.now()) {
-            throw new Error('sortableTarget must be in the future.');
+        if (supportDate.getTime() < Date.now()) {
+            throw new Error('supportDate must be in the future.');
         }
         if (secret && typeof secret !== 'string') {
             throw new Error('secret must be a string or undefined.');
@@ -50,10 +50,10 @@ class Rando {
         this.length = length;
         this.base = this.alphabet.length;
         this.sortable = sortable;
-        this.sortableTarget = sortableTarget;
+        this.supportDate = supportDate;
         this.secret = secret;
         // Length of the sortable segment needed to support the target date at maximum resolution
-        this.sortableFullLength = Math.floor(Math.log(this.sortableTarget.getTime()) / Math.log(this.base)) + 1;
+        this.sortableFullLength = Math.floor(Math.log(this.supportDate.getTime()) / Math.log(this.base)) + 1;
         // Signature length needed to support the maximum hash value. Numerator is pre-calculated value of 2^256
         this.signatureFullLength = Math.floor(Math.log(1.157920892373162e77) / Math.log(this.base)) + 1;
         // Set the remaining properties

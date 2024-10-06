@@ -82,22 +82,22 @@ type RandoOptions = {
   alphabet?: string
   length?: number
   sortable?: boolean
-  sortableTarget?: Date
+  supportDate?: Date
   secret?: string
 }
 ```
 
-| Property         | Default      | Description                                                                                                                                                                                                                     |
-| ---------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alphabet`       | `BASE_58`    | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy.                                                                  |
-| `length`         | `22`         | The length of the ID. By default, the `length` is `22` which provides 128 bits of entropy with a base 58 alphabet.                                                                                                              |
-| `sortable`       | `false`      | Makes the ID sortable. With the default base 58 alphabet, the first 8 characters are used to encode a timestamp at millisecond precision.                                                                                       |
-| `sortableTarget` | `3000-01-01` | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                                                                                      |
-| `secret`         | `undefined`  | Provide a secret for the sign and verify methods. The `secret` property can be changed after the instance is created, allowing you to set secrets even on presets. A good signing secret should be at least 32 characters long. |
+| Property      | Default      | Description                                                                                                                                                                                                                     |
+| ------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alphabet`    | `BASE_58`    | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy.                                                                  |
+| `length`      | `22`         | The length of the ID. By default, the `length` is `22` which provides 128 bits of entropy with a base 58 alphabet.                                                                                                              |
+| `sortable`    | `false`      | Makes the ID sortable. With the default base 58 alphabet, the first 8 characters are used to encode a timestamp at millisecond precision.                                                                                       |
+| `supportDate` | `3000-01-01` | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                                                                                      |
+| `secret`      | `undefined`  | Provide a secret for the sign and verify methods. The `secret` property can be changed after the instance is created, allowing you to set secrets even on presets. A good signing secret should be at least 32 characters long. |
 
 ### Special Considerations for Sortable IDs
 
-The `length` and base of the `alphabet` together determine how long the sortable segment must be to support millisecond precision. If the `length` isn't long enough to support millisecond precision, the timestamp precision will be reduced as needed. The `sortableTarget` property allows you to specify a target date for the sortable segment to support. The sortable segment will be left-padded to support the target date as needed.
+The `length` and base of the `alphabet` together determine how long the sortable segment must be to support millisecond precision. If the `length` isn't long enough to support millisecond precision, the timestamp precision will be reduced as needed. The `supportDate` property allows you to specify a target date for the sortable segment to support. The sortable segment will be left-padded to support the target date as needed.
 
 Note that making an ID sortable will reduce the number of random characters in the ID. If you `console.log` the Rando instance, you will see several helpful properties that can help you determine whether or not the ID meets your requirements.
 
@@ -113,7 +113,7 @@ const rando = new Rando({ sortable: true, secret: 'secret' })
 //   randomBits: 82.01173393178601,
 //   randomLimit: 4.875194084160305e+24,
 //   sortable: true,
-//   sortableTarget: 3000-01-01T05:00:00.000Z,
+//   supportDate: 3000-01-01T05:00:00.000Z,
 //   sortableLength: 8,
 //   sortableLimit: 6028-02-27T14:15:18.016Z,
 //   sortableTrim: 0,

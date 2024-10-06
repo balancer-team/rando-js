@@ -5,7 +5,7 @@ type RandoOptions = {
   alphabet?: string
   length?: number
   sortable?: boolean
-  sortableTarget?: Date
+  supportDate?: Date
   secret?: string
 }
 
@@ -22,7 +22,7 @@ export class Rando {
   readonly randomBits: number
   readonly randomLimit: number
   readonly sortable: boolean
-  readonly sortableTarget: Date
+  readonly supportDate: Date
   readonly sortableLength: number
   readonly sortableLimit: Date
   readonly sortableTrim: number
@@ -36,7 +36,7 @@ export class Rando {
     alphabet = BASE_58,
     length = 22,
     sortable = false,
-    sortableTarget = new Date('3000-01-01'),
+    supportDate = new Date('3000-01-01'),
     secret = undefined,
   }: RandoOptions = {}) {
     // Validation logic
@@ -57,12 +57,12 @@ export class Rando {
       throw new Error('sortable must be a boolean.')
     }
 
-    if (!(sortableTarget instanceof Date)) {
-      throw new Error('sortableTarget must be a Date object.')
+    if (!(supportDate instanceof Date)) {
+      throw new Error('supportDate must be a Date object.')
     }
 
-    if (sortableTarget.getTime() < Date.now()) {
-      throw new Error('sortableTarget must be in the future.')
+    if (supportDate.getTime() < Date.now()) {
+      throw new Error('supportDate must be in the future.')
     }
 
     if (secret && typeof secret !== 'string') {
@@ -74,11 +74,11 @@ export class Rando {
     this.length = length
     this.base = this.alphabet.length
     this.sortable = sortable
-    this.sortableTarget = sortableTarget
+    this.supportDate = supportDate
     this.secret = secret
 
     // Length of the sortable segment needed to support the target date at maximum resolution
-    this.sortableFullLength = Math.floor(Math.log(this.sortableTarget.getTime()) / Math.log(this.base)) + 1
+    this.sortableFullLength = Math.floor(Math.log(this.supportDate.getTime()) / Math.log(this.base)) + 1
 
     // Signature length needed to support the maximum hash value. Numerator is pre-calculated value of 2^256
     this.signatureFullLength = Math.floor(Math.log(1.157920892373162e77) / Math.log(this.base)) + 1

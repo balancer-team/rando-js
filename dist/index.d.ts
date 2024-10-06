@@ -2,7 +2,7 @@ type RandoOptions = {
     alphabet?: string;
     length?: number;
     sortable?: boolean;
-    sortableTarget?: Date;
+    supportDate?: Date;
     secret?: string;
 };
 type GenerateOptions = {
@@ -16,7 +16,7 @@ export declare class Rando {
     readonly randomBits: number;
     readonly randomLimit: number;
     readonly sortable: boolean;
-    readonly sortableTarget: Date;
+    readonly supportDate: Date;
     readonly sortableLength: number;
     readonly sortableLimit: Date;
     readonly sortableTrim: number;
@@ -24,7 +24,7 @@ export declare class Rando {
     private sortableFullLength;
     private signatureFullLength;
     secret?: string;
-    constructor({ alphabet, length, sortable, sortableTarget, secret, }?: RandoOptions);
+    constructor({ alphabet, length, sortable, supportDate, secret, }?: RandoOptions);
     generate({ date }?: GenerateOptions): string;
     generateRandomSegment(): string;
     generateSortableSegment({ date }?: GenerateOptions): string;

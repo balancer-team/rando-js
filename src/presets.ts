@@ -1,5 +1,5 @@
 import { Rando } from './'
-import { NUMBERS, CLEAN } from './constants'
+import { NUMBERS } from './constants'
 
 // Rando (like a compact UUIDv4)
 export const rando = new Rando()
