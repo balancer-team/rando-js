@@ -129,7 +129,7 @@ const rando = new Rando({ sortable: true, secret: 'secret' })
 Rando comes with a few presets to make it easy to generate IDs for common use cases.
 
 ```js
-import { rando, particle, locker, pinto, trip } from '@balancer-team/rando/presets'
+import { rando, particle, locker, pinto } from '@balancer-team/rando/presets'
 
 rando.generate() //=> "ogm3Yzf4NnSKJsDnL8ma8X"
 particle.generate() //=> "1nMK3pu9oQ8ff2jVutn5PR"
