@@ -139,7 +139,7 @@ slug.generate() //=> "gD75nvxqV43y"
 ```
 
 - `rando` Default settings with 128 bits of entropy, like a compact UUIDv4.
-- `particle` Sortable ID with 82 bits of entropy, like a compact UUIDv7.
+- `particle` Sortable ID with over 80 bits of entropy, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
 - `pinto` Numerical 6-digit pin for email or phone verification.
 - `slug` Short, no vowels, over 64 bits of entropy. Not guaranteed unique.
