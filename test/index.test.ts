@@ -94,7 +94,7 @@ test('Pinto preset', () => {
 })
 
 test('Slug preset', () => {
-  assert.strictEqual(slug.generate().length, 8)
+  assert.strictEqual(slug.generate().length, 12)
 })
 
 test('Get invalid date', () => {

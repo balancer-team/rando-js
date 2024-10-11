@@ -20,6 +20,6 @@ exports.pinto = new _1.Rando({
 });
 // Slug (prioritize shortness, not guaranteed unique)
 exports.slug = new _1.Rando({
-    sortable: true,
-    length: 8,
+    alphabet: constants_1.CLEAN,
+    length: 12,
 });
