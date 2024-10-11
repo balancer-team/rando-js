@@ -64,10 +64,7 @@ class Rando {
         this.randomBits = Math.log2(Math.pow(this.base, this.randomLength));
         this.randomLimit = Math.round(Math.pow(2, this.randomBits));
         const lostResolution = Math.pow(this.base, this.sortableTrim);
-        this.sortableResolution =
-            constants_1.TIMESTAMP_RESOLUTIONS.find((r) => {
-                return r.max >= lostResolution;
-            })?.description ?? 'Unknown';
+        this.sortableResolution = constants_1.RESOLUTIONS.find((r) => r.max >= lostResolution)?.description ?? 'Unknown';
     }
     // Methods
     generate({ date = new Date() } = {}) {
@@ -110,6 +107,8 @@ class Rando {
     }
     getDate(id) {
         if (!this.sortable)
+            return null;
+        if (id.length < this.sortableLength)
             return null;
         let sortableSegment = this.getSortableSegment(id);
         if (this.sortableTrim > 0) {

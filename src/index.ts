@@ -1,5 +1,5 @@
 import { createHmac, randomInt } from 'crypto'
-import { BASE_58, TIMESTAMP_RESOLUTIONS } from './constants'
+import { BASE_58, RESOLUTIONS } from './constants'
 
 type RandoOptions = {
   alphabet?: string
@@ -91,10 +91,7 @@ export class Rando {
     this.randomBits = Math.log2(Math.pow(this.base, this.randomLength))
     this.randomLimit = Math.round(Math.pow(2, this.randomBits))
     const lostResolution = Math.pow(this.base, this.sortableTrim)
-    this.sortableResolution =
-      TIMESTAMP_RESOLUTIONS.find((r) => {
-        return r.max >= lostResolution
-      })?.description ?? 'Unknown'
+    this.sortableResolution = RESOLUTIONS.find((r) => r.max >= lostResolution)?.description ?? 'Unknown'
   }
 
   // Methods
@@ -145,6 +142,7 @@ export class Rando {
 
   getDate(id: string): Date | null {
     if (!this.sortable) return null
+    if (id.length < this.sortableLength) return null
 
     let sortableSegment = this.getSortableSegment(id)
 

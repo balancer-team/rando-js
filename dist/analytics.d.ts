@@ -5,4 +5,4 @@
  *
  * @returns {void}
  */
-export declare function generateTimestampDefaults(): void;
+export declare function generateSortableGuidance(): void;

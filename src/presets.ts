@@ -19,3 +19,9 @@ export const pinto = new Rando({
   alphabet: NUMBERS,
   length: 6,
 })
+
+// Slug (prioritize shortness, not guaranteed unique)
+export const slug = new Rando({
+  sortable: true,
+  length: 8,
+})

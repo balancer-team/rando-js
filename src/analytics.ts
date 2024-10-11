@@ -6,10 +6,12 @@
  * @returns {void}
  */
 
-export function generateTimestampDefaults(): void {
+export function generateSortableGuidance(): void {
   const targetTimestamp = new Date('3000-01-01').getTime()
 
-  for (let base = 2; base <= 128; base++) {
+  console.log('|Base|Length|Max Year|')
+  console.log('|---|---|---|')
+  for (let base = 2; base <= 64; base++) {
     // Find the length of a string represntation of a timestamp, given the base
     let length = 1
     let maxTimestamp = Math.pow(base, length)
@@ -26,6 +28,6 @@ export function generateTimestampDefaults(): void {
     const maxYear = maxDate.getFullYear()
     // maxTimestamp = maxDate.getTime()
 
-    console.log(`${base}: { length: ${length}, timestamp: ${maxTimestamp}, year: ${maxYear} },`)
+    console.log(`|${base}|${length}|${maxYear}|`)
   }
 }

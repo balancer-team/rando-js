@@ -7,10 +7,12 @@
  * @returns {void}
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateTimestampDefaults = generateTimestampDefaults;
-function generateTimestampDefaults() {
+exports.generateSortableGuidance = generateSortableGuidance;
+function generateSortableGuidance() {
     const targetTimestamp = new Date('3000-01-01').getTime();
-    for (let base = 2; base <= 128; base++) {
+    console.log('|Base|Length|Max Year|');
+    console.log('|---|---|---|');
+    for (let base = 2; base <= 64; base++) {
         // Find the length of a string represntation of a timestamp, given the base
         let length = 1;
         let maxTimestamp = Math.pow(base, length);
@@ -24,6 +26,6 @@ function generateTimestampDefaults() {
         // const maxDateString = maxDate.toISOString().split('T')[0]
         const maxYear = maxDate.getFullYear();
         // maxTimestamp = maxDate.getTime()
-        console.log(`${base}: { length: ${length}, timestamp: ${maxTimestamp}, year: ${maxYear} },`);
+        console.log(`|${base}|${length}|${maxYear}|`);
     }
 }

@@ -2,7 +2,8 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { CLEAN } from '../src/constants'
-import { rando, particle, locker, pinto } from '../src/presets'
+import { rando, particle, locker, pinto, slug } from '../src/presets'
+import { generateSortableGuidance } from '../src/analytics'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -92,6 +93,10 @@ test('Pinto preset', () => {
   assert.strictEqual(/^\d{6}$/.test(pin), true)
 })
 
+test('Slug preset', () => {
+  assert.strictEqual(slug.generate().length, 8)
+})
+
 test('Get invalid date', () => {
   const rando = new Rando({ sortable: true })
   assert.strictEqual(rando.getDate('OIl0'), null)
@@ -123,7 +128,3 @@ test('Consistent signature length', () => {
     assert.strictEqual(signed.length, 66)
   }
 })
-
-// 1nQ3QwweyBLj9jBkiTwdv3Hz5MTP4Y6xeT8PecWn3Mq86qXECXsLpJUZwC4yBBjau
-// 1nQ3QwweyBLj9jBkiTwdv
-// 1nQ3USWjGLi9VBFoBvutTWqBt41bA5Bovry3Vt72UrxP29ALowcQW7sstjnsAyG4BQXM1wjsVt9KyznFJUZaJ2BB

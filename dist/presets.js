@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pinto = exports.locker = exports.particle = exports.rando = void 0;
+exports.slug = exports.pinto = exports.locker = exports.particle = exports.rando = void 0;
 const _1 = require("./");
 const constants_1 = require("./constants");
 // Rando (like a compact UUIDv4)
@@ -17,4 +17,9 @@ exports.locker = new _1.Rando({
 exports.pinto = new _1.Rando({
     alphabet: constants_1.NUMBERS,
     length: 6,
+});
+// Slug (prioritize shortness, not guaranteed unique)
+exports.slug = new _1.Rando({
+    sortable: true,
+    length: 8,
 });
