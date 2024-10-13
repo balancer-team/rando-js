@@ -135,14 +135,14 @@ rando.generate() //=> "ogm3Yzf4NnSKJsDnL8ma8X"
 particle.generate() //=> "1nMK3pu9oQ8ff2jVutn5PR"
 locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX"
 pinto.generate() //=> "368230"
-slug.generate() //=> "gD75nvxqV43y"
+slug.generate() //=> "gD75nv"
 ```
 
-- `rando` Default settings with 128 bits of entropy, like a compact UUIDv4.
+- `rando` Default settings with over 128 bits of entropy, like a compact UUIDv4.
 - `particle` Sortable ID with over 80 bits of entropy, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
 - `pinto` Numerical 6-digit pin for email or phone verification.
-- `slug` Short, no vowels, over 64 bits of entropy. Not guaranteed unique.
+- `slug` Short, no vowels, over 32 bits of entropy.
 
 ### Guidance for Sortable IDs
 
