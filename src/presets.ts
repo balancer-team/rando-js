@@ -1,5 +1,5 @@
 import { Rando } from './'
-import { NUMBERS, CLEAN } from './constants'
+import { NUMBERS, BASE_50 } from './constants'
 
 // Rando (like a compact UUIDv4)
 export const rando = new Rando()
@@ -22,6 +22,6 @@ export const pinto = new Rando({
 
 // Slug (prioritize shortness, not guaranteed unique)
 export const slug = new Rando({
-  alphabet: CLEAN,
+  alphabet: BASE_50,
   length: 6,
 })

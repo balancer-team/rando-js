@@ -1,9 +1,8 @@
 import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
-import { CLEAN } from '../src/constants'
+import { BASE_50 } from '../src/constants'
 import { rando, particle, locker, pinto, slug } from '../src/presets'
-import { generateSortableGuidance } from '../src/analytics'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -37,7 +36,7 @@ test('Date matches after encode and decode with custom alphabet', () => {
   const date = new Date()
   const rando = new Rando({
     sortable: true,
-    alphabet: CLEAN,
+    alphabet: BASE_50,
   })
   const id = rando.generate({ date })
   assert.strictEqual(date.getTime(), rando.getDate(id)?.getTime())
@@ -46,7 +45,7 @@ test('Date matches after encode and decode with custom alphabet', () => {
 test('Date matches to within 1 hour with trimmed timestamp', () => {
   const date = new Date()
   const rando = new Rando({
-    alphabet: CLEAN,
+    alphabet: BASE_50,
     sortable: true,
     length: 5,
   })
@@ -60,7 +59,7 @@ test('Date matches to within 1 hour with trimmed timestamp', () => {
 test('Date matches after encode and decode with all options', () => {
   const date = new Date()
   const rando = new Rando({
-    alphabet: CLEAN,
+    alphabet: BASE_50,
     length: 22,
     sortable: true,
     supportDate: new Date('5022-01-01'),

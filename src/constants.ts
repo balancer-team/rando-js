@@ -5,8 +5,8 @@
 export const PASSWORD = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$%^&+-*/=(){}[]~|:;<>,._'
 export const BASE_64_URL = '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
 export const BASE_58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
-export const CLEAN = '123456789BCDFGHJKLMNPQRSTVWXYZbcdfghjkmnpqrstvwxyz'
-export const CLEAN_32 = '123456789ABCDEFGHJKLMNPQRSTVWXYZ'
+export const BASE_50 = '123456789BCDFGHJKLMNPQRSTVWXYZbcdfghjkmnpqrstvwxyz' // No vowels or ambiguous characters
+export const BASE_29 = '123456789BCDFGHJKLMNPRSTVWXYZ' // All caps, no vowels or ambiguous characters.
 export const HEX = '0123456789abcdef'
 export const NUMBERS = '0123456789'
 
