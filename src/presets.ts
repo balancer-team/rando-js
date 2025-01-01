@@ -20,7 +20,7 @@ export const pinto = new Rando({
   length: 6,
 })
 
-// Slug (prioritize shortness, not guaranteed unique)
+// Slug (prioritizes shortness, over 32 bits of entropy)
 export const slug = new Rando({
   alphabet: BASE_50,
   length: 6,
