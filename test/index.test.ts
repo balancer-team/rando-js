@@ -100,30 +100,3 @@ test('Get invalid date', () => {
   const rando = new Rando({ sortable: true })
   assert.strictEqual(rando.getDate('OIl0'), null)
 })
-
-test('Sign and verify', () => {
-  rando.secret = 'secret'
-  const id = rando.generate()
-  const signed = rando.sign(id)
-  const verified = rando.verify(signed)
-  if (!verified) assert.fail('Verification failed')
-  assert.strictEqual(verified, id)
-})
-
-test('Sign and verify fails with modified id', () => {
-  particle.secret = 'secret'
-  const id = particle.generate()
-  let signed = particle.sign(id)
-  signed = 3 + signed.slice(1)
-  const verified = particle.verify(signed)
-  assert.strictEqual(verified, null)
-})
-
-test('Consistent signature length', () => {
-  particle.secret = 'secret'
-  for (let i = 0; i < 100; i++) {
-    const id = particle.generate()
-    const signed = particle.sign(id)
-    assert.strictEqual(signed.length, 66)
-  }
-})

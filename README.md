@@ -50,29 +50,6 @@ Sortable IDs can easily be decoded to return a date object. Note that the instan
 rando.getDate('1nN6oZkdAnxQck8bPqUCzG').toISOString() //=> 2024-09-21T17:38:44.418Z
 ```
 
-### Signed IDs
-
-You can add a signature to the end of an ID to verify its authenticity. This is useful for preventing tampering with the ID and stopping brute-force attempts at guessing IDs, since verification can be handled by your server instead of your database. The signature is generated using the HMAC algorithm with the SHA-256 hash function. The signature is encoded using the same alphabet as the random segment, and the length of the signature will vary depending on the base of the `alphabet`. Longer alphabets will result in shorter signatures.
-
-```js
-// Generate the ID and sign it
-const rando = new Rando({ secret: 'secret' }) // Use a secure secret, of course
-const id = rando.generate() //=> "2VRw9zT8EHVFdxnzSXremp"
-const signed = rando.sign(id) //=> "2VRw9zT8EHVFdxnzSXrempDPvgBzGv9RiGbLnUnQ8X2qPGbuYUzH1exnSnfKFVWrXM"
-
-// Verify the signature
-const verified = rando.verify(signed) //=> "2VRw9zT8EHVFdxnzSXremp"
-
-// Handling the result
-if (verified) {
-  console.log(verified) //=> "2VRw9zT8EHVFdxnzSXremp"
-} else {
-  console.log(verified) //=> null
-}
-```
-
-The verify method will return the original ID if the signature is valid, or `null` if the signature is invalid.
-
 ### All Options
 
 Rando instances can be extensively customized to generate the perfect identifier for your requirements. Here's the type definition of all available options, with details below:

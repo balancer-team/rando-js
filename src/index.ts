@@ -1,4 +1,4 @@
-import { createHmac, randomInt } from 'crypto'
+import { randomInt } from './random-int'
 import { BASE_58, RESOLUTIONS } from './constants'
 
 type RandoOptions = {
@@ -28,7 +28,6 @@ export class Rando {
   readonly sortableTrim: number
   readonly sortableResolution: string
   private sortableFullLength: number // length of the sortable segment needed to support maximum resolution
-  private signatureFullLength: number // length of the signature segment needed to support maximum signature calc
   secret?: string
 
   // Constructor
@@ -79,9 +78,6 @@ export class Rando {
 
     // Length of the sortable segment needed to support the target date at maximum resolution
     this.sortableFullLength = Math.floor(Math.log(this.supportDate.getTime()) / Math.log(this.base)) + 1
-
-    // Signature length needed to support the maximum hash value. Numerator is pre-calculated value of 2^256
-    this.signatureFullLength = Math.floor(Math.log(1.157920892373162e77) / Math.log(this.base)) + 1
 
     // Set the remaining properties
     this.sortableTrim = Math.max(0, this.sortableFullLength - this.length)
@@ -157,27 +153,5 @@ export class Rando {
       decoded = decoded * this.base + alphabetIndex
     }
     return new Date(decoded)
-  }
-
-  sign(id: string): string {
-    if (!this.secret) throw new Error('sign requires a secret.')
-    const hash = createHmac('sha256', this.secret).update(id).digest('hex')
-
-    // Convert the hash from base 16 to the base of the alphabet
-    let signature = ''
-    let remaining = BigInt('0x' + hash)
-    while (remaining > 0n) {
-      const i = Number(remaining % BigInt(this.base))
-      signature = this.alphabet[i] + signature
-      remaining = remaining / BigInt(this.base)
-    }
-    return id + signature.padStart(this.signatureFullLength, this.alphabet[0])
-  }
-
-  verify(signed: string): string | null {
-    if (!this.secret) throw new Error('verify requires a secret.')
-    const id = signed.slice(0, this.length)
-    if (this.sign(id) === signed) return id
-    return null
   }
 }
