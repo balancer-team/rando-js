@@ -18,8 +18,8 @@ exports.pinto = new _1.Rando({
     alphabet: constants_1.NUMBERS,
     length: 6,
 });
-// Slug (prioritize shortness, not guaranteed unique)
+// Slug (prioritizes shortness, over 32 bits of entropy)
 exports.slug = new _1.Rando({
-    alphabet: constants_1.CLEAN,
+    alphabet: constants_1.BASE_50,
     length: 6,
 });

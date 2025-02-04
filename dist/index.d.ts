@@ -22,7 +22,6 @@ export declare class Rando {
     readonly sortableTrim: number;
     readonly sortableResolution: string;
     private sortableFullLength;
-    private signatureFullLength;
     secret?: string;
     constructor({ alphabet, length, sortable, supportDate, secret, }?: RandoOptions);
     generate({ date }?: GenerateOptions): string;
@@ -32,7 +31,5 @@ export declare class Rando {
     getSortableSegment(id: string): string;
     sortAlphabet(alphabet: string): string;
     getDate(id: string): Date | null;
-    sign(id: string): string;
-    verify(signed: string): string | null;
 }
 export {};
