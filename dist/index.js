@@ -69,7 +69,7 @@ class Rando {
         if (!this.sortable)
             return randomSegment;
         const sortableSegment = this.generateSortableSegment({ date });
-        return sortableSegment + randomSegment + '-TEST';
+        return sortableSegment + randomSegment;
     }
     generateRandomSegment() {
         const arr = Array.from({ length: this.randomLength }, () => this.alphabet[(0, rng_1.rng)(this.base)]);
