@@ -95,7 +95,7 @@ export class Rando {
     const randomSegment = this.generateRandomSegment()
     if (!this.sortable) return randomSegment
     const sortableSegment = this.generateSortableSegment({ date })
-    return sortableSegment + randomSegment + '-TEST'
+    return sortableSegment + randomSegment
   }
 
   generateRandomSegment(): string {
