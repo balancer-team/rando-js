@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rando = void 0;
-const random_int_1 = require("./random-int");
+const rng_1 = require("./rng");
 const constants_1 = require("./constants");
 class Rando {
     // Properties
@@ -69,10 +69,10 @@ class Rando {
         if (!this.sortable)
             return randomSegment;
         const sortableSegment = this.generateSortableSegment({ date });
-        return sortableSegment + randomSegment;
+        return sortableSegment + randomSegment + '-TEST';
     }
     generateRandomSegment() {
-        const arr = Array.from({ length: this.randomLength }, () => this.alphabet[(0, random_int_1.randomInt)(this.base)]);
+        const arr = Array.from({ length: this.randomLength }, () => this.alphabet[(0, rng_1.rng)(this.base)]);
         const s = arr.join('');
         return s;
     }

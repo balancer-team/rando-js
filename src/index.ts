@@ -1,4 +1,4 @@
-import { randomInt } from './random-int'
+import { rng } from './rng'
 import { BASE_58, RESOLUTIONS } from './constants'
 
 type RandoOptions = {
@@ -95,11 +95,11 @@ export class Rando {
     const randomSegment = this.generateRandomSegment()
     if (!this.sortable) return randomSegment
     const sortableSegment = this.generateSortableSegment({ date })
-    return sortableSegment + randomSegment
+    return sortableSegment + randomSegment + '-TEST'
   }
 
   generateRandomSegment(): string {
-    const arr = Array.from({ length: this.randomLength }, () => this.alphabet[randomInt(this.base)])
+    const arr = Array.from({ length: this.randomLength }, () => this.alphabet[rng(this.base)])
     const s = arr.join('')
     return s
   }
