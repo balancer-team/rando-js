@@ -96,7 +96,6 @@ const rando = new Rando({ sortable: true, secret: 'secret' })
 //   sortableTrim: 0,
 //   sortableResolution: '1 millisecond',
 //   sortableFullLength: 8,
-//   signatureFullLength: 44,
 //   secret: 'secret'
 // }
 ```
