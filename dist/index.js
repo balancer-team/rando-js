@@ -18,9 +18,8 @@ class Rando {
     sortableTrim;
     sortableResolution;
     sortableFullLength; // length of the sortable segment needed to support maximum resolution
-    secret;
     // Constructor
-    constructor({ alphabet = constants_1.BASE_58, length = 22, sortable = false, supportDate = new Date('3000-01-01'), secret = undefined, } = {}) {
+    constructor({ alphabet = constants_1.BASE_58, length = 22, sortable = false, supportDate = new Date('3000-01-01'), } = {}) {
         // Validation logic
         if (typeof alphabet !== 'string' || alphabet.length < 2) {
             throw new Error('alphabet must be at least two characters.');
@@ -41,16 +40,12 @@ class Rando {
         if (supportDate.getTime() < Date.now()) {
             throw new Error('supportDate must be in the future.');
         }
-        if (secret && typeof secret !== 'string') {
-            throw new Error('secret must be a string or undefined.');
-        }
         // Assign the options
         this.alphabet = this.sortAlphabet(alphabet);
         this.length = length;
         this.base = this.alphabet.length;
         this.sortable = sortable;
         this.supportDate = supportDate;
-        this.secret = secret;
         // Length of the sortable segment needed to support the target date at maximum resolution
         this.sortableFullLength = Math.floor(Math.log(this.supportDate.getTime()) / Math.log(this.base)) + 1;
         // Set the remaining properties
