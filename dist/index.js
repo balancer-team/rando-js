@@ -15,9 +15,6 @@ class Rando {
     supportDate;
     sortableLength;
     sortableLimit;
-    sortableTrim;
-    sortableResolution;
-    sortableFullLength; // length of the sortable segment needed to support maximum resolution
     // Constructor
     constructor({ alphabet = constants_1.BASE_58, length = 22, sortable = false, supportDate = new Date('3000-01-01'), } = {}) {
         // Validation logic
@@ -47,16 +44,15 @@ class Rando {
         this.sortable = sortable;
         this.supportDate = supportDate;
         // Length of the sortable segment needed to support the target date at maximum resolution
-        this.sortableFullLength = Math.floor(Math.log(this.supportDate.getTime()) / Math.log(this.base)) + 1;
+        this.sortableLength = this.sortable ? Math.floor(Math.log(this.supportDate.getTime()) / Math.log(this.base)) + 1 : 0;
+        if (this.sortableLength > this.length) {
+            throw new Error('length insufficient for sortable segment.');
+        }
         // Set the remaining properties
-        this.sortableTrim = Math.max(0, this.sortableFullLength - this.length);
-        this.sortableLength = this.sortable ? Math.min(this.sortableFullLength, this.length) : 0;
-        this.sortableLimit = new Date(Math.pow(this.base, this.sortableFullLength));
+        this.sortableLimit = new Date(Math.pow(this.base, this.sortableLength));
         this.randomLength = this.length - this.sortableLength;
         this.randomBits = Math.log2(Math.pow(this.base, this.randomLength));
         this.randomLimit = Math.round(Math.pow(2, this.randomBits));
-        const lostResolution = Math.pow(this.base, this.sortableTrim);
-        this.sortableResolution = constants_1.RESOLUTIONS.find((r) => r.max >= lostResolution)?.description ?? 'Unknown';
     }
     // Methods
     generate({ date = new Date() } = {}) {
@@ -81,9 +77,6 @@ class Rando {
             sortableSegment = this.alphabet[i] + sortableSegment;
             remaining = Math.floor(remaining / this.base);
         }
-        if (this.sortableTrim > 0) {
-            sortableSegment = sortableSegment.slice(0, -this.sortableTrim);
-        }
         return sortableSegment;
     }
     getRandomSegment(id) {
@@ -103,9 +96,6 @@ class Rando {
         if (id.length < this.sortableLength)
             return null;
         let sortableSegment = this.getSortableSegment(id);
-        if (this.sortableTrim > 0) {
-            sortableSegment = sortableSegment.padEnd(this.sortableLength + this.sortableTrim, this.alphabet[0]);
-        }
         let decoded = 0;
         for (let i = 0; i < sortableSegment.length; i++) {
             const alphabetIndex = this.alphabet.indexOf(sortableSegment[i]);

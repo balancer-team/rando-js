@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
-import { BASE_50 } from '../src/constants'
+import { HEX } from '../src/constants'
 import { rando, particle, locker, sesame, pinto, slug } from '../src/presets'
 
 test('Rando default', () => {
@@ -36,30 +36,16 @@ test('Date matches after encode and decode with custom alphabet', () => {
   const date = new Date()
   const rando = new Rando({
     sortable: true,
-    alphabet: BASE_50,
+    alphabet: HEX,
   })
   const id = rando.generate({ date })
   assert.strictEqual(date.getTime(), rando.getDate(id)?.getTime())
 })
 
-test('Date matches to within 1 hour with trimmed timestamp', () => {
-  const date = new Date()
-  const rando = new Rando({
-    alphabet: BASE_50,
-    sortable: true,
-    length: 5,
-  })
-  const id = rando.generate({ date })
-  const decodedDate = rando.getDate(id)
-  if (!decodedDate) assert.fail('Date not found')
-  const diff = date.getTime() - decodedDate.getTime()
-  assert.strictEqual(diff < 1000 * 60 * 60, true)
-})
-
 test('Date matches after encode and decode with all options', () => {
   const date = new Date()
   const rando = new Rando({
-    alphabet: BASE_50,
+    alphabet: HEX,
     length: 22,
     sortable: true,
     supportDate: new Date('5022-01-01'),
@@ -95,7 +81,7 @@ test('Pinto preset', () => {
 })
 
 test('Slug preset', () => {
-  assert.strictEqual(slug.generate().length, 6)
+  assert.strictEqual(slug.generate().length, 12)
 })
 
 test('Get invalid date', () => {

@@ -23,8 +23,9 @@ exports.pinto = new _1.Rando({
     alphabet: constants_1.NUMBERS,
     length: 6,
 });
-// Slug (prioritizes shortness, over 32 bits of entropy)
+// Slug (short, no vowels, sortable)
 exports.slug = new _1.Rando({
-    alphabet: constants_1.BASE_50,
-    length: 6,
+    sortable: true,
+    alphabet: constants_1.BASE_42,
+    length: 12,
 });

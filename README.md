@@ -109,15 +109,15 @@ particle.generate() //=> "1nMK3pu9oQ8ff2jVutn5PR"
 locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX"
 sesame.generate() //=> "QXVobZ7?H~B8^K&<Y9%w"
 pinto.generate() //=> "368230"
-slug.generate() //=> "gD75nv"
+slug.generate() //=> "18VnbH9N1BfT"
 ```
 
 - `rando` Default settings with over 128 bits of entropy, like a compact UUIDv4.
-- `particle` Sortable ID with over 80 bits of entropy, like a compact UUIDv7.
+- `particle` Sortable ID with over 80 random bits, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
 - `sesame` Secure 20-character password with over 128 bits of entropy.
 - `pinto` Numerical 6-digit pin for email or phone verification.
-- `slug` Short, no vowels, over 32 bits of entropy.
+- `slug` Short, no vowels, sortable, with over 16 random bits.
 
 ### Guidance for Sortable IDs
 

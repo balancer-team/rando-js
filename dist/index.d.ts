@@ -18,9 +18,6 @@ export declare class Rando {
     readonly supportDate: Date;
     readonly sortableLength: number;
     readonly sortableLimit: Date;
-    readonly sortableTrim: number;
-    readonly sortableResolution: string;
-    private sortableFullLength;
     constructor({ alphabet, length, sortable, supportDate, }?: RandoOptions);
     generate({ date }?: GenerateOptions): string;
     generateRandomSegment(): string;

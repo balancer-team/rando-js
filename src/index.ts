@@ -1,5 +1,5 @@
 import { rng } from './rng'
-import { BASE_58, RESOLUTIONS } from './constants'
+import { BASE_58 } from './constants'
 
 type RandoOptions = {
   alphabet?: string
@@ -24,9 +24,6 @@ export class Rando {
   readonly supportDate: Date
   readonly sortableLength: number
   readonly sortableLimit: Date
-  readonly sortableTrim: number
-  readonly sortableResolution: string
-  private sortableFullLength: number // length of the sortable segment needed to support maximum resolution
 
   // Constructor
   constructor({
@@ -69,17 +66,17 @@ export class Rando {
     this.supportDate = supportDate
 
     // Length of the sortable segment needed to support the target date at maximum resolution
-    this.sortableFullLength = Math.floor(Math.log(this.supportDate.getTime()) / Math.log(this.base)) + 1
+    this.sortableLength = this.sortable ? Math.floor(Math.log(this.supportDate.getTime()) / Math.log(this.base)) + 1 : 0
+
+    if (this.sortableLength > this.length) {
+      throw new Error('length insufficient for sortable segment.')
+    }
 
     // Set the remaining properties
-    this.sortableTrim = Math.max(0, this.sortableFullLength - this.length)
-    this.sortableLength = this.sortable ? Math.min(this.sortableFullLength, this.length) : 0
-    this.sortableLimit = new Date(Math.pow(this.base, this.sortableFullLength))
+    this.sortableLimit = new Date(Math.pow(this.base, this.sortableLength))
     this.randomLength = this.length - this.sortableLength
     this.randomBits = Math.log2(Math.pow(this.base, this.randomLength))
     this.randomLimit = Math.round(Math.pow(2, this.randomBits))
-    const lostResolution = Math.pow(this.base, this.sortableTrim)
-    this.sortableResolution = RESOLUTIONS.find((r) => r.max >= lostResolution)?.description ?? 'Unknown'
   }
 
   // Methods
@@ -108,10 +105,6 @@ export class Rando {
       remaining = Math.floor(remaining / this.base)
     }
 
-    if (this.sortableTrim > 0) {
-      sortableSegment = sortableSegment.slice(0, -this.sortableTrim)
-    }
-
     return sortableSegment
   }
 
@@ -133,10 +126,6 @@ export class Rando {
     if (id.length < this.sortableLength) return null
 
     let sortableSegment = this.getSortableSegment(id)
-
-    if (this.sortableTrim > 0) {
-      sortableSegment = sortableSegment.padEnd(this.sortableLength + this.sortableTrim, this.alphabet[0])
-    }
 
     let decoded = 0
     for (let i = 0; i < sortableSegment.length; i++) {

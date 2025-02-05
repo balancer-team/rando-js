@@ -1,5 +1,5 @@
 import { Rando } from './'
-import { NUMBERS, BASE_50, PASSWORD } from './constants'
+import { PASSWORD, BASE_42, NUMBERS } from './constants'
 
 // Rando (like a compact UUIDv4)
 export const rando = new Rando()
@@ -26,8 +26,9 @@ export const pinto = new Rando({
   length: 6,
 })
 
-// Slug (prioritizes shortness, over 32 bits of entropy)
+// Slug (short, no vowels, sortable)
 export const slug = new Rando({
-  alphabet: BASE_50,
-  length: 6,
+  sortable: true,
+  alphabet: BASE_42,
+  length: 12,
 })
