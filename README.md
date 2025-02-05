@@ -60,17 +60,15 @@ type RandoOptions = {
   length?: number
   sortable?: boolean
   supportDate?: Date
-  secret?: string
 }
 ```
 
-| Property      | Default      | Description                                                                                                                                                                                                                     |
-| ------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alphabet`    | `BASE_58`    | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy.                                                                  |
-| `length`      | `22`         | The length of the ID. By default, the `length` is `22` which provides 128 bits of entropy with a base 58 alphabet.                                                                                                              |
-| `sortable`    | `false`      | Makes the ID sortable. With the default base 58 alphabet, the first 8 characters are used to encode a timestamp at millisecond precision.                                                                                       |
-| `supportDate` | `3000-01-01` | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                                                                                      |
-| `secret`      | `undefined`  | Provide a secret for the sign and verify methods. The `secret` property can be changed after the instance is created, allowing you to set secrets even on presets. A good signing secret should be at least 32 characters long. |
+| Property      | Default      | Description                                                                                                                                                    |
+| ------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alphabet`    | `BASE_58`    | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy. |
+| `length`      | `22`         | The length of the ID. By default, the `length` is `22` which provides 128 bits of entropy with a base 58 alphabet.                                             |
+| `sortable`    | `false`      | Makes the ID sortable. With the default base 58 alphabet, the first 8 characters are used to encode a timestamp at millisecond precision.                      |
+| `supportDate` | `3000-01-01` | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                     |
 
 ### Special Considerations for Sortable IDs
 
@@ -79,7 +77,7 @@ The `length` and base of the `alphabet` together determine how long the sortable
 Note that making an ID sortable will reduce the number of random characters in the ID. If you `console.log` the Rando instance, you will see several helpful properties that can help you determine whether or not the ID meets your requirements.
 
 ```js
-const rando = new Rando({ sortable: true, secret: 'secret' })
+const rando = new Rando({ sortable: true })
 
 //=> Output
 // Rando {
@@ -96,7 +94,6 @@ const rando = new Rando({ sortable: true, secret: 'secret' })
 //   sortableTrim: 0,
 //   sortableResolution: '1 millisecond',
 //   sortableFullLength: 8,
-//   secret: 'secret'
 // }
 ```
 
@@ -110,6 +107,7 @@ import { rando, particle, locker, pinto, slug } from '@balancer-team/rando/prese
 rando.generate() //=> "ogm3Yzf4NnSKJsDnL8ma8X"
 particle.generate() //=> "1nMK3pu9oQ8ff2jVutn5PR"
 locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX"
+sesame.generate() //=> "QXVobZ7?H~B8^K&<Y9%w"
 pinto.generate() //=> "368230"
 slug.generate() //=> "gD75nv"
 ```
@@ -117,6 +115,7 @@ slug.generate() //=> "gD75nv"
 - `rando` Default settings with over 128 bits of entropy, like a compact UUIDv4.
 - `particle` Sortable ID with over 80 bits of entropy, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
+- `sesame` Secure 20-character password with over 128 bits of entropy.
 - `pinto` Numerical 6-digit pin for email or phone verification.
 - `slug` Short, no vowels, over 32 bits of entropy.
 

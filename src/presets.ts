@@ -1,5 +1,5 @@
 import { Rando } from './'
-import { NUMBERS, BASE_50 } from './constants'
+import { NUMBERS, BASE_50, PASSWORD } from './constants'
 
 // Rando (like a compact UUIDv4)
 export const rando = new Rando()
@@ -12,6 +12,12 @@ export const particle = new Rando({
 // Locker (secure key with over 256 bits of entropy)
 export const locker = new Rando({
   length: 44,
+})
+
+// Sesame (secure password with over 128 bits of entropy)
+export const sesame = new Rando({
+  alphabet: PASSWORD,
+  length: 20,
 })
 
 // Pin (for verification codes, etc)

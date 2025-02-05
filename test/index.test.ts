@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
 import { BASE_50 } from '../src/constants'
-import { rando, particle, locker, pinto, slug } from '../src/presets'
+import { rando, particle, locker, sesame, pinto, slug } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -63,7 +63,6 @@ test('Date matches after encode and decode with all options', () => {
     length: 22,
     sortable: true,
     supportDate: new Date('5022-01-01'),
-    secret: 'secret',
   })
   const id = rando.generate({ date })
   assert.strictEqual(date.getTime(), rando.getDate(id)?.getTime())
@@ -79,12 +78,15 @@ test('Rando preset', () => {
 })
 
 test('Particle preset', () => {
-  particle.secret = 'secret'
   assert.strictEqual(particle.generate().length, 22)
 })
 
 test('Locker preset', () => {
   assert.strictEqual(locker.generate().length, 44)
+})
+
+test('Sesame preset', () => {
+  assert.strictEqual(sesame.generate().length, 20)
 })
 
 test('Pinto preset', () => {
