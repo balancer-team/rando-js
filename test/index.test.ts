@@ -6,7 +6,7 @@ import { rando, particle, locker, sesame, pinto, slug } from '../src/presets'
 
 test('Rando default', () => {
   const rando = new Rando()
-  assert.strictEqual(rando.generate().length, 22)
+  assert.strictEqual(rando.generate().length, 24)
 })
 
 test('Rando with custom length', () => {
@@ -56,23 +56,28 @@ test('Date matches after encode and decode with all options', () => {
 
 test('Info returns bits of entropy', () => {
   const rando = new Rando()
-  assert.strictEqual(Math.floor(rando.randomBits), 128)
+  assert.strictEqual(Math.floor(rando.randomBits), 131)
+})
+
+test('Get invalid date', () => {
+  const rando = new Rando({ sortable: true })
+  assert.strictEqual(rando.getDate('OIl0'), null)
 })
 
 test('Rando preset', () => {
-  assert.strictEqual(rando.generate().length, 22)
+  assert.strictEqual(rando.generate().length, 24)
 })
 
 test('Particle preset', () => {
-  assert.strictEqual(particle.generate().length, 22)
+  assert.strictEqual(particle.generate().length, 21)
 })
 
 test('Locker preset', () => {
-  assert.strictEqual(locker.generate().length, 44)
+  assert.strictEqual(locker.generate().length, 48)
 })
 
 test('Sesame preset', () => {
-  assert.strictEqual(sesame.generate().length, 20)
+  assert.strictEqual(sesame.generate().length, 14)
 })
 
 test('Pinto preset', () => {
@@ -81,10 +86,5 @@ test('Pinto preset', () => {
 })
 
 test('Slug preset', () => {
-  assert.strictEqual(slug.generate().length, 12)
-})
-
-test('Get invalid date', () => {
-  const rando = new Rando({ sortable: true })
-  assert.strictEqual(rando.getDate('OIl0'), null)
+  assert.strictEqual(slug.generate().length, 9)
 })

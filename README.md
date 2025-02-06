@@ -1,6 +1,6 @@
 # Rando
 
-Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique ID. Options can be modified to fit a wide variety of requirements. In a browser environment, randomness is provided by the Web Crypto API. In a node environment, randomness is provided by the `node:crypto` module.
+Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique ID. Options can be modified to fit a wide variety of requirements. In a node environment, randomness is provided by the `node:crypto` module. In a browser environment, randomness is provided by the Web Crypto API.
 
 ### Install
 
@@ -10,27 +10,27 @@ npm i @balancer-team/rando
 
 ### Usage
 
-Import the rando class and create an instance. The instance generates IDs with the `generate()` method. By default, IDs are 22 characters long, use a base 58 alphabet, and have 128 bits of entropy. The default settings provide a good balance of entropy, human-readability, and URL safety.
+Import the rando class and create an instance. The instance generates IDs with the `generate()` method. By default, IDs are 24 characters long, use a base 44 alphabet, and have over 128 bits of entropy. The default settings provide a good balance of entropy, human-readability, and URL safety, and the alphabet excludes vowels to avoid profanity.
 
 ```js
 import { Rando } from '@balancer-team/rando'
 
 const rando = new Rando()
-rando.generate() // => "ogm3Yzf4NnSKJsDnL8ma8X"
+rando.generate() // => "tz7t9v8dZqHgB5gp9X14Dndn"
 ```
 
 ### Customizing the Length
 
-If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 44-character ID with over 256 bits of entropy:
+If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 48-character ID with over 256 bits of entropy:
 
 ```js
-const rando = new Rando({ length: 44 })
-rando.generate() //=> "NfHRpTLJkjXcKmprjcpQ4UgRfL4KKEGoSrBLytf5RD44"
+const rando = new Rando({ length: 48 })
+rando.generate() //=> "XNprJn8hLGhzC1GT5kSbfzx2tSTpzYZDvvx1pBST9gF74dVq"
 ```
 
 ### Sortable IDs
 
-Rando can generate sortable IDs where the beginning of the ID is an encoded timestamp using the given `alphabet`. Rando will evaluate the `alphabet` length and automatically determine how many characters are required to encode a timestamp at millisecond precision. If the `length` isn't sufficient for millisecond precision, the precision will be reduced as needed.
+Rando can generate sortable IDs where the beginning of the ID is an encoded timestamp using the given `alphabet`. Rando will evaluate the `alphabet` length and automatically determine how many characters are required to encode a timestamp at millisecond precision. The `length` must be sufficient for millisecond precision. Refer to the table below for guidance on the length needed to support a given year with a given alphabet base.
 
 ```js
 const rando = new Rando({ sortable: true })
@@ -38,8 +38,8 @@ rando.generate()
 
 // Output:
 //
-// "1nN6oZkdAnxQck8bPqUCzG"
-//  |------||------------|
+// "16PbqV2HgTFrtsVbtpqS3Sbf"
+//  |-------||-------------|
 //  Sortable    Random
 //  Segment     Segment
 ```
@@ -47,7 +47,7 @@ rando.generate()
 Sortable IDs can easily be decoded to return a date object. Note that the instance doing the decoding must have the same options set as the instance that generated it.
 
 ```js
-rando.getDate('1nN6oZkdAnxQck8bPqUCzG').toISOString() //=> 2024-09-21T17:38:44.418Z
+rando.getDate('16PbqV2HgTFrtsVbtpqS3Sbf').toISOString() //=> 2025-02-06T13:30:42.903Z
 ```
 
 ### All Options
@@ -63,37 +63,34 @@ type RandoOptions = {
 }
 ```
 
-| Property      | Default      | Description                                                                                                                                                    |
-| ------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alphabet`    | `BASE_58`    | A string of characters to use to generate your IDs. By default, the base 58 alphabet is used for a good balance of human-readability, URL safety, and entropy. |
-| `length`      | `22`         | The length of the ID. By default, the `length` is `22` which provides 128 bits of entropy with a base 58 alphabet.                                             |
-| `sortable`    | `false`      | Makes the ID sortable. With the default base 58 alphabet, the first 8 characters are used to encode a timestamp at millisecond precision.                      |
-| `supportDate` | `3000-01-01` | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                     |
+| Property      | Default      | Description                                                                                                                                                                 |
+| ------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alphabet`    | `BASE_44`    | A string of characters to use to generate your IDs. By default, the base 44 alphabet is used for a balance of readability, URL safety, entropy, and avoidance of profanity. |
+| `length`      | `22`         | The length of the ID. By default, the `length` is `24` which provides over 128 bits of entropy.                                                                             |
+| `sortable`    | `false`      | Makes the ID sortable when set to `true`. With the default alphabet, the first 9 characters encode a timestamp at millisecond precision.                                    |
+| `supportDate` | `3000-01-01` | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                                  |
 
 ### Special Considerations for Sortable IDs
 
-The `length` and base of the `alphabet` together determine how long the sortable segment must be to support millisecond precision. If the `length` isn't long enough to support millisecond precision, the timestamp precision will be reduced as needed. The `supportDate` property allows you to specify a target date for the sortable segment to support. The sortable segment will be left-padded to support the target date as needed.
+The `length` and base of the `alphabet` together determine how long the sortable segment must be to support millisecond precision. If the `length` isn't long enough to support millisecond precision, an error will be thrown on instantiation. The `supportDate` property allows you to specify a target date for the sortable segment to support. The sortable segment will be left-padded to support the target date as needed.
 
-Note that making an ID sortable will reduce the number of random characters in the ID. If you `console.log` the Rando instance, you will see several helpful properties that can help you determine whether or not the ID meets your requirements.
+Note that making an ID sortable will reduce the number of random characters in the ID. If you `console.log` the instance, you will see several helpful properties that can help you determine whether or not the ID meets your requirements.
 
 ```js
 const rando = new Rando({ sortable: true })
 
 //=> Output
 // Rando {
-//   alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
-//   length: 22,
-//   randomLength: 14,
-//   base: 58,
-//   randomBits: 82.01173393178601,
-//   randomLimit: 4.875194084160305e+24,
+//   alphabet: '123456789BCDFGHJKLNPRSTVXYZbcdfghknpqrstvxyz',
+//   length: 24,
+//   randomLength: 15,
+//   base: 44,
+//   randomBits: 81.89147427955946,
+//   randomLimit: 4.4852860687290275e+24,
 //   sortable: true,
-//   supportDate: 3000-01-01T05:00:00.000Z,
-//   sortableLength: 8,
-//   sortableLimit: 6028-02-27T14:15:18.016Z,
-//   sortableTrim: 0,
-//   sortableResolution: '1 millisecond',
-//   sortableFullLength: 8,
+//   supportDate: 3000-01-01T00:00:00.000Z,
+//   sortableLength: 9,
+//   sortableLimit: +021557-07-02T22:58:29.504Z
 // }
 ```
 
@@ -104,24 +101,24 @@ Rando comes with a few presets to make it easy to generate IDs for common use ca
 ```js
 import { rando, particle, locker, pinto, slug } from '@balancer-team/rando/presets'
 
-rando.generate() //=> "ogm3Yzf4NnSKJsDnL8ma8X"
-particle.generate() //=> "1nMK3pu9oQ8ff2jVutn5PR"
-locker.generate() //=> "KExaEVwFiZ5XL7339yjauuW2VAD2BrzBP5BPT8GWXbtX"
-sesame.generate() //=> "QXVobZ7?H~B8^K&<Y9%w"
+rando.generate() //=> "vyJsTyLKbpXp1h1pTsdxCfv1"
+particle.generate() //=> "16PbqdrD3VxKxgTHc6Dtf"
+locker.generate() //=> "3YPF3LpSsPcfVNrKnpByghdG3t3GppcPqB3TcNtc9RSnRgC2"
+sesame.generate() //=> "4btN2*F@RtdG2K"
 pinto.generate() //=> "368230"
-slug.generate() //=> "18VnbH9N1BfT"
+slug.generate() //=> "16PbqdrD3"
 ```
 
 - `rando` Default settings with over 128 bits of entropy, like a compact UUIDv4.
-- `particle` Sortable ID with over 80 random bits, like a compact UUIDv7.
+- `particle` Sortable ID with over 64 random bits per ms, like a compact ObjectId.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
-- `sesame` Secure 20-character password with over 128 bits of entropy.
+- `sesame` Secure password with over 80 bits of entropy.
 - `pinto` Numerical 6-digit pin for email or phone verification.
-- `slug` Short, no vowels, sortable, with over 16 random bits.
+- `slug` Short, sortable, maximum of one per ms.
 
 ### Guidance for Sortable IDs
 
-The following table is a guide for the length needed to support at least the year 3000 with a given alphabet base. The table assumes that the timestamp supports millisecond precision.
+The following table is a guide for the length needed to support at least the year 3000 with a given alphabet base.
 
 | Base | Length | Max Year |
 | ---- | ------ | -------- |

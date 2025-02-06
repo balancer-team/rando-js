@@ -5,27 +5,27 @@ const _1 = require("./");
 const constants_1 = require("./constants");
 // Rando (like a compact UUIDv4)
 exports.rando = new _1.Rando();
-// Particle (like a compact UUIDv7)
+// Particle (like a compact ObjectId)
 exports.particle = new _1.Rando({
+    length: 21,
     sortable: true,
 });
 // Locker (secure key with over 256 bits of entropy)
 exports.locker = new _1.Rando({
-    length: 44,
+    length: 48,
 });
 // Sesame (secure password with over 128 bits of entropy)
 exports.sesame = new _1.Rando({
     alphabet: constants_1.PASSWORD,
-    length: 20,
+    length: 14,
 });
 // Pin (for verification codes, etc)
 exports.pinto = new _1.Rando({
     alphabet: constants_1.NUMBERS,
     length: 6,
 });
-// Slug (short, no vowels, sortable)
+// Slug (short, sortable)
 exports.slug = new _1.Rando({
+    length: 9,
     sortable: true,
-    alphabet: constants_1.BASE_42,
-    length: 12,
 });
