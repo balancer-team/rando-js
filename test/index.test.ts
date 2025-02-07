@@ -69,7 +69,7 @@ test('Rando preset', () => {
 })
 
 test('Particle preset', () => {
-  assert.strictEqual(particle.generate().length, 21)
+  assert.strictEqual(particle.generate().length, 24)
 })
 
 test('Locker preset', () => {
@@ -86,5 +86,5 @@ test('Pinto preset', () => {
 })
 
 test('Slug preset', () => {
-  assert.strictEqual(slug.generate().length, 9)
+  assert.strictEqual(slug.generate().length, 12)
 })

@@ -6,7 +6,6 @@ export const rando = new Rando()
 
 // Particle (like a compact ObjectId)
 export const particle = new Rando({
-  length: 21,
   sortable: true,
 })
 
@@ -29,6 +28,6 @@ export const pinto = new Rando({
 
 // Slug (short, sortable)
 export const slug = new Rando({
-  length: 9,
+  length: 12,
   sortable: true,
 })

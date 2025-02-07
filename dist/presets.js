@@ -7,7 +7,6 @@ const constants_1 = require("./constants");
 exports.rando = new _1.Rando();
 // Particle (like a compact ObjectId)
 exports.particle = new _1.Rando({
-    length: 21,
     sortable: true,
 });
 // Locker (secure key with over 256 bits of entropy)
@@ -26,6 +25,6 @@ exports.pinto = new _1.Rando({
 });
 // Slug (short, sortable)
 exports.slug = new _1.Rando({
-    length: 9,
+    length: 12,
     sortable: true,
 });
