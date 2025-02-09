@@ -20,7 +20,7 @@ export const sesame = new Rando({
   length: 14,
 })
 
-// Pin (for verification codes, etc)
+// Pinto (for verification codes, etc)
 export const pinto = new Rando({
   alphabet: NUMBERS,
   length: 6,

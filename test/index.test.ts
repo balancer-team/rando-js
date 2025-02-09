@@ -72,6 +72,10 @@ test('Particle preset', () => {
   assert.strictEqual(particle.generate().length, 24)
 })
 
+test('Slug preset', () => {
+  assert.strictEqual(slug.generate().length, 12)
+})
+
 test('Locker preset', () => {
   assert.strictEqual(locker.generate().length, 48)
 })
@@ -83,8 +87,4 @@ test('Sesame preset', () => {
 test('Pinto preset', () => {
   const pin = pinto.generate()
   assert.strictEqual(/^\d{6}$/.test(pin), true)
-})
-
-test('Slug preset', () => {
-  assert.strictEqual(slug.generate().length, 12)
 })

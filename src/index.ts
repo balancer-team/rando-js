@@ -30,7 +30,7 @@ export class Rando {
     alphabet = BASE_44,
     length = 24,
     sortable = false,
-    supportDate = new Date('3000-01-01'),
+    supportDate = new Date('3000'),
   }: RandoOptions = {}) {
     // Validation logic
     if (typeof alphabet !== 'string' || alphabet.length < 2) {

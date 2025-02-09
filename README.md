@@ -63,12 +63,12 @@ type RandoOptions = {
 }
 ```
 
-| Property      | Default      | Description                                                                                                                                                                 |
-| ------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alphabet`    | `BASE_44`    | A string of characters to use to generate your IDs. By default, the base 44 alphabet is used for a balance of readability, URL safety, entropy, and avoidance of profanity. |
-| `length`      | `24`         | The length of the ID. By default, the `length` is `24` which provides over 128 bits of entropy.                                                                             |
-| `sortable`    | `false`      | Makes the ID sortable when set to `true`. With the default alphabet, the first 9 characters encode a timestamp at millisecond precision.                                    |
-| `supportDate` | `3000-01-01` | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                                  |
+| Property      | Default   | Description                                                                                                                                                                 |
+| ------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alphabet`    | `BASE_44` | A string of characters to use to generate your IDs. By default, the base 44 alphabet is used for a balance of readability, URL safety, entropy, and avoidance of profanity. |
+| `length`      | `24`      | The length of the ID. By default, the `length` is `24` which provides over 128 bits of entropy.                                                                             |
+| `sortable`    | `false`   | Makes the ID sortable when set to `true`. With the default alphabet, the first 9 characters encode a timestamp at millisecond precision.                                    |
+| `supportDate` | `'3000'`  | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                                  |
 
 ### Special Considerations for Sortable IDs
 
@@ -109,12 +109,12 @@ pinto.generate() //=> "368230"
 slug.generate() //=> "16PbqdrD3THc"
 ```
 
-- `rando` Default settings with over 128 bits of entropy, like a compact UUIDv4.
-- `particle` Sortable ID with over 80 random bits per ms, like a compact UUIDv7.
+- `rando` Default with over 128 bits of entropy, like a compact UUIDv4.
+- `particle` Sortable with over 80 random bits, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
 - `sesame` Secure password with over 80 bits of entropy.
 - `pinto` Numerical 6-digit pin for email or phone verification.
-- `slug` Short, sortable, with over 16 random bits per ms.
+- `slug` Short, sortable, with over 16 random bits.
 
 ### Guidance for Sortable IDs
 
