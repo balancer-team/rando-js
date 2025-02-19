@@ -11,7 +11,7 @@ export const particle = new Rando({
 
 // Locker (secure key with over 256 bits of entropy)
 export const locker = new Rando({
-  length: 44,
+  length: 46,
 })
 
 // Sesame (secure password with over 128 bits of entropy)

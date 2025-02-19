@@ -10,22 +10,22 @@ npm i @balancer-team/rando
 
 ### Usage
 
-Import the rando class and create an instance. The instance generates IDs with the `generate()` method. By default, IDs are 22 characters long, use a base 62 alphabet, and have over 128 bits of entropy.
+Import the rando class and create an instance. The instance generates IDs with the `generate()` method.
 
 ```js
 import { Rando } from '@balancer-team/rando'
 
 const rando = new Rando()
-rando.generate() // => "1Z9MoiSk8S1CmGaPwPhwTi"
+rando.generate() // => "NqrmxmT2Y9rh2KkhJBMtJY"
 ```
 
 ### Customizing the Length
 
-If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 44-character ID with over 256 bits of entropy:
+If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 46-character ID with over 256 bits of entropy:
 
 ```js
-const rando = new Rando({ length: 44 })
-rando.generate() //=> "Ui52fVAKZP5vTEKrLH8cb20i07bL776Lonc2dq2EyHkF"
+const rando = new Rando({ length: 46 })
+rando.generate() //=> "jRkPNGJNVFGMvVYh1rm5T15LQjwhs9Jvky8QF5W737KK6k"
 ```
 
 ### Sortable IDs
@@ -38,7 +38,7 @@ rando.generate()
 
 // Output:
 //
-// "0UdHdIP9YrpHkV8Q0iH2tb"
+// "3DM1XqWcMT5hZfGHhBZykG"
 //  |------||------------|
 //  Sortable    Random
 //  Segment     Segment
@@ -47,7 +47,7 @@ rando.generate()
 Sortable IDs can be decoded to return a date. Note that the instance doing the decoding must have the same options as the instance that generated it.
 
 ```js
-rando.getDate('0UdHe0uO93LDZkgSly36te').toISOString() //=> 2025-02-19T20:29:42.296Z
+rando.getDate('3DM1XqWcMT5hZfGHhBZykG').toISOString() //=> 2025-02-19T22:17:58.831Z
 ```
 
 ### All Options
@@ -63,12 +63,12 @@ type RandoOptions = {
 }
 ```
 
-| Property      | Default   | Description                                                                                                                              |
-| ------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `alphabet`    | `BASE_62` | A string of characters to use to generate your IDs. By default, the base 62 alphabet is used.                                            |
-| `length`      | `24`      | The length of the ID. By default, the `length` is `22` which provides over 128 bits of entropy.                                          |
-| `sortable`    | `false`   | Makes the ID sortable when set to `true`. With the default alphabet, the first 8 characters encode a timestamp at millisecond precision. |
-| `supportDate` | `'3000'`  | Allows you to specify a target date for the sortable segment to support. See below for additional details.                               |
+| Property      | Default   | Description                                                                                                                                                            |
+| ------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alphabet`    | `BASE_50` | A string of characters to use to generate your IDs. The default base 50 alphabet excludes ambiguous characters for readability and excludes vowels to avoid profanity. |
+| `length`      | `22`      | The length of the ID. By default, the `length` is `22` which provides over 124 bits of entropy, two more bits than a UUIDv4                                            |
+| `sortable`    | `false`   | Makes the ID sortable when set to `true`. With the default alphabet, the first 8 characters encode a timestamp at millisecond precision.                               |
+| `supportDate` | `'3000'`  | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                             |
 
 ### Special Considerations for Sortable IDs
 
@@ -81,16 +81,16 @@ const rando = new Rando({ sortable: true })
 
 //=> Output
 // Rando {
-//   alphabet: '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+//   alphabet: '123456789BCDFGHJKLMNPQRSTVWXYZbcdfghjkmnpqrstvwxyz',
 //   length: 22,
 //   randomLength: 14,
-//   base: 62,
-//   randomBits: 83.35874834541626,
-//   randomLimit: 1.2401769434657583e+25,
+//   base: 50,
+//   randomBits: 79.01398665684614,
+//   randomLimit: 6.103515624999988e+23,
 //   sortable: true,
 //   supportDate: 3000-01-01T00:00:00.000Z,
 //   sortableLength: 8,
-//   sortableLimit: 8888-12-02T13:19:44.896Z
+//   sortableLimit: 3207-11-04T06:26:40.000Z
 // }
 ```
 
@@ -101,20 +101,20 @@ Rando comes with a few presets to make it easy to generate IDs for common use ca
 ```js
 import { rando, particle, locker, pinto, slug } from '@balancer-team/rando/presets'
 
-rando.generate() //=> "jsIyrAe8f75WmOluMIE5Fq"
-particle.generate() //=> "0UdHe0uO93LDZkgSly36te"
-locker.generate() //=> "YxbQv13Z6sRYsjRfsejta7EpU8fTxOOvi1Ae0eLK4xSA"
+rando.generate() //=> "GLFVXtqjn8MYPtcZvpXzrK"
+particle.generate() //=> "3DM1b9mGt33mbvtwGR1zKp"
+locker.generate() //=> "pG98bVcFq9TBx7CWpMBGjqqXBL354WwgVz93bHB5qQPrH5"
 sesame.generate() //=> "E@MvHJG4JbA$o{8ll0AK"
 pinto.generate() //=> "368230"
-slug.generate() //=> "IGPrXd"
+slug.generate() //=> "fYfYBc"
 ```
 
-- `rando` Default with over 128 bits of entropy, like a compact UUIDv4.
-- `particle` Sortable with over 80 random bits, like a compact UUIDv7.
+- `rando` Default with over 124 bits of entropy, like a compact UUIDv4.
+- `particle` Sortable string followed by random bits, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
 - `sesame` Secure password with over 128 bits of entropy.
 - `pinto` Numerical 6-digit pin for email or phone verification.
-- `slug` Short, with over 32 random bits for lower-volume use cases.
+- `slug` Short, with over 32 random bits for lower-volume use.
 
 ### Guidance for Sortable IDs
 

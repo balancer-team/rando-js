@@ -11,7 +11,7 @@ exports.particle = new _1.Rando({
 });
 // Locker (secure key with over 256 bits of entropy)
 exports.locker = new _1.Rando({
-    length: 44,
+    length: 46,
 });
 // Sesame (secure password with over 128 bits of entropy)
 exports.sesame = new _1.Rando({

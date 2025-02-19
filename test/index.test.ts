@@ -56,7 +56,7 @@ test('Date matches after encode and decode with all options', () => {
 
 test('Info returns bits of entropy', () => {
   const rando = new Rando()
-  assert.strictEqual(Math.floor(rando.randomBits), 130)
+  assert.strictEqual(Math.floor(rando.randomBits), 124)
 })
 
 test('Get invalid date', () => {
@@ -78,7 +78,7 @@ test('Slug preset', () => {
 })
 
 test('Locker preset', () => {
-  assert.strictEqual(locker.generate().length, 44)
+  assert.strictEqual(locker.generate().length, 46)
 })
 
 test('Sesame preset', () => {
