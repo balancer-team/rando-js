@@ -4,20 +4,20 @@ import { PASSWORD, NUMBERS } from './constants'
 // Rando (like a compact UUIDv4)
 export const rando = new Rando()
 
-// Particle (like a compact ObjectId)
+// Particle (like a compact UUIDv7)
 export const particle = new Rando({
   sortable: true,
 })
 
 // Locker (secure key with over 256 bits of entropy)
 export const locker = new Rando({
-  length: 48,
+  length: 44,
 })
 
 // Sesame (secure password with over 128 bits of entropy)
 export const sesame = new Rando({
   alphabet: PASSWORD,
-  length: 14,
+  length: 20,
 })
 
 // Pinto (for verification codes, etc)
@@ -26,8 +26,7 @@ export const pinto = new Rando({
   length: 6,
 })
 
-// Slug (short, sortable)
+// Slug (short with over 32 bits of entropy)
 export const slug = new Rando({
-  length: 12,
-  sortable: true,
+  length: 6,
 })

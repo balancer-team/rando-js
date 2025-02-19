@@ -1,6 +1,6 @@
 # Rando
 
-Rando is a tool for generating identifiers. By default, `rando()` generates a cryptographically random, universally unique ID. Options can be modified to fit a wide variety of requirements. In a node environment, randomness is provided by the `node:crypto` module. In a browser environment, randomness is provided by the Web Crypto API.
+Rando is a tool for generating identifiers. By default, `rando()` generates a random, universally unique ID. Options can be modified to fit a wide variety of requirements. In a node environment, randomness is provided by the `node:crypto` module. In a browser environment, randomness is provided by the Web Crypto API.
 
 ### Install
 
@@ -10,22 +10,22 @@ npm i @balancer-team/rando
 
 ### Usage
 
-Import the rando class and create an instance. The instance generates IDs with the `generate()` method. By default, IDs are 24 characters long, use a base 44 alphabet, and have over 128 bits of entropy. The default settings provide a good balance of entropy, human-readability, and URL safety, and the alphabet excludes vowels to avoid profanity.
+Import the rando class and create an instance. The instance generates IDs with the `generate()` method. By default, IDs are 22 characters long, use a base 62 alphabet, and have over 128 bits of entropy.
 
 ```js
 import { Rando } from '@balancer-team/rando'
 
 const rando = new Rando()
-rando.generate() // => "tz7t9v8dZqHgB5gp9X14Dndn"
+rando.generate() // => "1Z9MoiSk8S1CmGaPwPhwTi"
 ```
 
 ### Customizing the Length
 
-If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 48-character ID with over 256 bits of entropy:
+If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 44-character ID with over 256 bits of entropy:
 
 ```js
-const rando = new Rando({ length: 48 })
-rando.generate() //=> "XNprJn8hLGhzC1GT5kSbfzx2tSTpzYZDvvx1pBST9gF74dVq"
+const rando = new Rando({ length: 44 })
+rando.generate() //=> "Ui52fVAKZP5vTEKrLH8cb20i07bL776Lonc2dq2EyHkF"
 ```
 
 ### Sortable IDs
@@ -38,16 +38,16 @@ rando.generate()
 
 // Output:
 //
-// "16PbqV2HgTFrtsVbtpqS3Sbf"
-//  |-------||-------------|
+// "0UdHdIP9YrpHkV8Q0iH2tb"
+//  |------||------------|
 //  Sortable    Random
 //  Segment     Segment
 ```
 
-Sortable IDs can easily be decoded to return a date object. Note that the instance doing the decoding must have the same options set as the instance that generated it.
+Sortable IDs can be decoded to return a date. Note that the instance doing the decoding must have the same options as the instance that generated it.
 
 ```js
-rando.getDate('16PbqV2HgTFrtsVbtpqS3Sbf').toISOString() //=> 2025-02-06T13:30:42.903Z
+rando.getDate('0UdHe0uO93LDZkgSly36te').toISOString() //=> 2025-02-19T20:29:42.296Z
 ```
 
 ### All Options
@@ -63,12 +63,12 @@ type RandoOptions = {
 }
 ```
 
-| Property      | Default   | Description                                                                                                                                                                 |
-| ------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alphabet`    | `BASE_44` | A string of characters to use to generate your IDs. By default, the base 44 alphabet is used for a balance of readability, URL safety, entropy, and avoidance of profanity. |
-| `length`      | `24`      | The length of the ID. By default, the `length` is `24` which provides over 128 bits of entropy.                                                                             |
-| `sortable`    | `false`   | Makes the ID sortable when set to `true`. With the default alphabet, the first 9 characters encode a timestamp at millisecond precision.                                    |
-| `supportDate` | `'3000'`  | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                                  |
+| Property      | Default   | Description                                                                                                                              |
+| ------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `alphabet`    | `BASE_62` | A string of characters to use to generate your IDs. By default, the base 62 alphabet is used.                                            |
+| `length`      | `24`      | The length of the ID. By default, the `length` is `22` which provides over 128 bits of entropy.                                          |
+| `sortable`    | `false`   | Makes the ID sortable when set to `true`. With the default alphabet, the first 8 characters encode a timestamp at millisecond precision. |
+| `supportDate` | `'3000'`  | Allows you to specify a target date for the sortable segment to support. See below for additional details.                               |
 
 ### Special Considerations for Sortable IDs
 
@@ -81,16 +81,16 @@ const rando = new Rando({ sortable: true })
 
 //=> Output
 // Rando {
-//   alphabet: '123456789BCDFGHJKLNPRSTVXYZbcdfghknpqrstvxyz',
-//   length: 24,
-//   randomLength: 15,
-//   base: 44,
-//   randomBits: 81.89147427955946,
-//   randomLimit: 4.4852860687290275e+24,
+//   alphabet: '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+//   length: 22,
+//   randomLength: 14,
+//   base: 62,
+//   randomBits: 83.35874834541626,
+//   randomLimit: 1.2401769434657583e+25,
 //   sortable: true,
 //   supportDate: 3000-01-01T00:00:00.000Z,
-//   sortableLength: 9,
-//   sortableLimit: +021557-07-02T22:58:29.504Z
+//   sortableLength: 8,
+//   sortableLimit: 8888-12-02T13:19:44.896Z
 // }
 ```
 
@@ -101,20 +101,20 @@ Rando comes with a few presets to make it easy to generate IDs for common use ca
 ```js
 import { rando, particle, locker, pinto, slug } from '@balancer-team/rando/presets'
 
-rando.generate() //=> "vyJsTyLKbpXp1h1pTsdxCfv1"
-particle.generate() //=> "16PbqdrD3VxKxgTHc6DtfLKb"
-locker.generate() //=> "3YPF3LpSsPcfVNrKnpByghdG3t3GppcPqB3TcNtc9RSnRgC2"
-sesame.generate() //=> "4btN2*F@RtdG2K"
+rando.generate() //=> "jsIyrAe8f75WmOluMIE5Fq"
+particle.generate() //=> "0UdHe0uO93LDZkgSly36te"
+locker.generate() //=> "YxbQv13Z6sRYsjRfsejta7EpU8fTxOOvi1Ae0eLK4xSA"
+sesame.generate() //=> "E@MvHJG4JbA$o{8ll0AK"
 pinto.generate() //=> "368230"
-slug.generate() //=> "16PbqdrD3THc"
+slug.generate() //=> "IGPrXd"
 ```
 
 - `rando` Default with over 128 bits of entropy, like a compact UUIDv4.
 - `particle` Sortable with over 80 random bits, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
-- `sesame` Secure password with over 80 bits of entropy.
+- `sesame` Secure password with over 128 bits of entropy.
 - `pinto` Numerical 6-digit pin for email or phone verification.
-- `slug` Short, sortable, with over 16 random bits.
+- `slug` Short, with over 32 random bits for lower-volume use cases.
 
 ### Guidance for Sortable IDs
 

@@ -1,5 +1,5 @@
 import { rng } from './rng'
-import { BASE_44 } from './constants'
+import { BASE_62 } from './constants'
 
 type RandoOptions = {
   alphabet?: string
@@ -27,8 +27,8 @@ export class Rando {
 
   // Constructor
   constructor({
-    alphabet = BASE_44,
-    length = 24,
+    alphabet = BASE_62,
+    length = 22,
     sortable = false,
     supportDate = new Date('3000'),
   }: RandoOptions = {}) {
