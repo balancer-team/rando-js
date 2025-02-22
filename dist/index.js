@@ -16,7 +16,7 @@ class Rando {
     sortableLength;
     sortableLimit;
     // Constructor
-    constructor({ alphabet = constants_1.BASE_50, length = 22, sortable = false, supportDate = new Date('3000'), } = {}) {
+    constructor({ alphabet = constants_1.BASE_58, length = 22, sortable = false, supportDate = new Date('3000'), } = {}) {
         // Validation logic
         if (typeof alphabet !== 'string' || alphabet.length < 2) {
             throw new Error('alphabet must be at least two characters.');

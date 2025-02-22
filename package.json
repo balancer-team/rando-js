@@ -1,6 +1,6 @@
 {
   "name": "@balancer-team/rando",
-  "version": "7.2.0",
+  "version": "8.0.0",
   "description": "Generate identifiers with Rando.",
   "main": "dist/index.js",
   "exports": {
@@ -27,7 +27,7 @@
     "rando",
     "short",
     "unique",
-    "particle",
+    "sorto",
     "sortable",
     "generator",
     "identifier",

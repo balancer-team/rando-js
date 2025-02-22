@@ -1,8 +1,8 @@
 import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
-import { HEX } from '../src/constants'
-import { rando, particle, locker, sesame, pinto, slug } from '../src/presets'
+import { rando, sorto, locker, sesame, pinto } from '../src/presets'
+import { NUMBERS } from '../src/constants'
 
 test('Rando default', () => {
   const rando = new Rando()
@@ -32,20 +32,10 @@ test('Date matches after encode and decode', () => {
   assert.strictEqual(date.getTime(), rando.getDate(id)?.getTime())
 })
 
-test('Date matches after encode and decode with custom alphabet', () => {
-  const date = new Date()
-  const rando = new Rando({
-    sortable: true,
-    alphabet: HEX,
-  })
-  const id = rando.generate({ date })
-  assert.strictEqual(date.getTime(), rando.getDate(id)?.getTime())
-})
-
 test('Date matches after encode and decode with all options', () => {
   const date = new Date()
   const rando = new Rando({
-    alphabet: HEX,
+    alphabet: NUMBERS,
     length: 32,
     sortable: true,
     supportDate: new Date('5022-01-01'),
@@ -56,7 +46,7 @@ test('Date matches after encode and decode with all options', () => {
 
 test('Info returns bits of entropy', () => {
   const rando = new Rando()
-  assert.strictEqual(Math.floor(rando.randomBits), 124)
+  assert.strictEqual(Math.floor(rando.randomBits), 128)
 })
 
 test('Get invalid date', () => {
@@ -68,17 +58,13 @@ test('Rando preset', () => {
   assert.strictEqual(rando.generate().length, 22)
 })
 
-test('Particle preset', () => {
-  const id = particle.generate()
-  assert.strictEqual(particle.generate().length, 22)
-})
-
-test('Slug preset', () => {
-  assert.strictEqual(slug.generate().length, 6)
+test('Sorto preset', () => {
+  const id = sorto.generate()
+  assert.strictEqual(sorto.generate().length, 22)
 })
 
 test('Locker preset', () => {
-  assert.strictEqual(locker.generate().length, 46)
+  assert.strictEqual(locker.generate().length, 44)
 })
 
 test('Sesame preset', () => {

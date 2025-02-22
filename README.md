@@ -16,16 +16,16 @@ Import the rando class and create an instance. The instance generates IDs with t
 import { Rando } from '@balancer-team/rando'
 
 const rando = new Rando()
-rando.generate() // => "NqrmxmT2Y9rh2KkhJBMtJY"
+rando.generate() // => "TGJL3v9QgnYhmSjvEmnTyr"
 ```
 
 ### Customizing the Length
 
-If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 46-character ID with over 256 bits of entropy:
+If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 44-character ID with over 256 bits of entropy:
 
 ```js
-const rando = new Rando({ length: 46 })
-rando.generate() //=> "jRkPNGJNVFGMvVYh1rm5T15LQjwhs9Jvky8QF5W737KK6k"
+const rando = new Rando({ length: 44 })
+rando.generate() //=> "rmjUb9k1MsEYQGPVoQiBvM9Hx69Hmr422aCPDBQvAjMR"
 ```
 
 ### Sortable IDs
@@ -38,7 +38,7 @@ rando.generate()
 
 // Output:
 //
-// "3DM1XqWcMT5hZfGHhBZykG"
+// "1niQ6EpTpywH3wBBZUeHSu"
 //  |------||------------|
 //  Sortable    Random
 //  Segment     Segment
@@ -47,7 +47,7 @@ rando.generate()
 Sortable IDs can be decoded to return a date. Note that the instance doing the decoding must have the same options as the instance that generated it.
 
 ```js
-rando.getDate('3DM1XqWcMT5hZfGHhBZykG').toISOString() //=> 2025-02-19T22:17:58.831Z
+rando.getDate('1niQ6EpTpywH3wBBZUeHSu').toISOString() //=> 2025-02-22T22:24:53.420Z
 ```
 
 ### All Options
@@ -63,34 +63,35 @@ type RandoOptions = {
 }
 ```
 
-| Property      | Default   | Description                                                                                                                                                            |
-| ------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alphabet`    | `BASE_50` | A string of characters to use to generate your IDs. The default base 50 alphabet excludes ambiguous characters for readability and excludes vowels to avoid profanity. |
-| `length`      | `22`      | The length of the ID. By default, the `length` is `22` which provides over 124 bits of entropy, two more bits than a UUIDv4                                            |
-| `sortable`    | `false`   | Makes the ID sortable when set to `true`. With the default alphabet, the first 8 characters encode a timestamp at millisecond precision.                               |
-| `supportDate` | `'3000'`  | Allows you to specify a target date for the sortable segment to support. See below for additional details.                                                             |
+| Property      | Default   | Description                                                                                                   |
+| ------------- | --------- | ------------------------------------------------------------------------------------------------------------- |
+| `alphabet`    | `BASE_58` | A string of characters to use to generate your IDs.                                                           |
+| `length`      | `22`      | The length of the ID. By default, the `length` is `22` which provides over 128 bits of entropy.               |
+| `sortable`    | `false`   | Makes the ID sortable when set to `true`. The leading characters encode a timestamp at millisecond precision. |
+| `supportDate` | `'3000'`  | Allows you to specify a target date for the sortable segment. See below for additional details.               |
 
 ### Special Considerations for Sortable IDs
 
-The `length` and base of the `alphabet` together determine how long the sortable segment must be to support millisecond precision. If the `length` isn't long enough to support millisecond precision, an error will be thrown on instantiation. The `supportDate` property allows you to specify a target date for the sortable segment to support. The sortable segment will be left-padded to support the target date as needed.
+The `length` and base of the `alphabet` together determine how long the sortable segment must be for millisecond precision. If the `length` is too short, an error will be thrown on instantiation. The `supportDate` property allows you to specify a target date for the sortable segment to support. The sortable segment will be left-padded to support the target date as needed.
 
 Note that making an ID sortable will reduce the number of random characters in the ID. If you `console.log` the instance, you will see several helpful properties that can help you determine whether or not the ID meets your requirements.
 
 ```js
 const rando = new Rando({ sortable: true })
 
-//=> Output
+// Output:
+//
 // Rando {
-//   alphabet: '123456789BCDFGHJKLMNPQRSTVWXYZbcdfghjkmnpqrstvwxyz',
+//   alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
 //   length: 22,
 //   randomLength: 14,
-//   base: 50,
-//   randomBits: 79.01398665684614,
-//   randomLimit: 6.103515624999988e+23,
+//   base: 58,
+//   randomBits: 82.01173393178601,
+//   randomLimit: 4.875194084160305e+24,
 //   sortable: true,
 //   supportDate: 3000-01-01T00:00:00.000Z,
 //   sortableLength: 8,
-//   sortableLimit: 3207-11-04T06:26:40.000Z
+//   sortableLimit: 6028-02-27T14:15:18.016Z
 // }
 ```
 
@@ -99,22 +100,20 @@ const rando = new Rando({ sortable: true })
 Rando comes with a few presets to make it easy to generate IDs for common use cases.
 
 ```js
-import { rando, particle, locker, pinto, slug } from '@balancer-team/rando/presets'
+import { rando, sorto, locker, sesame, pinto } from '@balancer-team/rando/presets'
 
-rando.generate() //=> "GLFVXtqjn8MYPtcZvpXzrK"
-particle.generate() //=> "3DM1b9mGt33mbvtwGR1zKp"
-locker.generate() //=> "pG98bVcFq9TBx7CWpMBGjqqXBL354WwgVz93bHB5qQPrH5"
+rando.generate() //=> "TGJL3v9QgnYhmSjvEmnTyr"
+sorto.generate() //=> "1niQ6EpTpywH3wBBZUeHSu"
+locker.generate() //=> "rmjUb9k1MsEYQGPVoQiBvM9Hx69Hmr422aCPDBQvAjMR"
 sesame.generate() //=> "E@MvHJG4JbA$o{8ll0AK"
 pinto.generate() //=> "368230"
-slug.generate() //=> "fYfYBc"
 ```
 
-- `rando` Default with over 124 bits of entropy, like a compact UUIDv4.
-- `particle` Sortable string followed by random bits, like a compact UUIDv7.
+- `rando` Default with over 128 bits of entropy, like a compact UUIDv4.
+- `sorto` Sortable string followed by a random string, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
 - `sesame` Secure password with over 128 bits of entropy.
 - `pinto` Numerical 6-digit pin for email or phone verification.
-- `slug` Short, with over 32 random bits for lower-volume use.
 
 ### Guidance for Sortable IDs
 
