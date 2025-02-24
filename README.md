@@ -1,6 +1,6 @@
 # Rando
 
-Rando is a library for generating identifiers. By default, `rando()` generates a random, universally unique ID. Options can be modified to fit a wide variety of requirements. In a node environment, randomness is provided by the `node:crypto` module. In a browser environment, randomness is provided by the Web Crypto API.
+Rando is a library for generating identifiers. By default, IDs are random and universally unique. Options can be modified to fit a wide variety of requirements. In a node environment, randomness is provided by the `node:crypto` module. In a browser environment, randomness is provided by the Web Crypto API.
 
 ### Install
 
