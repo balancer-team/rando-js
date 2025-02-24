@@ -65,7 +65,7 @@ type RandoOptions = {
 
 | Property      | Default   | Description                                                                                                   |
 | ------------- | --------- | ------------------------------------------------------------------------------------------------------------- |
-| `alphabet`    | `BASE_58` | A string of characters to use to generate your IDs.                                                           |
+| `alphabet`    | `BASE_58` | A string of characters to use to generate your IDs. Each character must be unique.                            |
 | `length`      | `22`      | The length of the ID. By default, the `length` is `22` which provides over 128 bits of entropy.               |
 | `sortable`    | `false`   | Makes the ID sortable when set to `true`. The leading characters encode a timestamp at millisecond precision. |
 | `supportDate` | `'3000'`  | Allows you to specify a target date for the sortable segment. See below for additional details.               |
