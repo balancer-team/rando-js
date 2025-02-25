@@ -46,7 +46,7 @@ test('Date matches after encode and decode with all options', () => {
 
 test('Info returns bits of entropy', () => {
   const rando = new Rando()
-  assert.strictEqual(Math.floor(rando.randomBits), 128)
+  assert.strictEqual(Math.floor(rando.randomBits), 124)
 })
 
 test('Get invalid date', () => {
@@ -54,17 +54,26 @@ test('Get invalid date', () => {
   assert.strictEqual(rando.getDate('OIl0'), null)
 })
 
+test('Bulk generate second id is incremented', () => {
+  const arr = rando.bulkGenerate(10)
+  assert.strictEqual(rando.increment(arr[0]), arr[1])
+})
+
+test('Bulk generate length is correct', () => {
+  const arr = rando.bulkGenerate(10)
+  assert.strictEqual(arr.length, 10)
+})
+
 test('Rando preset', () => {
   assert.strictEqual(rando.generate().length, 22)
 })
 
 test('Sorto preset', () => {
-  const id = sorto.generate()
   assert.strictEqual(sorto.generate().length, 22)
 })
 
 test('Locker preset', () => {
-  assert.strictEqual(locker.generate().length, 44)
+  assert.strictEqual(locker.generate().length, 46)
 })
 
 test('Sesame preset', () => {

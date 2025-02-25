@@ -1,5 +1,5 @@
 import { rng } from './rng'
-import { BASE_58 } from './constants'
+import { BASE_50 } from './constants'
 
 type RandoOptions = {
   alphabet?: string
@@ -27,10 +27,10 @@ export class Rando {
 
   // Constructor
   constructor({
-    alphabet = BASE_58,
+    alphabet = BASE_50,
     length = 22,
     sortable = false,
-    supportDate = new Date('3000'),
+    supportDate = new Date('4000'),
   }: RandoOptions = {}) {
     // Validation logic
     if (typeof alphabet !== 'string' || alphabet.length < 2) {
@@ -88,9 +88,7 @@ export class Rando {
   }
 
   generateRandomSegment(): string {
-    const arr = Array.from({ length: this.randomLength }, () => this.alphabet[rng(this.base)])
-    const s = arr.join('')
-    return s
+    return Array.from({ length: this.randomLength }, () => this.alphabet[rng(this.base)]).join('')
   }
 
   generateSortableSegment({ date = new Date() }: GenerateOptions = {}): string {
@@ -134,5 +132,29 @@ export class Rando {
       decoded = decoded * this.base + alphabetIndex
     }
     return new Date(decoded)
+  }
+
+  increment(id: string): string {
+    const arr = id.split('')
+    let cursor = arr.length - 1
+    while (cursor >= 0) {
+      const i = this.alphabet.indexOf(arr[cursor])
+      if (i === this.base - 1) {
+        arr[cursor] = this.alphabet[0]
+        cursor--
+      } else {
+        arr[cursor] = this.alphabet[i + 1]
+        break
+      }
+    }
+    return arr.join('')
+  }
+
+  bulkGenerate(n: number): string[] {
+    const ids = [this.generate()]
+    for (let i = 1; i < n; i++) {
+      ids.push(this.increment(ids[i - 1]))
+    }
+    return ids
   }
 }

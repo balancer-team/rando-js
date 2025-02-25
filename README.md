@@ -16,16 +16,16 @@ Import the rando class and create an instance. The instance generates IDs with t
 import { Rando } from '@balancer-team/rando'
 
 const rando = new Rando()
-rando.generate() // => "TGJL3v9QgnYhmSjvEmnTyr"
+rando.generate() // => "Jb46bM8xM3mhDLnpQrwNvN"
 ```
 
 ### Customizing the Length
 
-If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 44-character ID with over 256 bits of entropy:
+If you want a longer random string, for example if you want extra security for an API key, it's easy to modify the length. The example below generates a 46-character ID with over 256 bits of entropy:
 
 ```js
-const rando = new Rando({ length: 44 })
-rando.generate() //=> "rmjUb9k1MsEYQGPVoQiBvM9Hx69Hmr422aCPDBQvAjMR"
+const rando = new Rando({ length: 46 })
+rando.generate() //=> "X5533mwXPH6V2nMN5548t1vkFVN4RTJqM89JNQcbVjmt1G"
 ```
 
 ### Sortable IDs
@@ -38,7 +38,7 @@ rando.generate()
 
 // Output:
 //
-// "1niQ6EpTpywH3wBBZUeHSu"
+// "13DNYFr2DBJvhWfWCs58Nb"
 //  |------||------------|
 //  Sortable    Random
 //  Segment     Segment
@@ -47,7 +47,7 @@ rando.generate()
 Sortable IDs can be decoded to return a date. Note that the instance doing the decoding must have the same options as the instance that generated it.
 
 ```js
-rando.getDate('1niQ6EpTpywH3wBBZUeHSu').toISOString() //=> 2025-02-22T22:24:53.420Z
+rando.getDate('13DNYFr2DBJvhWfWCs58Nb').toISOString() //=> "2025-02-25T13:11:45.061Z"
 ```
 
 ### All Options
@@ -63,18 +63,18 @@ type RandoOptions = {
 }
 ```
 
-| Property      | Default   | Description                                                                                                   |
-| ------------- | --------- | ------------------------------------------------------------------------------------------------------------- |
-| `alphabet`    | `BASE_58` | A string of characters to use to generate your IDs. Each character must be unique.                            |
-| `length`      | `22`      | The length of the ID. By default, the `length` is `22` which provides over 128 bits of entropy.               |
-| `sortable`    | `false`   | Makes the ID sortable when set to `true`. The leading characters encode a timestamp at millisecond precision. |
-| `supportDate` | `'3000'`  | Allows you to specify a target date for the sortable segment. See below for additional details.               |
+| Property      | Default   | Description                                                                                                                                               |
+| ------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alphabet`    | `BASE_50` | A string of characters to use to generate your IDs. Each character must be unique. The default base 50 alphabet excludes vowels and ambiguous characters. |
+| `length`      | `22`      | The length of the ID. By default, the `length` is `22` which provides 124 bits of entropy, slightly more than a UUIDv4.                                   |
+| `sortable`    | `false`   | Makes the ID sortable when set to `true`. The leading characters encode a timestamp at millisecond precision.                                             |
+| `supportDate` | `'4000'`  | Allows you to specify a target date for the sortable segment. See below for additional details.                                                           |
 
 ### Special Considerations for Sortable IDs
 
-The `length` and base of the `alphabet` together determine how long the sortable segment must be for millisecond precision. If the `length` is too short, an error will be thrown on instantiation. The `supportDate` property allows you to specify a target date for the sortable segment to support. The sortable segment will be left-padded to support the target date as needed.
+The `length` and base of the `alphabet` together determine how long the sortable segment must be for millisecond precision. If the `length` is too short, Rando will throw an error when instantiated. The `supportDate` property allows you to specify a target date for the sortable segment to support. The sortable segment will be left-padded to support the target date with a consistent overall length.
 
-Note that making an ID sortable will reduce the number of random characters in the ID. If you `console.log` the instance, you will see several helpful properties that can help you determine whether or not the ID meets your requirements.
+Note that making an ID sortable will reduce the number of random characters in the ID. If you `console.log` the instance, you will see several helpful properties such as `randomBits` that can help you determine whether or not the ID meets your requirements.
 
 ```js
 const rando = new Rando({ sortable: true })
@@ -82,16 +82,16 @@ const rando = new Rando({ sortable: true })
 // Output:
 //
 // Rando {
-//   alphabet: '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
+//   alphabet: '123456789BCDFGHJKLMNPQRSTVWXYZbcdfghjkmnpqrstvwxyz',
 //   length: 22,
-//   randomLength: 14,
-//   base: 58,
-//   randomBits: 82.01173393178601,
-//   randomLimit: 4.875194084160305e+24,
+//   randomLength: 13,
+//   base: 50,
+//   randomBits: 73.37013046707142,
+//   randomLimit: 1.2207031249999986e+22,
 //   sortable: true,
-//   supportDate: 3000-01-01T00:00:00.000Z,
-//   sortableLength: 8,
-//   sortableLimit: 6028-02-27T14:15:18.016Z
+//   supportDate: 4000-01-01T00:00:00.000Z,
+//   sortableLength: 9,
+//   sortableLimit: +063862-01-25T10:13:20.000Z
 // }
 ```
 
@@ -102,18 +102,18 @@ Rando comes with a few presets to make it easy to generate IDs for common use ca
 ```js
 import { rando, sorto, locker, sesame, pinto } from '@balancer-team/rando/presets'
 
-rando.generate() //=> "TGJL3v9QgnYhmSjvEmnTyr"
-sorto.generate() //=> "1niQ6EpTpywH3wBBZUeHSu"
-locker.generate() //=> "rmjUb9k1MsEYQGPVoQiBvM9Hx69Hmr422aCPDBQvAjMR"
+rando.generate() //=> "7kFD8XHYp1JdXXzYsxRvXT"
+sorto.generate() //=> "13DNYDsRBvc6TQ2HwHh1GW"
+locker.generate() //=> "5Myvnv4BQm7rDhz3zntYGMXf9Srr71z7wFwF1SSYMQVvQQ"
 sesame.generate() //=> "E@MvHJG4JbA$o{8ll0AK"
 pinto.generate() //=> "368230"
 ```
 
-- `rando` Default with over 128 bits of entropy, like a compact UUIDv4.
+- `rando` Default, like a compact UUIDv4.
 - `sorto` Sortable string followed by a random string, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
 - `sesame` Secure password with over 128 bits of entropy.
-- `pinto` Numerical 6-digit pin for email or phone verification.
+- `pinto` Numerical 6-digit pin for verification codes.
 
 ### Guidance for Sortable IDs
 
@@ -121,29 +121,29 @@ The following table is a guide for the length needed to support at least the yea
 
 | Base | Length | Max Year |
 | ---- | ------ | -------- |
-| 2    | 45     | 3084     |
+| 2    | 46     | 4199     |
 | 3    | 29     | 4144     |
 | 4    | 23     | 4199     |
 | 5    | 20     | 4992     |
 | 6    | 18     | 5188     |
-| 7    | 16     | 3023     |
-| 8    | 15     | 3084     |
+| 7    | 17     | 9341     |
+| 8    | 16     | 10889    |
 | 9    | 15     | 8494     |
 | 10   | 14     | 5138     |
-| 11   | 13     | 3063     |
+| 11   | 14     | 14003    |
 | 12   | 13     | 5360     |
 | 13   | 13     | 11567    |
-| 14   | 12     | 3766     |
+| 14   | 13     | 27121    |
 | 15   | 12     | 6081     |
 | 16   | 12     | 10889    |
-| 17   | 11     | 3056     |
+| 17   | 12     | 20432    |
 | 18   | 11     | 4006     |
 | 19   | 11     | 5661     |
 | 20   | 11     | 8459     |
 | 21   | 11     | 13069    |
 | 22   | 11     | 20486    |
-| 23   | 10     | 3282     |
-| 24   | 10     | 3979     |
+| 23   | 11     | 32163    |
+| 24   | 11     | 50190    |
 | 25   | 10     | 4992     |
 | 26   | 10     | 6443     |
 | 27   | 10     | 8494     |
@@ -151,9 +151,9 @@ The following table is a guide for the length needed to support at least the yea
 | 29   | 10     | 15301    |
 | 30   | 10     | 20681    |
 | 31   | 10     | 27942    |
-| 32   | 9      | 3084     |
-| 33   | 9      | 3440     |
-| 34   | 9      | 3894     |
+| 32   | 10     | 37648    |
+| 33   | 10     | 50503    |
+| 34   | 10     | 67387    |
 | 35   | 9      | 4467     |
 | 36   | 9      | 5188     |
 | 37   | 9      | 6088     |
@@ -168,11 +168,11 @@ The following table is a guide for the length needed to support at least the yea
 | 46   | 9      | 31193    |
 | 47   | 9      | 37433    |
 | 48   | 9      | 44832    |
-| 49   | 8      | 3023     |
-| 50   | 8      | 3207     |
-| 51   | 8      | 3420     |
-| 52   | 8      | 3664     |
-| 53   | 8      | 3942     |
+| 49   | 9      | 53572    |
+| 50   | 9      | 63862    |
+| 51   | 9      | 75936    |
+| 52   | 9      | 90061    |
+| 53   | 9      | 106535   |
 | 54   | 8      | 4261     |
 | 55   | 8      | 4623     |
 | 56   | 8      | 5034     |

@@ -10,7 +10,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "node --require ts-node/register --test test/*.test.ts"
+    "test": "node --require ts-node/register --test test/*.test.ts",
+    "analytics": "node --require ts-node/register src/analytics.ts"
   },
   "author": "Alan Hettinger",
   "license": "MIT",
