@@ -7,9 +7,8 @@
  * @returns {void}
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateSortableGuidance = generateSortableGuidance;
 function generateSortableGuidance() {
-    const targetTimestamp = new Date('3000-01-01').getTime();
+    const targetTimestamp = new Date('4000').getTime();
     console.log('|Base|Length|Max Year|');
     console.log('|---|---|---|');
     for (let base = 2; base <= 64; base++) {
@@ -22,10 +21,8 @@ function generateSortableGuidance() {
         }
         // Find the maximum date for the given length
         let maxDate = new Date(maxTimestamp);
-        // if (maxDate > new Date('9999-12-31')) maxDate = new Date('9999-12-31')
-        // const maxDateString = maxDate.toISOString().split('T')[0]
         const maxYear = maxDate.getFullYear();
-        // maxTimestamp = maxDate.getTime()
         console.log(`|${base}|${length}|${maxYear}|`);
     }
 }
+generateSortableGuidance();

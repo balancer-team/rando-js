@@ -54,16 +54,6 @@ test('Get invalid date', () => {
   assert.strictEqual(rando.getDate('OIl0'), null)
 })
 
-test('Bulk generate second id is incremented', () => {
-  const arr = rando.bulkGenerate(10)
-  assert.strictEqual(rando.increment(arr[0]), arr[1])
-})
-
-test('Bulk generate length is correct', () => {
-  const arr = rando.bulkGenerate(10)
-  assert.strictEqual(arr.length, 10)
-})
-
 test('Rando preset', () => {
   assert.strictEqual(rando.generate().length, 22)
 })

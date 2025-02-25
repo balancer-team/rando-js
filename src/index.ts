@@ -133,28 +133,4 @@ export class Rando {
     }
     return new Date(decoded)
   }
-
-  increment(id: string): string {
-    const arr = id.split('')
-    let cursor = arr.length - 1
-    while (cursor >= 0) {
-      const i = this.alphabet.indexOf(arr[cursor])
-      if (i === this.base - 1) {
-        arr[cursor] = this.alphabet[0]
-        cursor--
-      } else {
-        arr[cursor] = this.alphabet[i + 1]
-        break
-      }
-    }
-    return arr.join('')
-  }
-
-  bulkGenerate(n: number): string[] {
-    const ids = [this.generate()]
-    for (let i = 1; i < n; i++) {
-      ids.push(this.increment(ids[i - 1]))
-    }
-    return ids
-  }
 }
