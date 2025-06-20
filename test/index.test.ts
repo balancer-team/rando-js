@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
-import { rando, sorto, locker, sesame, pinto } from '../src/presets'
+import { rando, sorto, locker, tapper, sesame, pinto } from '../src/presets'
 import { NUMBERS } from '../src/constants'
 
 test('Rando default', () => {
@@ -64,6 +64,10 @@ test('Sorto preset', () => {
 
 test('Locker preset', () => {
   assert.strictEqual(locker.generate().length, 46)
+})
+
+test('Tapper preset', () => {
+  assert.strictEqual(tapper.generate().length, 16)
 })
 
 test('Sesame preset', () => {

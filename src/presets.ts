@@ -1,5 +1,5 @@
 import { Rando } from './'
-import { PASSWORD, NUMBERS } from './constants'
+import { BASE_29, PASSWORD, NUMBERS } from './constants'
 
 // Rando (like a compact UUIDv4)
 export const rando = new Rando()
@@ -12,6 +12,12 @@ export const sorto = new Rando({
 // Locker (secure key with over 256 bits of entropy)
 export const locker = new Rando({
   length: 46,
+})
+
+// Tapper (for codes or serial numbers that are easy to type)
+export const tapper = new Rando({
+  alphabet: BASE_29,
+  length: 16,
 })
 
 // Sesame (secure password with over 128 bits of entropy)
