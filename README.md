@@ -114,7 +114,7 @@ pinto.generate() //=> "368230"
 - `sorto` Sortable string followed by a random string, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
 - `tribble` A trillion billion possible values. Easy to type.
-- `sesame` Secure password with over 128 bits of entropy.
+- `sesame` Secure 16-character password.
 - `pinto` Numerical 6-digit pin for verification codes.
 
 ### Guidance for Sortable IDs
