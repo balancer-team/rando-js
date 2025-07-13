@@ -71,7 +71,7 @@ test('Tribble preset', () => {
 })
 
 test('Sesame preset', () => {
-  assert.strictEqual(sesame.generate().length, 20)
+  assert.strictEqual(sesame.generate().length, 16)
 })
 
 test('Pinto preset', () => {

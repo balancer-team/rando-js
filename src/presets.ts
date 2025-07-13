@@ -23,7 +23,7 @@ export const tribble = new Rando({
 // Sesame (secure password with over 128 bits of entropy)
 export const sesame = new Rando({
   alphabet: PASSWORD,
-  length: 20,
+  length: 16,
 })
 
 // Pinto (for verification codes, etc)
