@@ -105,7 +105,7 @@ import { rando, sorto, locker, sesame, pinto } from '@balancer-team/rando/preset
 rando.generate() //=> "7kFD8XHYp1JdXXzYsxRvXT"
 sorto.generate() //=> "13DNYDsRBvc6TQ2HwHh1GW"
 locker.generate() //=> "5Myvnv4BQm7rDhz3zntYGMXf9Srr71z7wFwF1SSYMQVvQQ"
-tapper.generate() //=> "C5W3C4FP14KSDXBJ"
+tribble.generate() //=> "C5W3C4FP14KSDXBJ"
 sesame.generate() //=> "E@MvHJG4JbA$o{8ll0AK"
 pinto.generate() //=> "368230"
 ```
@@ -113,7 +113,7 @@ pinto.generate() //=> "368230"
 - `rando` Default, like a compact UUIDv4.
 - `sorto` Sortable string followed by a random string, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
-- `tapper` Case-insensitive codes or serial numbers that are easy to type.
+- `tribble` Case-insensitive code, easy to type.
 - `sesame` Secure password with over 128 bits of entropy.
 - `pinto` Numerical 6-digit pin for verification codes.
 

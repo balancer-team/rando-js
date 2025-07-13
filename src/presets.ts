@@ -14,8 +14,8 @@ export const locker = new Rando({
   length: 46,
 })
 
-// Tapper (for codes or serial numbers that are easy to type)
-export const tapper = new Rando({
+//  (for codes or serial numbers that are easy to type)
+export const tribble = new Rando({
   alphabet: BASE_29,
   length: 16,
 })
