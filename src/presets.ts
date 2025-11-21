@@ -1,5 +1,5 @@
 import { Rando } from './'
-import { BASE_29, PASSWORD, NUMBERS } from './constants'
+import { BASE_28, PASSWORD, NUMBERS } from './constants'
 
 // Rando (like a compact UUIDv4)
 export const rando = new Rando()
@@ -16,7 +16,7 @@ export const locker = new Rando({
 
 //  (for codes or serial numbers that are easy to type)
 export const tribble = new Rando({
-  alphabet: BASE_29,
+  alphabet: BASE_28,
   length: 16,
 })
 
