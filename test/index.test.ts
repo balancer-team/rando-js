@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert'
 import { Rando } from '../src'
-import { rando, sorto, locker, tribble, sesame, pinto } from '../src/presets'
+import { rando, sorto, locker, clarion, sesame, pinto } from '../src/presets'
 import { NUMBERS } from '../src/constants'
 
 test('Rando default', () => {
@@ -66,8 +66,8 @@ test('Locker preset', () => {
   assert.strictEqual(locker.generate().length, 46)
 })
 
-test('Tribble preset', () => {
-  assert.strictEqual(tribble.generate().length, 16)
+test('Clarion preset', () => {
+  assert.strictEqual(clarion.generate().length, 26)
 })
 
 test('Sesame preset', () => {
@@ -77,4 +77,13 @@ test('Sesame preset', () => {
 test('Pinto preset', () => {
   const pin = pinto.generate()
   assert.strictEqual(/^\d{6}$/.test(pin), true)
+})
+
+test('Generate 1000 monotonic IDs and ensure they are sorted', () => {
+  const ids = []
+  for (let i = 0; i < 1000; i++) {
+    ids.push(sorto.generate())
+  }
+  const sortedIds = [...ids].sort()
+  assert.deepStrictEqual(ids, sortedIds)
 })

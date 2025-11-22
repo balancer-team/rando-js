@@ -32,6 +32,8 @@ rando.generate() //=> "X5533mwXPH6V2nMN5548t1vkFVN4RTJqM89JNQcbVjmt1G"
 
 Rando can generate sortable IDs where the beginning of the ID is an encoded timestamp using the given `alphabet`. Rando will evaluate the `alphabet` length and automatically determine how many characters are required to encode a timestamp at millisecond precision. The `length` must be sufficient for millisecond precision. Refer to the table below for guidance on the length needed to support a given year with a given alphabet base.
 
+Sortable IDs are monotonic. The first four characters of the random segment will be incremented if multiple IDs are generated in the same millisecond.
+
 ```js
 const rando = new Rando({ sortable: true })
 rando.generate()
@@ -105,7 +107,7 @@ import { rando, sorto, locker, sesame, pinto } from '@balancer-team/rando/preset
 rando.generate() //=> "7kFD8XHYp1JdXXzYsxRvXT"
 sorto.generate() //=> "13DNYDsRBvc6TQ2HwHh1GW"
 locker.generate() //=> "5Myvnv4BQm7rDhz3zntYGMXf9Srr71z7wFwF1SSYMQVvQQ"
-tribble.generate() //=> "C5W3C4FP14KSDXBJ"
+clarion.generate() //=> "fmxtcqd5zc4h5gm62z5gbs8xwt"
 sesame.generate() //=> "E@MvHJG4JbA$o8li"
 pinto.generate() //=> "368230"
 ```
@@ -113,7 +115,7 @@ pinto.generate() //=> "368230"
 - `rando` Default, like a compact UUIDv4.
 - `sorto` Sortable string followed by a random string, like a compact UUIDv7.
 - `locker` Long string with over 256 bits of entropy, suitable for API keys.
-- `tribble` Easy to type. Suitable for recovery codes.
+- `clarion` Lowercase random string. Easier to read, type, and verbally relay.
 - `sesame` Secure 16-character password.
 - `pinto` Numerical 6-digit pin for verification codes.
 

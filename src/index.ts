@@ -25,6 +25,9 @@ export class Rando {
   readonly sortableLength: number
   readonly sortableLimit: Date
 
+  // Save the last monotonic ID
+  private lastMonotonic: string | null = null
+
   // Constructor
   constructor({
     alphabet = BASE_50,
@@ -80,12 +83,57 @@ export class Rando {
   }
 
   // Methods
-  generate({ date = new Date() }: GenerateOptions = {}): string {
-    const randomSegment = this.generateRandomSegment()
+  generate({ date }: GenerateOptions = {}): string {
+    let randomSegment = this.generateRandomSegment()
     if (!this.sortable) return randomSegment
-    const sortableSegment = this.generateSortableSegment({ date })
-    return sortableSegment + randomSegment
+    let sortableSegment = this.generateSortableSegment({ date })
+    if (date) return sortableSegment + randomSegment
+
+    // If no date is provided, ensure monotonic IDs
+    const lastSortableSegment = this.lastMonotonic ? this.getSortableSegment(this.lastMonotonic) : ''
+    const lastRandomSegment = this.lastMonotonic ? this.getRandomSegment(this.lastMonotonic) : ''
+
+    // If the new sortable segment is greater than the last one, nothing needs to be incremented
+    if (sortableSegment > lastSortableSegment) {
+      this.lastMonotonic = sortableSegment + randomSegment
+      return this.lastMonotonic
+    }
+
+    // Get the lexicographically maximum sortable segment between sortableSegment and lastSortableSegment
+    // This ensures that IDs are always increasing even if it has been incremented into the future
+    if (sortableSegment < lastSortableSegment) sortableSegment = lastSortableSegment
+
+    // Increment the sortable segment plus up to four characters of the last random segment
+    const monotonicSegment = this.increment(sortableSegment + lastRandomSegment.slice(0, 4))
+    const remainingRandomSegment = randomSegment.slice(4)
+
+    // Set the last monotonic ID
+    this.lastMonotonic = monotonicSegment + remainingRandomSegment
+    return this.lastMonotonic
   }
+
+  // generateMonotonic(): string {
+  //   if (!this.sortable) throw new Error('generateMonotonic requires sortable to be true.')
+
+  //   let sortableSegment = this.generateSortableSegment()
+  //   let randomSegment = this.generateRandomSegment()
+  //   const lastSortableSegment = this.lastMonotonic ? this.getSortableSegment(this.lastMonotonic) : ''
+  //   const lastRandomSegment = this.lastMonotonic ? this.getRandomSegment(this.lastMonotonic) : ''
+
+  //   // If the new sortable segment is greater than the last one, nothing needs to be incremented
+  //   if (sortableSegment > lastSortableSegment) return sortableSegment + randomSegment
+
+  //   // Get the lexicographically maximum sortable segment between sortableSegment and lastSortableSegment
+  //   if (sortableSegment < lastSortableSegment) sortableSegment = lastSortableSegment
+
+  //   // Increment the sortable segment plus four characters of the random segment
+  //   const monotonicSegment = this.increment(sortableSegment + lastRandomSegment.slice(0, 4))
+  //   const remainingRandomSegment = randomSegment.slice(4)
+
+  //   // Update the last monotonic ID
+  //   this.lastMonotonic = monotonicSegment + remainingRandomSegment
+  //   return this.lastMonotonic
+  // }
 
   generateRandomSegment(): string {
     return Array.from({ length: this.randomLength }, () => this.alphabet[rng(this.base)]).join('')
@@ -104,6 +152,24 @@ export class Rando {
     }
 
     return sortableSegment
+  }
+
+  private increment(segment: string): string {
+    if (segment.length === 0) throw new Error('Cannot increment empty segment.')
+    let incremented = ''
+    let cursor = segment.length - 1
+    while (cursor >= 0) {
+      const index = this.alphabet.indexOf(segment[cursor])
+      if (index === -1) throw new Error('Invalid character in segment.')
+      if (index + 1 === this.base) {
+        incremented = this.alphabet[0] + incremented
+        cursor--
+      } else {
+        incremented = this.alphabet[index + 1] + incremented
+        return segment.slice(0, cursor) + incremented
+      }
+    }
+    throw new Error('Cannot increment beyond maximum value.')
   }
 
   getRandomSegment(id: string): string {

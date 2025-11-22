@@ -1,5 +1,5 @@
 import { Rando } from './'
-import { BASE_28, PASSWORD, NUMBERS } from './constants'
+import { CLARION_LOWERCASE, PASSWORD, NUMBERS } from './constants'
 
 // Rando (like a compact UUIDv4)
 export const rando = new Rando()
@@ -14,10 +14,10 @@ export const locker = new Rando({
   length: 46,
 })
 
-//  (for codes or serial numbers that are easy to type)
-export const tribble = new Rando({
-  alphabet: BASE_28,
-  length: 16,
+//  Clarion (lowercase, easy to read, type, verbally relay)
+export const clarion = new Rando({
+  alphabet: CLARION_LOWERCASE,
+  length: 26,
 })
 
 // Sesame (secure password with over 128 bits of entropy)
