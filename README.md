@@ -107,15 +107,15 @@ import { rando, sorto, locker, sesame, pinto } from '@balancer-team/rando/preset
 rando.generate() //=> "7kFD8XHYp1JdXXzYsxRvXT"
 sorto.generate() //=> "13DNYDsRBvc6TQ2HwHh1GW"
 locker.generate() //=> "5Myvnv4BQm7rDhz3zntYGMXf9Srr71z7wFwF1SSYMQVvQQ"
-clarion.generate() //=> "fmxtcqd5zc4h5gm62z5gbs8xwt"
+clarion.generate() //=> "26NSBR257GFD2L"
 sesame.generate() //=> "E@MvHJG4JbA$o8li"
 pinto.generate() //=> "368230"
 ```
 
 - `rando` Default, like a compact UUIDv4.
-- `sorto` Sortable string followed by a random string, like a compact UUIDv7.
-- `locker` Long string with over 256 bits of entropy, suitable for API keys.
-- `clarion` Lowercase random string. Easier to read, type, and verbally relay.
+- `sorto` Sortable, like a compact UUIDv7.
+- `locker` Over 256 bits of entropy, suitable for API keys.
+- `clarion` Optimal readability, suitable for non-distributed systems.
 - `sesame` Secure 16-character password.
 - `pinto` Numerical 6-digit pin for verification codes.
 
