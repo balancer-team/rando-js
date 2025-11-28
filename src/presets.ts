@@ -18,7 +18,7 @@ export const locker = new Rando({
 export const clarion = new Rando({
   sortable: true,
   alphabet: CLARITY,
-  length: 16,
+  length: 14,
 })
 
 // Sesame (secure password with over 128 bits of entropy)

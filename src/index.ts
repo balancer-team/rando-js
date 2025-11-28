@@ -104,8 +104,8 @@ export class Rando {
     if (sortableSegment < lastSortableSegment) sortableSegment = lastSortableSegment
 
     // Increment the sortable segment plus up to four characters of the last random segment
-    const monotonicSegment = this.increment(sortableSegment + lastRandomSegment.slice(0, 4))
-    const remainingRandomSegment = randomSegment.slice(4)
+    const monotonicSegment = this.increment(sortableSegment + lastRandomSegment.slice(0, 3))
+    const remainingRandomSegment = randomSegment.slice(3)
 
     // Set the last monotonic ID
     this.lastMonotonic = monotonicSegment + remainingRandomSegment

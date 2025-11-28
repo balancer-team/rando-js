@@ -67,7 +67,7 @@ test('Locker preset', () => {
 })
 
 test('Clarion preset', () => {
-  assert.strictEqual(clarion.generate().length, 16)
+  assert.strictEqual(clarion.generate().length, 14)
 })
 
 test('Sesame preset', () => {
@@ -86,4 +86,20 @@ test('Generate 1000 monotonic IDs and ensure they are sorted', () => {
   }
   const sortedIds = [...ids].sort()
   assert.deepStrictEqual(ids, sortedIds)
+})
+
+test('Generate as many IDs as possible within 1 second to test performance', () => {
+  // const rando = new Rando()
+  const endTime = Date.now() + 1000
+  let count = 0
+  while (Date.now() < endTime) {
+    clarion.generate()
+    count++
+  }
+  console.log(`Generated ${count} IDs in 1 second`)
+
+  // Do the math to log how many per ms
+  console.log(`Generated ${count / 1000} IDs per ms`)
+
+  assert.ok(count > 10000) // Expect at least 10,000 IDs generated in 1 second
 })
