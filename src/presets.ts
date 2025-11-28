@@ -1,5 +1,5 @@
 import { Rando } from './'
-import { CLARION_LOWERCASE, PASSWORD, NUMBERS } from './constants'
+import { CLARITY, PASSWORD, NUMBERS } from './constants'
 
 // Rando (like a compact UUIDv4)
 export const rando = new Rando()
@@ -16,8 +16,9 @@ export const locker = new Rando({
 
 //  Clarion (lowercase, easy to read, type, verbally relay)
 export const clarion = new Rando({
-  alphabet: CLARION_LOWERCASE,
-  length: 26,
+  sortable: true,
+  alphabet: CLARITY,
+  length: 16,
 })
 
 // Sesame (secure password with over 128 bits of entropy)

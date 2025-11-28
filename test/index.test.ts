@@ -67,7 +67,7 @@ test('Locker preset', () => {
 })
 
 test('Clarion preset', () => {
-  assert.strictEqual(clarion.generate().length, 26)
+  assert.strictEqual(clarion.generate().length, 16)
 })
 
 test('Sesame preset', () => {
