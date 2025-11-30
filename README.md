@@ -112,12 +112,12 @@ sesame.generate() //=> "E@MvHJG4JbA$o8li"
 pinto.generate() //=> "368230"
 ```
 
-- `rando` Default, like a compact UUIDv4.
-- `sorto` Sortable, like a compact UUIDv7.
-- `locker` Over 256 bits of entropy, suitable for API keys.
-- `clarion` Optimal readability, suitable for non-distributed systems.
-- `sesame` Secure 16-character password.
-- `pinto` Numerical 6-digit pin for verification codes.
+- `rando` Default, like a compact UUIDv4
+- `sorto` Sortable, like a compact UUIDv7
+- `locker` Over 256 bits of entropy, suitable for API keys
+- `clarion` Optimal readability, suitable for non-distributed systems
+- `sesame` Secure 16-character password
+- `pinto` Numerical 6-digit pin for verification codes
 
 ### Guidance for Sortable IDs
 

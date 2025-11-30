@@ -33,7 +33,7 @@ export class Rando {
     alphabet = BASE_50,
     length = 22,
     sortable = false,
-    supportDate = new Date('4000'),
+    supportDate = new Date('4000-01-01'),
   }: RandoOptions = {}) {
     // Validation logic
     if (typeof alphabet !== 'string' || alphabet.length < 2) {
@@ -112,29 +112,6 @@ export class Rando {
     return this.lastMonotonic
   }
 
-  // generateMonotonic(): string {
-  //   if (!this.sortable) throw new Error('generateMonotonic requires sortable to be true.')
-
-  //   let sortableSegment = this.generateSortableSegment()
-  //   let randomSegment = this.generateRandomSegment()
-  //   const lastSortableSegment = this.lastMonotonic ? this.getSortableSegment(this.lastMonotonic) : ''
-  //   const lastRandomSegment = this.lastMonotonic ? this.getRandomSegment(this.lastMonotonic) : ''
-
-  //   // If the new sortable segment is greater than the last one, nothing needs to be incremented
-  //   if (sortableSegment > lastSortableSegment) return sortableSegment + randomSegment
-
-  //   // Get the lexicographically maximum sortable segment between sortableSegment and lastSortableSegment
-  //   if (sortableSegment < lastSortableSegment) sortableSegment = lastSortableSegment
-
-  //   // Increment the sortable segment plus four characters of the random segment
-  //   const monotonicSegment = this.increment(sortableSegment + lastRandomSegment.slice(0, 4))
-  //   const remainingRandomSegment = randomSegment.slice(4)
-
-  //   // Update the last monotonic ID
-  //   this.lastMonotonic = monotonicSegment + remainingRandomSegment
-  //   return this.lastMonotonic
-  // }
-
   generateRandomSegment(): string {
     return Array.from({ length: this.randomLength }, () => this.alphabet[rng(this.base)]).join('')
   }
@@ -198,5 +175,25 @@ export class Rando {
       decoded = decoded * this.base + alphabetIndex
     }
     return new Date(decoded)
+  }
+}
+
+export class Serious {
+  // Track last generated ID to ensure strict monotonicity and no duplicates
+  private static lastId: number | null = null
+
+  static generate(): number {
+    const baseMillis = Date.now()
+    let candidate = baseMillis * 1000 + Math.floor(Math.random() * 1000)
+    const last = this.lastId
+
+    // If candidate is not greater than last, bump to last + 1
+    // This covers same millisecond collisions, clock skew backwards, and random lower values
+    if (last !== null && candidate <= last) {
+      candidate = last + 1
+    }
+
+    this.lastId = candidate
+    return candidate
   }
 }

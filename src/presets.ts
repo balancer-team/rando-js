@@ -1,4 +1,4 @@
-import { Rando } from './'
+import { Rando, Serious } from './'
 import { CLARITY, PASSWORD, NUMBERS } from './constants'
 
 // Rando (like a compact UUIDv4)
